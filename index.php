@@ -37,7 +37,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title><?= h($className) ?> анги</title>
   <meta name="description" content="<?= h($className) ?> ангийн хичээл, дугуйлангийн хуваарь, сурах бичиг, хувийн ажил, цомог, Дурсамжийн самбар, Music, YouTube, GOOGLE, Photobooth болон AI CHAT.">
-  <meta name="theme-color" content="#23483e">
+  <meta name="theme-color" content="#6d4aff">
   <script src="<?= h(asset('assets/js/theme.js')) ?>"></script>
   <script src="<?= h(asset('assets/js/i18n.js')) ?>"></script>
   <link rel="icon" href="assets/img/favicon-48.png" sizes="48x48" type="image/png">
@@ -45,7 +45,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= h(asset('assets/css/style.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/folders.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/workspace.css')) ?>">
@@ -72,11 +72,12 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <link rel="stylesheet" href="<?= h(asset('assets/css/teachermirror.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/intercom.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/call-board.css')) ?>">
-  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/aurora.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/motion.css')) ?>">
 </head>
 <body data-page="home" data-tab="schedule">
 <?php include __DIR__ . '/inc/icons.php'; ?>
-<div class="bg-orbs" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="bg-orbs" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div><div class="bg-stars"></div><div class="bg-grid"></div></div>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="nav nav-home glass nav-with-menu">
@@ -92,28 +93,32 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   </div>
 </header>
 <dialog class="site-menu" id="siteMenu" aria-labelledby="siteMenuTitle">
-  <div class="site-menu-head"><div><span class="site-menu-kicker" data-i18n-skip><?= h($className) ?></span><h2 id="siteMenuTitle" data-i18n="nav.sections">Ангийн хэрэгслүүд</h2><p data-i18n="nav.subtitle">Суралцах, бүтээх, хамтдаа байх.</p></div><button class="site-menu-close" id="siteMenuClose" type="button" aria-label="Цэс хаах" data-i18n-aria-label="nav.close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+  <div class="site-menu-head"><span class="site-menu-logo" aria-hidden="true"><img src="<?= h(asset('assets/img/logo.jpg')) ?>" alt="" width="400" height="250" decoding="async"></span><div><span class="site-menu-kicker" data-i18n-skip><?= h($className) ?></span><h2 id="siteMenuTitle" data-i18n="nav.sections">Ангийн хэрэгслүүд</h2><p data-i18n="nav.subtitle">Суралцах, бүтээх, хамтдаа байх.</p></div><button class="site-menu-close" id="siteMenuClose" type="button" aria-label="Цэс хаах" data-i18n-aria-label="nav.close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
   <div class="tabs site-menu-tabs" role="tablist" aria-orientation="vertical" aria-label="Хэсгүүд" data-i18n-aria-label="nav.sections">
+    <div class="tab-group" role="presentation"><span class="tab-group-label" aria-hidden="true" data-i18n="nav.group.lessons">Хичээл</span></div>
     <button class="tab" type="button" role="tab" id="tab-schedule" aria-controls="view-schedule" data-tab="schedule"><?= icon('calendar') ?><span data-i18n="nav.schedule">Хуваарь</span></button>
     <button class="tab" type="button" role="tab" id="tab-clubs" aria-controls="view-clubs" data-tab="clubs"><?= icon('clock') ?><span data-i18n="nav.clubs">Дугуйлан</span></button>
-    <button class="tab" type="button" role="tab" id="tab-album" aria-controls="view-album" data-tab="album"><?= icon('images') ?><span data-i18n="nav.album">Цомог</span><?= icon('lock', 'tab-lock') ?></button>
-    <button class="tab" type="button" role="tab" id="tab-folders" aria-controls="view-folders" data-tab="folders"><?= icon('folder') ?><span data-i18n="nav.folders">Хавтас</span></button>
+    <button class="tab" type="button" role="tab" id="tab-teachermirror" aria-controls="view-teachermirror" data-tab="teachermirror"><?= icon('screen') ?><span data-i18n="nav.teachermirror">Дэлгэц Хуваалцах</span></button>
+    <div class="tab-group" role="presentation"><span class="tab-group-label" aria-hidden="true" data-i18n="nav.group.study">Сурах</span></div>
     <button class="tab" type="button" role="tab" id="tab-textbooks" aria-controls="view-textbooks" data-tab="textbooks"><?= icon('book') ?><span data-i18n="nav.textbooks">СУРАХ БИЧИГ</span></button>
+    <button class="tab" type="button" role="tab" id="tab-folders" aria-controls="view-folders" data-tab="folders"><?= icon('folder') ?><span data-i18n="nav.folders">Хавтас</span></button>
+    <button class="tab" type="button" role="tab" id="tab-ai-chat" aria-controls="view-ai-chat" data-tab="ai-chat"><?= icon('chat') ?><span data-i18n="nav.aiChat">AI CHAT</span></button>
+    <div class="tab-group" role="presentation"><span class="tab-group-label" aria-hidden="true" data-i18n="nav.group.create">Бүтээл ба дурсамж</span></div>
+    <button class="tab" type="button" role="tab" id="tab-album" aria-controls="view-album" data-tab="album"><?= icon('images') ?><span data-i18n="nav.album">Цомог</span><?= icon('lock', 'tab-lock') ?></button>
     <button class="tab" type="button" role="tab" id="tab-doodle" aria-controls="view-doodle" data-tab="doodle"><?= icon('pen') ?><span data-i18n="nav.doodle">Дурсамжийн самбар</span><?= icon('lock', 'tab-lock') ?></button>
     <button class="tab" type="button" role="tab" id="tab-board" aria-controls="view-board" data-tab="board"><?= icon('palette') ?><span data-i18n="nav.board">САМБАР</span><?= icon('lock', 'tab-lock') ?></button>
+    <button class="tab" type="button" role="tab" id="tab-photobooth" aria-controls="view-photobooth" data-tab="photobooth"><?= icon('camera') ?><span data-i18n="nav.photobooth">Photobooth</span></button>
+    <div class="tab-group" role="presentation"><span class="tab-group-label" aria-hidden="true" data-i18n="nav.group.fun">Чөлөөт цаг</span></div>
     <button class="tab" type="button" role="tab" id="tab-music" aria-controls="view-music" data-tab="music"><?= icon('music') ?><span data-i18n="nav.music">Music</span></button>
     <button class="tab" type="button" role="tab" id="tab-youtube" aria-controls="view-youtube" data-tab="youtube"><?= icon('youtube') ?><span data-i18n="nav.youtube">YouTube</span></button>
     <button class="tab" type="button" role="tab" id="tab-google" aria-controls="view-google" data-tab="google"><?= icon('globe') ?><span data-i18n="nav.google">GOOGLE</span></button>
     <button class="tab" type="button" role="tab" id="tab-games" aria-controls="view-games" data-tab="games"><?= icon('dice') ?><span data-i18n="nav.games">Тоглоомууд</span></button>
-    <button class="tab" type="button" role="tab" id="tab-photobooth" aria-controls="view-photobooth" data-tab="photobooth"><?= icon('camera') ?><span data-i18n="nav.photobooth">Photobooth</span></button>
-    <button class="tab" type="button" role="tab" id="tab-ai-chat" aria-controls="view-ai-chat" data-tab="ai-chat"><?= icon('chat') ?><span data-i18n="nav.aiChat">AI CHAT</span></button>
-    <button class="tab" type="button" role="tab" id="tab-teachermirror" aria-controls="view-teachermirror" data-tab="teachermirror"><?= icon('screen') ?><span data-i18n="nav.teachermirror">Дэлгэц Хуваалцах</span></button>
   </div>
   <div class="site-menu-footer">
-    <button class="btn btn-ghost" type="button" id="siteFullscreenButton" data-menu-action aria-pressed="false"><?= icon('expand') ?><span data-i18n="mirror.fullscreen">Бүтэн дэлгэц</span></button>
-    <button class="btn btn-ghost" type="button" id="intercomListenButton" data-menu-action data-chime="<?= h(asset('assets/audio/music.mp3')) ?>" aria-pressed="false"><?= icon('speaker') ?><span data-i18n="intercom.listen">Intercom сонсох</span></button>
-    <button class="btn btn-ghost" type="button" data-add-media><?= icon('plus') ?><span data-i18n="nav.addPhoto">Зураг нэмэх</span></button>
-    <a class="btn btn-ghost" href="admin.php"><?= icon('settings') ?><span data-i18n="nav.admin">Удирдлага</span></a>
+    <button class="btn btn-ghost" type="button" id="siteFullscreenButton" data-menu-action aria-pressed="false" title="Бүтэн дэлгэц" data-i18n-title="mirror.fullscreen"><?= icon('expand') ?><span data-i18n="mirror.fullscreen">Бүтэн дэлгэц</span></button>
+    <button class="btn btn-ghost" type="button" id="intercomListenButton" title="Intercom сонсох" data-i18n-title="intercom.listen" data-menu-action data-chime="<?= h(asset('assets/audio/music.mp3')) ?>" aria-pressed="false"><?= icon('speaker') ?><span data-i18n="intercom.listen">Intercom сонсох</span></button>
+    <button class="btn btn-ghost" type="button" data-add-media title="Зураг нэмэх" data-i18n-title="nav.addPhoto"><?= icon('plus') ?><span data-i18n="nav.addPhoto">Зураг нэмэх</span></button>
+    <a class="btn btn-ghost" href="admin.php" title="Удирдлага" data-i18n-title="nav.admin"><?= icon('settings') ?><span data-i18n="nav.admin">Удирдлага</span></a>
   </div>
 </dialog>
 
@@ -124,6 +129,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
       <div class="today-card glass">
         <span class="today-num" id="todayNum" aria-hidden="true" data-i18n-skip></span>
         <div class="today-head">
+          <p class="home-greeting" id="homeGreeting" data-i18n-skip></p>
           <h1 class="today-day" id="todayDay" data-i18n-skip></h1>
           <p class="today-date" id="dateLine" data-i18n-skip></p>
         </div>
@@ -146,9 +152,15 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
       </aside>
     </div>
 
-    <div class="senior-shortcuts" role="group" aria-label="Ангийн хэрэгслүүд">
-      <button class="senior-shortcut" type="button" data-tab="textbooks"><span class="shortcut-icon"><?= icon('book') ?></span><span><b>Нэг дор, бүх ном</b><small>12-р ангийн сурах бичиг, миний ажил</small></span><span class="shortcut-arrow">↗</span></button>
-      <button class="senior-shortcut shortcut-lilac" type="button" data-tab="doodle"><span class="shortcut-icon"><?= icon('pen') ?></span><span><b>Бидний үлдээх мөр</b><small>Зураг, өнгө, хэзээ ч арилахгүй дурсамж</small></span><span class="shortcut-arrow">↗</span></button>
+    <div class="home-launch" role="group" aria-label="Хурдан нээх" data-i18n-aria-label="home.launch">
+      <button class="home-tile" type="button" data-tab="music" style="--ta:#8b5cf6;--tb:#ec4899"><span class="home-tile-icon"><?= icon('music') ?></span><span class="home-tile-copy"><b data-i18n="nav.music">Music</b><small data-i18n="home.tile.music">Дуу сонсох</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="google" style="--ta:#3b82f6;--tb:#22d3ee"><span class="home-tile-icon"><?= icon('globe') ?></span><span class="home-tile-copy"><b data-i18n="nav.google">GOOGLE</b><small data-i18n="home.tile.google">Хайх, сурах</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="games" style="--ta:#f59e0b;--tb:#ef4444"><span class="home-tile-icon"><?= icon('dice') ?></span><span class="home-tile-copy"><b data-i18n="nav.games">Тоглоомууд</b><small data-i18n="home.tile.games">Ludo, Chooser…</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="ai-chat" style="--ta:#6d4aff;--tb:#22d3ee"><span class="home-tile-icon"><?= icon('chat') ?></span><span class="home-tile-copy"><b data-i18n="nav.aiChat">AI CHAT</b><small data-i18n="home.tile.ai">Асуулт асуух</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="textbooks" style="--ta:#10b981;--tb:#3b82f6"><span class="home-tile-icon"><?= icon('book') ?></span><span class="home-tile-copy"><b data-i18n="nav.textbooks">СУРАХ БИЧИГ</b><small data-i18n="home.tile.books">12-р ангийн ном</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="folders" style="--ta:#0ea5e9;--tb:#6366f1"><span class="home-tile-icon"><?= icon('folder') ?></span><span class="home-tile-copy"><b data-i18n="nav.folders">Хавтас</b><small data-i18n="home.tile.folders">Миний файлууд</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="doodle" style="--ta:#ec4899;--tb:#f97316"><span class="home-tile-icon"><?= icon('pen') ?></span><span class="home-tile-copy"><b data-i18n="nav.doodle">Дурсамжийн самбар</b><small data-i18n="home.tile.doodle">Зурж үлдээх</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
+      <button class="home-tile" type="button" data-tab="youtube" style="--ta:#ef4444;--tb:#f97316"><span class="home-tile-icon"><?= icon('youtube') ?></span><span class="home-tile-copy"><b data-i18n="nav.youtube">YouTube</b><small data-i18n="home.tile.youtube">Хамтдаа үзэх</small></span><span class="home-tile-arrow" aria-hidden="true">↗</span></button>
     </div>
 
     <div class="section-head">
@@ -362,6 +374,8 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
 <script src="<?= h(asset('assets/js/fullscreen-back.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/display-fullscreen.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/app.js')) ?>"></script>
+<script src="<?= h(asset('assets/js/home.js')) ?>"></script>
+<script src="<?= h(asset('assets/js/motion.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/intercom-listener.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/call-board.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/note-board.js')) ?>"></script>

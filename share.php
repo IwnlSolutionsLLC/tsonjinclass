@@ -27,7 +27,7 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-uns
   <link rel="stylesheet" href="<?= h(asset('assets/css/senior.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/themes.css')) ?>">
   <script src="<?= h(asset('assets/js/theme.js')) ?>"></script><script src="<?= h(asset('assets/js/i18n.js')) ?>"></script><link rel="stylesheet" href="<?= h(asset('assets/css/navigation.css')) ?>">
-  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="<?= h(asset('assets/css/aurora.css')) ?>">
 </head>
 <body data-page="share" data-tab="folders">
 <?php include __DIR__ . '/inc/icons.php'; ?>

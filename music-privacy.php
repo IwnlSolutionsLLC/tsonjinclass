@@ -10,7 +10,7 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 <html lang="mn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Music · Өгөгдөл ба үйлчилгээ</title>
 <script src="<?= h(asset('assets/js/theme.js')) ?>"></script><script src="<?= h(asset('assets/js/i18n.js')) ?>"></script><link rel="stylesheet" href="<?= h(asset('assets/css/navigation.css')) ?>">
 <link rel="stylesheet" href="<?= h(asset('assets/css/style.css')) ?>"><link rel="stylesheet" href="<?= h(asset('assets/css/senior.css')) ?>"><link rel="stylesheet" href="<?= h(asset('assets/css/themes.css')) ?>">
-<link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="<?= h(asset('assets/css/aurora.css')) ?>">
 </head><body><?php include __DIR__ . '/inc/icons.php'; ?><main class="wrap" style="max-width:800px;padding-top:32px">
 <a class="btn btn-ghost btn-sm" href="./#music">← Music рүү</a>
 <section class="panel glass" style="margin-top:24px;line-height:1.8"><h1>Music · Өгөгдөл ба үйлчилгээ</h1>

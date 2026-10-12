@@ -1,6 +1,7 @@
 /* GOOGLE — a small in-site browser: Google search (SafeSearch on), quick links to learning sites
-   and games, and favorites/recent kept on this device. Sites that refuse to be embedded open in a new tab;
-   YouTube links go to the YouTube section. The frame is sandboxed so a page can never take over the class site. */
+   and games, and favorites/recent kept on this device. Everything stays on the class site: nothing opens a
+   new tab, sites that refuse to be embedded show a friendly notice here, and YouTube links go to the YouTube
+   section. The frame is sandboxed without pop-ups or top navigation, so a page can never leave or take over the site. */
 (function () {
   'use strict';
   var C = window.C122, view = document.getElementById('view-google'); if (!C || !view) return;
@@ -13,28 +14,34 @@
   function read(key) { try { var v = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
   function write(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} }
 
+  var OURS = [
+    { name:'Ludo', hash:'ludo', icon:'🎲', color:'#ff5fa2' },
+    { name:'FlashCards', hash:'flashcards', icon:'🃏', color:'#ffb020' },
+    { name:'Chooser', hash:'chooser', icon:'🎯', color:'#22c3ee' },
+    { name:'Music', hash:'music', icon:'🎧', color:'#8b5cf6' },
+    { name:'YouTube', hash:'youtube', icon:'▶️', color:'#ef4444' },
+    { name:'AI CHAT', hash:'ai-chat', icon:'💬', color:'#6d4aff' }
+  ];
   var LEARN = [
     { name:'Google', url:HOME_URL, icon:'G', color:'#4285f4' },
     { name:'Википедиа', url:'https://mn.wikipedia.org/', icon:'W', color:'#3a3a3a' },
     { name:'Wikipedia', url:'https://en.wikipedia.org/wiki/Main_Page', icon:'W', color:'#5b5b5b' },
     { name:'Газрын зураг', key:'google.site.maps', url:'https://www.google.com/maps?output=embed&q=Ulaanbaatar', icon:'🗺️', color:'#34a853' },
     { name:'Desmos', url:'https://www.desmos.com/calculator', icon:'📈', color:'#2f72b8' },
-    { name:'PhET Atom', url:'https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_all.html', icon:'⚛️', color:'#f2a33a' },
-    { name:'Орчуулга', key:'google.site.translate', url:'https://translate.google.com/?sl=en&tl=mn', icon:'🌐', color:'#1a73e8' },
-    { name:'Khan Academy', url:'https://www.khanacademy.org/', icon:'🎓', color:'#14bf96' }
+    { name:'PhET · Atom', url:'https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_all.html', icon:'⚛️', color:'#f2a33a' },
+    { name:'PhET · Projectile', url:'https://phet.colorado.edu/sims/html/projectile-motion/latest/projectile-motion_all.html', icon:'🎯', color:'#e0663a' },
+    { name:'PhET · Orbits', url:'https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_all.html', icon:'🪐', color:'#5b6cf0' }
   ];
   var PLAY = [
     { name:'Chess puzzle', key:'google.site.chessPuzzle', url:'https://lichess.org/training/frame?theme=brown&bg=light', icon:'♞', color:'#8b5a2b' },
     { name:'Chess TV', url:'https://lichess.org/tv/frame?theme=brown&bg=light', icon:'♛', color:'#5d4037' },
     { name:'Dino', url:'https://chromedino.com/', icon:'🦖', color:'#535353' },
     { name:'2048', url:'https://play2048.co/', icon:'🔢', color:'#edc22e' },
-    { name:'Quick, Draw!', url:'https://quickdraw.withgoogle.com/', icon:'✏️', color:'#ea4335' },
-    { name:'Scratch', url:'https://scratch.mit.edu/projects/editor/', icon:'🐱', color:'#ff8c1a' },
-    { name:'Typing', key:'google.site.typing', url:'https://monkeytype.com/', icon:'⌨️', color:'#e2b714' },
-    { name:'Kahoot!', url:'https://kahoot.it/', icon:'🟣', color:'#46178f' }
+    { name:'PhET · Colors', url:'https://phet.colorado.edu/sims/html/color-vision/latest/color-vision_all.html', icon:'🌈', color:'#c2410c' },
+    { name:'PhET · Balance', url:'https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_all.html', icon:'⚖️', color:'#0e7490' }
   ];
-  // Sites that send "do not embed" headers: open them in a new tab instead of showing an error page.
-  var TAB_ONLY = ['facebook.com', 'messenger.com', 'instagram.com', 'threads.net', 'tiktok.com', 'twitter.com', 'x.com', 'reddit.com', 'discord.com', 'linkedin.com', 'pinterest.com',
+  // Sites that refuse to be shown inside another site: explain that here instead of leaving the class site.
+  var NO_EMBED = ['facebook.com', 'messenger.com', 'instagram.com', 'threads.net', 'tiktok.com', 'twitter.com', 'x.com', 'reddit.com', 'discord.com', 'linkedin.com', 'pinterest.com',
     'github.com', 'gitlab.com', 'stackoverflow.com', 'amazon.com', 'ebay.com', 'netflix.com', 'spotify.com', 'twitch.tv', 'chatgpt.com', 'openai.com', 'claude.ai', 'anthropic.com', 'gemini.google.com',
     'roblox.com', 'minecraft.net', 'apple.com', 'icloud.com', 'microsoft.com', 'office.com', 'live.com', 'outlook.com', 'bing.com', 'zoom.us', 'canva.com', 'telegram.org', 'whatsapp.com',
     'duolingo.com', 'khanacademy.org', 'coursera.org', 'quickdraw.withgoogle.com', 'scratch.mit.edu', 'kahoot.it', 'kahoot.com', 'translate.google.com', 'monkeytype.com'];
@@ -61,9 +68,9 @@
         return { kind:'frame', url:url.href, label:url.searchParams.get('q') || '', search:url.pathname === '/search' };
       }
       if (url.pathname.indexOf('/maps') === 0 && url.searchParams.get('output') === 'embed') return { kind:'frame', url:url.href };
-      return { kind:'tab', url:url.href };
+      return { kind:'noembed', url:url.href };
     }
-    if (onList(host, TAB_ONLY)) return { kind:'tab', url:url.href };
+    if (onList(host, NO_EMBED)) return { kind:'noembed', url:url.href };
     return { kind:'frame', url:url.href };
   }
 
@@ -74,14 +81,21 @@
     if (!target) return;
     if (target.kind === 'blocked') { C.toast(T('google.badUrl', 'Ийм хаягийг нээх боломжгүй.'), 'error'); syncAddress(); return; }
     if (target.kind === 'youtube') { syncAddress(); openYouTube(target); return; }
+    if (target.kind === 'noembed') { showBlocked(target.url); return; }
     remember(target);
-    if (target.kind === 'tab') { openTab(target.url, true); syncAddress(); renderShelves(); return; }
     if (!options.fromHistory) { state.stack = state.stack.slice(0, state.index + 1); state.stack.push(target); state.index = state.stack.length - 1; }
     load(target);
   }
+  function showBlocked(url) {
+    var frame = $('googleFrame');
+    frame.removeAttribute('src'); frame.hidden = true; $('googleStart').hidden = true; $('googleBlocked').hidden = false;
+    $('googleBlockedText').textContent = T('google.blockedText', '«{site}» өөр сайт дотор нээгдэхийг зөвшөөрдөггүй. Манай сайт дээр үлдээд өөр зүйл сонгоорой 😊', { site:hostOf(url) || url });
+    setLoading(false); $('googleAddress').value = url; renderChrome();
+    if (C.SFX) C.SFX.play('nope');
+  }
   function load(target) {
     var frame = $('googleFrame');
-    $('googleStart').hidden = true; frame.hidden = false;
+    $('googleStart').hidden = true; $('googleBlocked').hidden = true; frame.hidden = false;
     frame.src = target.url;
     setLoading(true);
     $('googleAddress').value = target.search ? target.label : target.url;
@@ -96,7 +110,7 @@
   function current() { return state.index >= 0 && !$('googleFrame').hidden ? state.stack[state.index] : null; }
   function home() {
     var frame = $('googleFrame');
-    frame.removeAttribute('src'); frame.hidden = true; $('googleStart').hidden = false;
+    frame.removeAttribute('src'); frame.hidden = true; $('googleBlocked').hidden = true; $('googleStart').hidden = false;
     setLoading(false); $('googleAddress').value = '';
     state.index = Math.min(state.index, state.stack.length - 1);
     renderChrome(); renderShelves();
@@ -106,14 +120,9 @@
     if (state.index > 0) { state.index--; load(state.stack[state.index]); } else home();
   }
   function forward() { if (state.index < state.stack.length - 1) { if (current()) state.index++; load(state.stack[state.index]); } }
-  function openTab(url, announce) {
-    window.open(url, '_blank', 'noopener,noreferrer');
-    if (announce) C.toast(T('google.openedTab', '{site} шинэ табд нээгдлээ.', { site:hostOf(url) || url }));
-  }
-  function standalone(url) { try { var u = new URL(url); u.searchParams.delete('igu'); return u.href; } catch (e) { return url; } }
   function openYouTube(target) {
     var tab = document.getElementById('tab-youtube');
-    if (!tab || !C.YouTube || !C.YouTube.open) { openTab(target.url, true); return; }
+    if (!tab || !C.YouTube || !C.YouTube.open) { showBlocked(target.url); return; }
     tab.click();
     var q = target.query || (/(?:watch\?v=|shorts\/|live\/|embed\/|youtu\.be\/)/.test(target.url) ? target.url : '');
     if (q) C.YouTube.open(q);
@@ -139,14 +148,14 @@
 
   /* ---------- rendering ---------- */
   function tile(site, extra) {
-    var name = site.key ? T(site.key, site.name) : site.name, url = site.url, kind = resolve(url).kind;
-    return '<button type="button" class="google-tile" data-google-url="' + C.esc(url) + '" style="--tile:' + C.esc(site.color || '#4285f4') + '">' +
+    var name = site.key ? T(site.key, site.name) : site.name, url = site.url, inSite = !!site.hash;
+    return '<button type="button" class="google-tile' + (inSite ? ' is-ours' : '') + '" ' + (inSite ? 'data-google-tab="' + C.esc(site.hash) + '"' : 'data-google-url="' + C.esc(url) + '"') + ' style="--tile:' + C.esc(site.color || '#4285f4') + '">' +
       '<span class="google-tile-icon" aria-hidden="true">' + C.esc(site.icon || (name || '?').charAt(0).toUpperCase()) + '</span>' +
-      '<span class="google-tile-copy"><b data-i18n-skip>' + C.esc(name) + '</b><small data-i18n-skip>' + C.esc(hostOf(url)) + '</small></span>' +
-      (kind === 'tab' ? '<span class="google-tile-badge" title="' + C.esc(T('google.newTab', 'Шинэ табд нээх')) + '">' + C.icon('external', 'i-sm') + '</span>' : '') +
+      '<span class="google-tile-copy"><b data-i18n-skip>' + C.esc(name) + '</b><small data-i18n-skip>' + C.esc(inSite ? T('google.onSite', '12-2 сайт дээр') : hostOf(url)) + '</small></span>' +
       (extra || '') + '</button>';
   }
   function renderShelves() {
+    $('googleOurs').innerHTML = OURS.map(function (s) { return tile(s); }).join('');
     $('googleLearn').innerHTML = LEARN.map(function (s) { return tile(s); }).join('');
     $('googlePlay').innerHTML = PLAY.map(function (s) { return tile(s); }).join('');
     var favs = read(FAV_KEY);
@@ -165,7 +174,6 @@
     $('googleBack').disabled = !cur && state.index < 0;
     $('googleForward').disabled = state.index >= state.stack.length - 1 || state.index < 0 || (!cur && state.index < 0);
     $('googleReload').disabled = !cur;
-    $('googleExternal').disabled = !cur;
     $('googleStar').disabled = !cur;
     var fav = !!cur && isFav(cur.url);
     $('googleStar').setAttribute('aria-pressed', String(fav)); $('googleStar').classList.toggle('is-on', fav);
@@ -187,8 +195,7 @@
     $('googleAddress').addEventListener('focus', function () { this.select(); });
     $('googleBack').onclick = back; $('googleForward').onclick = forward; $('googleHome').onclick = home;
     $('googleReload').onclick = function () { var cur = current(); if (cur) load(cur); };
-    $('googleExternal').onclick = function () { var cur = current(); if (cur) openTab(standalone(cur.url), false); };
-    $('googleHintOpen').onclick = function () { $('googleExternal').click(); };
+    $('googleBlockedHome').onclick = home;
     $('googleStar').onclick = toggleFav;
     $('googleFullscreen').onclick = fullscreen;
     $('googleClearRecent').onclick = function () { write(RECENT_KEY, []); renderShelves(); };
@@ -196,6 +203,7 @@
     view.addEventListener('click', function (e) {
       var unfav = e.target.closest('[data-google-unfav]');
       if (unfav) { e.preventDefault(); e.stopPropagation(); write(FAV_KEY, read(FAV_KEY).filter(function (f) { return f.url !== unfav.dataset.googleUnfav; })); renderShelves(); return; }
+      var ours = e.target.closest('[data-google-tab]'); if (ours) { location.hash = ours.dataset.googleTab; return; }
       var link = e.target.closest('[data-google-url]'); if (link) go(link.dataset.googleUrl);
     });
     view.addEventListener('keydown', function (e) {

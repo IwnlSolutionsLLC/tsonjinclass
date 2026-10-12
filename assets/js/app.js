@@ -41,7 +41,7 @@
 
   /* ================= Табууд ================= */
   var tab = 'schedule';
-  var sectionNames = ['schedule', 'clubs', 'album', 'folders', 'textbooks', 'doodle', 'board', 'music', 'youtube', 'google', 'games', 'photobooth', 'ai-chat', 'teachermirror'];
+  var sectionNames = ['schedule', 'clubs', 'teachermirror', 'textbooks', 'folders', 'ai-chat', 'album', 'doodle', 'board', 'photobooth', 'music', 'youtube', 'google', 'games'];   // same order as the grouped menu
   var pill = C.$('.tab-pill');
 
   function movePill() {

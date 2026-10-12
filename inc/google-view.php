@@ -16,11 +16,10 @@
         <span class="google-omnibox-icon" aria-hidden="true"><?= icon('search', 'i-sm') ?></span>
         <label class="sr-only" for="googleAddress" data-i18n="google.addressLabel">Хайх эсвэл хаяг бичих</label>
         <input id="googleAddress" type="text" inputmode="search" enterkeyhint="go" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2000" placeholder="Google-ээс хайх эсвэл сайтын хаяг бичих…" data-i18n-placeholder="google.placeholder">
-        <button class="google-go" type="submit" aria-label="Хайх" data-i18n-aria-label="google.go"><?= icon('right', 'i-sm') ?></button>
+        <button class="google-go" type="submit" aria-label="Хайх" data-i18n-aria-label="google.search"><?= icon('search', 'i-sm') ?></button>
       </form>
       <div class="google-nav-buttons">
         <button class="google-btn" id="googleStar" type="button" aria-pressed="false" aria-label="Миний сайтад нэмэх" title="Миний сайтад нэмэх" data-i18n-aria-label="google.star" data-i18n-title="google.star" disabled><?= icon('star') ?></button>
-        <button class="google-btn" id="googleExternal" type="button" aria-label="Шинэ табд нээх" title="Шинэ табд нээх" data-i18n-aria-label="google.newTab" data-i18n-title="google.newTab" disabled><?= icon('external') ?></button>
         <button class="google-btn" id="googleFullscreen" type="button" aria-label="Бүтэн дэлгэц" title="Бүтэн дэлгэц" data-i18n-aria-label="mirror.fullscreen" data-i18n-title="mirror.fullscreen"><?= icon('expand') ?></button>
       </div>
     </div>
@@ -39,6 +38,10 @@
           <p class="google-safe"><?= icon('shield', 'i-sm') ?><span data-i18n="google.safe">SafeSearch асаалттай — ангид тохирох үр дүн.</span></p>
         </form>
 
+        <div class="google-shelf">
+          <div class="google-shelf-head"><h3 data-i18n="google.ours">Манай сайт дээр</h3></div>
+          <div class="google-tiles" id="googleOurs"></div>
+        </div>
         <div class="google-shelf" id="googleFavsShelf" hidden>
           <div class="google-shelf-head"><h3 data-i18n="google.favorites">Миний сайтууд</h3></div>
           <div class="google-tiles" id="googleFavs"></div>
@@ -56,14 +59,23 @@
           <div class="google-recent" id="googleRecent" data-i18n-skip></div>
         </div>
       </div>
+      <div class="google-blocked" id="googleBlocked" role="alert" hidden>
+        <span class="google-blocked-icon" aria-hidden="true">🙈</span>
+        <strong data-i18n="google.blockedTitle">Энэ сайтыг энд нээх боломжгүй</strong>
+        <p id="googleBlockedText" data-i18n-skip></p>
+        <div class="google-blocked-actions">
+          <button class="btn btn-primary" type="button" id="googleBlockedHome"><?= icon('home', 'i-sm') ?><span data-i18n="google.backHome">Нүүр рүү буцах</span></button>
+          <button class="btn btn-ghost" type="button" data-google-url="https://www.google.com/webhp?igu=1&amp;safe=active"><?= icon('search', 'i-sm') ?><span data-i18n="google.searchGoogle">Google-ээс хайх</span></button>
+        </div>
+      </div>
       <iframe id="googleFrame" class="google-frame" title="Вэб хуудас" data-i18n-title="google.frameTitle" hidden
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-pointer-lock allow-presentation allow-downloads allow-modals"
-        allow="fullscreen; autoplay; clipboard-write; encrypted-media; gamepad; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-presentation allow-modals"
+        allow="fullscreen; autoplay; encrypted-media; gamepad" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <div class="google-statusbar">
       <span class="google-current" id="googleCurrent" data-i18n-skip></span>
-      <span class="google-hint" id="googleHint" hidden><span data-i18n="google.blockedHint">Сайт энд нээгдэхгүй байна уу?</span> <button type="button" id="googleHintOpen" data-i18n="google.newTab">Шинэ табд нээх</button></span>
+      <span class="google-hint" id="googleHint" hidden data-i18n="google.stayHint">Сайт харагдахгүй бол Нүүр товчоор буцаад өөр сайт сонгоорой.</span>
     </div>
   </div>
 </section>

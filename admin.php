@@ -37,7 +37,7 @@ header('Cache-Control: no-store');
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= h(asset('assets/css/style.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/workspace.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/senior.css')) ?>">
@@ -47,7 +47,7 @@ header('Cache-Control: no-store');
   <link rel="stylesheet" href="<?= h(asset('assets/css/intercom.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/call.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/note.css')) ?>">
-  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/aurora.css')) ?>">
 </head>
 <body data-page="admin">
 <?php include __DIR__ . '/inc/icons.php'; ?>

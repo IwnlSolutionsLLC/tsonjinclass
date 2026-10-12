@@ -28,7 +28,7 @@
     root.dataset.theme = mode;
     root.style.colorScheme = mode;
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = mode === 'dark' ? '#19221f' : '#fcfcfa';
+    if (meta) meta.content = mode === 'dark' ? '#0b0920' : '#f3f1ff';
     updateButtons();
   }
   apply(mode, false);
