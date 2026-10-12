@@ -36,7 +36,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title><?= h($className) ?> анги</title>
-  <meta name="description" content="<?= h($className) ?> ангийн хичээл, дугуйлангийн хуваарь, сурах бичиг, хувийн ажил, цомог, Дурсамжийн самбар, Music, YouTube, Photobooth болон AI CHAT.">
+  <meta name="description" content="<?= h($className) ?> ангийн хичээл, дугуйлангийн хуваарь, сурах бичиг, хувийн ажил, цомог, Дурсамжийн самбар, Music, YouTube, GOOGLE, Photobooth болон AI CHAT.">
   <meta name="theme-color" content="#23483e">
   <script src="<?= h(asset('assets/js/theme.js')) ?>"></script>
   <script src="<?= h(asset('assets/js/i18n.js')) ?>"></script>
@@ -57,6 +57,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <link rel="stylesheet" href="<?= h(asset('assets/css/music.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/music-lyrics.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/youtube.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/google.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/flashcards.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/ludo.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/chooser.css')) ?>">
@@ -71,6 +72,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <link rel="stylesheet" href="<?= h(asset('assets/css/teachermirror.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/intercom.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/call-board.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
 </head>
 <body data-page="home" data-tab="schedule">
 <?php include __DIR__ . '/inc/icons.php'; ?>
@@ -101,6 +103,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
     <button class="tab" type="button" role="tab" id="tab-board" aria-controls="view-board" data-tab="board"><?= icon('palette') ?><span data-i18n="nav.board">САМБАР</span><?= icon('lock', 'tab-lock') ?></button>
     <button class="tab" type="button" role="tab" id="tab-music" aria-controls="view-music" data-tab="music"><?= icon('music') ?><span data-i18n="nav.music">Music</span></button>
     <button class="tab" type="button" role="tab" id="tab-youtube" aria-controls="view-youtube" data-tab="youtube"><?= icon('youtube') ?><span data-i18n="nav.youtube">YouTube</span></button>
+    <button class="tab" type="button" role="tab" id="tab-google" aria-controls="view-google" data-tab="google"><?= icon('globe') ?><span data-i18n="nav.google">GOOGLE</span></button>
     <button class="tab" type="button" role="tab" id="tab-games" aria-controls="view-games" data-tab="games"><?= icon('dice') ?><span data-i18n="nav.games">Тоглоомууд</span></button>
     <button class="tab" type="button" role="tab" id="tab-photobooth" aria-controls="view-photobooth" data-tab="photobooth"><?= icon('camera') ?><span data-i18n="nav.photobooth">Photobooth</span></button>
     <button class="tab" type="button" role="tab" id="tab-ai-chat" aria-controls="view-ai-chat" data-tab="ai-chat"><?= icon('chat') ?><span data-i18n="nav.aiChat">AI CHAT</span></button>
@@ -266,6 +269,7 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
   <?php include __DIR__ . '/inc/clubs-view.php'; ?>
   <?php include __DIR__ . '/inc/music-view.php'; ?>
   <?php include __DIR__ . '/inc/youtube-view.php'; ?>
+  <?php include __DIR__ . '/inc/google-view.php'; ?>
   <?php include __DIR__ . '/inc/games-view.php'; ?>
   <?php include __DIR__ . '/inc/photobooth-view.php'; ?>
   <?php include __DIR__ . '/inc/ai-chat-view.php'; ?>
@@ -334,11 +338,11 @@ header('Permissions-Policy: camera=(self), microphone=(self), display-capture=(s
 <script src="<?= h(asset('assets/js/clubs.js')) ?>"></script>
 <script>window.C122_SPOTIFY=<?= json_encode($spotifyBoot, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
 <script src="<?= h(asset('assets/js/spotify.js')) ?>"></script>
-<script src="<?= h(asset('assets/js/music-analysis.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/music-player.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/music.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/music-lyrics.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/youtube.js')) ?>"></script>
+<script src="<?= h(asset('assets/js/google.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/sfx.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/flashcards.js')) ?>"></script>
 <script src="<?= h(asset('assets/js/ludo.js')) ?>"></script>

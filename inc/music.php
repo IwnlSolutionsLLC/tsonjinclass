@@ -335,6 +335,8 @@ function handle_music_action($action)
     if (!in_array($action, $reads, true) && !in_array($action, $writes, true)) return false;
     $write = in_array($action, $writes, true);
     if ($write) require_post(); elseif (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'), true)) fail('GET хүсэлт шаардлагатай.', 405);
+    // The audio library (Smart Mix) was removed: songs come from Spotify search. Saved audio can still stream.
+    if (in_array($action, array('music_audio_library', 'music_audio_files', 'music_import', 'music_audio_import'), true)) fail('Аудио сан хасагдсан. Spotify-оос дуу хайна уу.', 410);
     music_prepare();
     if (in_array($action, array('music_stream', 'music_audio_stream'), true)) music_audio_stream($_GET['audio'] ?? $_GET['audioId'] ?? '');
     if ($action === 'music_audio_library') json_out(music_audio_library(clean_str($_GET['q'] ?? '', 180)));
@@ -398,7 +400,7 @@ function handle_music_action($action)
                         $spotifyTrack['id'] = bin2hex(random_bytes(16)); $spotifyTrack['added'] = date('c');
                         $playlist['tracks'][] = $spotifyTrack;
                     } elseif (($body['kind'] ?? '') === 'audio') {
-                        $playlist['tracks'][] = music_audio_shared_reference($state, $body['audioId'] ?? '', $playlist);
+                        fail('Аудио сан хасагдсан. Spotify-оос дуу хайна уу.', 410);
                     } else {
                         if (!in_array($body['kind'] ?? '', array('', 'youtube'), true)) fail('Аудио файл нэмэх боломжгүй. Хайлтаас дуу сонгоно уу.', 410);
                         $videoId = music_video_id($body['videoId'] ?? ''); if ($videoId === '' || !preg_match('/^[A-Za-z0-9_-]{11}$/D', (string)($body['videoId'] ?? ''))) fail('YouTube video ID буруу байна.');

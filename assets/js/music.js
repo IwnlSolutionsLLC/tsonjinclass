@@ -1,4 +1,4 @@
-/* Shared classroom playlists, native Smart Mix, and provider playback. */
+/* Shared classroom playlists with Spotify search and playback. */
 (function () {
   'use strict';
   var C = window.C122, view = document.getElementById('view-music'), boot = window.C122_SPOTIFY || {};
@@ -31,7 +31,7 @@
     }
     if (data.csrf && folder) state.csrf[folder] = data.csrf; return data;
   }
-  state.source = read('c122:music-source') === 'spotify' ? 'spotify' : 'audio';
+  state.source = 'spotify';   // songs are searched on Spotify only
   state.activeProvider = null; state.nativePlayer = null; state.spotifyPlayer = null;
   function trackKey(track) { return track && (track.uri || track.audioId || track.id) || ''; }
   function playable(track) {
@@ -48,7 +48,7 @@
   function renderAccount() {
     var student = owner(), open = !!student && !!student.unlocked;
     $('musicUnlock').hidden = !student || open; $('musicLock').hidden = !open; $('musicTrash').hidden = !open;
-    ['musicCreate','musicUnlock','musicLock','musicImport'].forEach(function (id) { $(id).disabled = state.busy; });
+    ['musicCreate','musicUnlock','musicLock'].forEach(function (id) { $(id).disabled = state.busy; });
     $('musicAccountStatus').textContent = !student ? 'Нэрээрээ плейлист үүсгээрэй. Дуу нь энэ дэлгэц дээр тоглоно.' : open ? student.name + ' · өөрийн плейлистүүдийг засах эрхтэй.' : student.name + ' · плейлист үүсгэх, засахдаа хавтасны кодоо оруулна.';
   }
   function renderLists() {
@@ -57,7 +57,7 @@
     $('musicLibraryEmpty').hidden = !!state.lists.length;
     C.$$('[data-music-filter]',view).forEach(function (button) { var on = button.dataset.musicFilter === state.filter; button.classList.toggle('on',on); button.setAttribute('aria-pressed',String(on)); });
   }
-  function trackCopy(track) { return '<div class="music-track-copy"><strong>' + C.esc(track.title || T('music.song','Дуу')) + '</strong><small>' + C.esc(track.artist || (track.kind === 'audio' ? (track.ownerName || 'Smart Mix Library') : track.kind === 'spotify' ? '' : 'YouTube хэсэгт үзээрэй')) + '</small></div>'; }
+  function trackCopy(track) { return '<div class="music-track-copy"><strong>' + C.esc(track.title || T('music.song','Дуу')) + '</strong><small>' + C.esc(track.artist || (track.kind === 'audio' ? (track.ownerName || T('music.audioTrack','Аудио')) : track.kind === 'spotify' ? '' : 'YouTube хэсэгт үзээрэй')) + '</small></div>'; }
   function readyToPlay() { return state.spotifyConnected && !!state.spotifyPlayer && state.spotifyPlayer.getState().ready && !state.playingBusy && !cooldown(); }
   function renderPlaylist() {
     var p = state.playlist, allowed = mine(p); $('musicPlaylistDetail').hidden = !p; if (!p) return;
@@ -178,7 +178,7 @@
   function stopSpotify() {
     state.spotifyEpoch++; state.searchSeq++; state.spotifyControllers.forEach(function (controller) { controller.abort(); }); state.spotifyControllers.clear();
     if (state.spotifyPlayer) state.spotifyPlayer.disconnect();
-    state.spotifyConnected = false; state.spotifyStatusKnown = true; state.spotifyLoading = false; state.playingBusy = false; state.searchController = null; if (state.source === 'spotify') state.results = []; if (state.activeProvider === 'spotify') state.playingPlaylist = null;
+    state.spotifyConnected = false; state.spotifyStatusKnown = true; state.spotifyLoading = false; state.playingBusy = false; state.searchController = null; state.results = []; if (state.activeProvider === 'spotify') state.playingPlaylist = null;
     $('musicSearchStatus').textContent = '';
     clearInterval(state.progressTimer); state.progressTimer = null; renderSpotifyAccount(); renderResults(); renderPlaylist();
   }
@@ -208,12 +208,12 @@
     } finally { clearTimeout(timer); state.spotifyControllers.delete(controller); if (options.signal) options.signal.removeEventListener('abort',abort); }
   }
   function renderSpotifyAccount() {
-    var showStreaming = state.source === 'spotify';
+    var showStreaming = true;
     $('musicSpotifyAccount').hidden = !showStreaming || state.spotifyConnected || !state.spotifyStatusKnown;
     $('musicSpotifyNotice').hidden = !showStreaming; if (!showStreaming) $('musicSpotifyHelp').hidden = true;
     $('musicSpotifyConnect').disabled = state.spotifyLoading || state.spotifyBusy || !state.spotifyCsrf || !!cooldown();
     $('musicSpotifyRetry').disabled = state.spotifyLoading || state.spotifyBusy || !!cooldown();
-    $('musicSearchInput').disabled = state.source === 'spotify' && (!state.spotifyConnected || !!cooldown()); $('musicSearchButton').disabled = !!state.searchController || (state.source === 'spotify' && (!state.spotifyConnected || !!cooldown()));
+    $('musicSearchInput').disabled = !state.spotifyConnected || !!cooldown(); $('musicSearchButton').disabled = !!state.searchController || !state.spotifyConnected || !!cooldown();
   }
   async function loadSpotifyStatus() {
     if (state.spotifyLoading || cooldown()) return; var epoch = state.spotifyEpoch; state.spotifyLoading = true; renderSpotifyAccount();
@@ -250,7 +250,7 @@
   function playerChanged(snapshot) {
     state.playerState = snapshot; var track = snapshot.track, restricted = snapshot.disallows || {}, ready = snapshot.provider === 'audio' ? !state.playingBusy : readyToPlay();
     $('musicNowTitle').textContent = track ? track.title : 'Өнөөдрийн аялгуу'; $('musicNowArtist').textContent = track ? track.artist || '' : 'Дуу хайж эсвэл ангийн плейлистээ сонгоорой.';
-    $('musicNowKicker').textContent = track ? snapshot.provider === 'audio' ? 'SMART MIX LIBRARY' : 'NOW PLAYING' : 'Дуугаа сонгоорой'; $('musicNowKicker').hidden = false;
+    $('musicNowKicker').textContent = track ? 'NOW PLAYING' : 'Дуугаа сонгоорой'; $('musicNowKicker').hidden = false;
     $('musicPlayerPlaceholder').hidden = !!track && !!track.image; $('musicCoverLink').hidden = !track || !track.image;
     if (track && track.image && $('musicCover').src !== track.image) $('musicCover').src = track.image;
     $('musicPlay').disabled = !ready || !track || (snapshot.paused ? restricted.resuming : restricted.pausing); $('musicPlay').innerHTML = C.icon(snapshot.paused ? 'play' : 'pause'); $('musicPlay').setAttribute('aria-label',snapshot.paused ? 'Тоглуулах' : 'Түр зогсоох');
@@ -259,18 +259,18 @@
     $('musicDuration').textContent = clockTime(snapshot.durationMs); $('musicSeek').disabled = !ready || !track || !snapshot.durationMs || !!restricted.seeking;
     if (!state.seeking) $('musicSeek').value = snapshot.durationMs ? Math.min(100,snapshot.positionMs / snapshot.durationMs * 100) : 0;
     $('musicVolume').disabled = !snapshot.ready || (snapshot.provider !== 'audio' && isIos());
-    var deck = view.querySelector('.music-player'); if (deck) { deck.classList.toggle('is-playing',!!track && !snapshot.paused); deck.classList.toggle('is-mixing',!!snapshot.mixActive); }
+    var deck = view.querySelector('.music-player'); if (deck) { deck.classList.toggle('is-playing',!!track && !snapshot.paused); }
     markCurrent(); renderSpotifyAccount();
-    // Keep the clock running whenever audio plays, even in the background, so the mini-player and automix stay in sync.
+    // Keep the clock running whenever audio plays, even in the background, so the mini-player stays in sync.
     if (!state.progressTimer && !snapshot.paused) state.progressTimer = setInterval(updateProgress,400);   // re-anchor lyrics ~2.5x/s so they don't drift ahead/behind
     if (state.progressTimer && snapshot.paused) { clearInterval(state.progressTimer); state.progressTimer = null; }
-    updateMediaSession(snapshot); updateMiniBar(snapshot); renderMixState(snapshot);
+    updateMediaSession(snapshot); updateMiniBar(snapshot); renderQueueState(snapshot);
     emitState(snapshot);
   }
   function updateProgress() {
     if (!state.player) return; var snapshot = state.player.getState();
     if (state.visible && !state.seeking) { $('musicPosition').textContent = clockTime(snapshot.positionMs); $('musicSeek').value = snapshot.durationMs ? snapshot.positionMs / snapshot.durationMs * 100 : 0; }
-    updateMediaSession(snapshot); updateMiniBar(snapshot); renderMixState(snapshot);
+    updateMediaSession(snapshot); updateMiniBar(snapshot); renderQueueState(snapshot);
     emitState(snapshot);
   }
   function isIos() { return /iPad|iPhone|iPod/.test(navigator.userAgent || '') || navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1; }
@@ -297,59 +297,7 @@
     var kind = error.status === 401 ? 'authentication' : error.status === 403 ? 'permissions' : error.status === 429 ? 'rate' : error.status === 404 || error.code === 'spotify_network' ? 'offline' : 'playback';
     playerError(error.message,kind);
   }
-  /* Native audio uses two decks. Provider streams keep their original playback. */
-  var automix = {enabled:read('c122:music-automix') !== '0',lastOrderBy:'none'};
-  /* ---------- Smart Mix: AI (Anthropic) playlist ordering for Spotify queues ----------
-     Claude sequences the playlist for the smoothest flow (tempo/energy/key/mood); the clicked
-     song stays first. Falls back to a local tempo+energy chain, then the original order, if the
-     AI is off/slow/unconfigured — playback never waits more than a few seconds on it. */
-  var featureCache = Object.create(null);
-  function featureVec(f) { return f ? {t:Math.min(1,(f.tempo || 120) / 200),e:f.energy == null ? 0.5 : f.energy,v:f.valence == null ? 0.5 : f.valence,k:isFinite(f.key) && f.key >= 0 ? f.key : -1} : null; }
-  function featureDistance(a,b) {
-    if (!a || !b) return 2;
-    var kd = a.k < 0 || b.k < 0 ? 0.3 : Math.min(Math.abs(a.k - b.k),12 - Math.abs(a.k - b.k)) / 6;
-    return Math.abs(a.t - b.t) * 1.6 + Math.abs(a.e - b.e) * 1.2 + Math.abs(a.v - b.v) * 0.6 + kd * 0.8;
-  }
-  function withTimeout(promise,ms,fallback) {
-    return new Promise(function (resolve) {
-      var done = false, timer = setTimeout(function () { if (!done) { done = true; resolve(fallback); } },ms);
-      promise.then(function (v) { if (!done) { done = true; clearTimeout(timer); resolve(v); } },function () { if (!done) { done = true; clearTimeout(timer); resolve(fallback); } });
-    });
-  }
-  function featureChain(tracks,ids) {
-    var vecs = ids.map(function (id) { return featureCache[id] || null; });
-    if (vecs.filter(Boolean).length < Math.ceil(tracks.length * 0.6)) return null;
-    var remaining = tracks.map(function (t,i) { return {track:t,vec:vecs[i]}; }), ordered = [remaining.shift()];
-    while (remaining.length) {
-      var last = ordered[ordered.length - 1].vec, best = 0, bestD = Infinity;
-      for (var i = 0; i < remaining.length; i++) { var d = featureDistance(last,remaining[i].vec); if (d < bestD) { bestD = d; best = i; } }
-      ordered.push(remaining.splice(best,1)[0]);
-    }
-    return ordered.map(function (entry) { return entry.track; });
-  }
-  function automixOrder(tracks) {
-    if (!automix.enabled || !Array.isArray(tracks) || tracks.length < 3 || tracks.length > 50) return Promise.resolve(tracks);
-    var ids = tracks.map(function (t) { return t.spotifyId || (/^spotify:track:([A-Za-z0-9]{22})$/.exec(t.uri || '') || [])[1]; });
-    if (ids.some(function (id) { return !id; })) return Promise.resolve(tracks);
-    notice(T('music.mixing','Ухаалаг дараалал бэлдэж байна…'));
-    var missing = ids.filter(function (id) { return !(id in featureCache); });
-    var fetchStep = !missing.length ? Promise.resolve() : withTimeout(
-      spotifyRequest('features',{query:{ids:missing.slice(0,50).join(',')}}).then(function (data) {
-        if (data && data.features) missing.forEach(function (id) { featureCache[id] = data.features[id] ? featureVec(data.features[id]) : null; });
-      }),1400,null);
-    return fetchStep.then(function () {
-      var payload = tracks.map(function (t,i) { var v = featureCache[ids[i]]; var o = {t:t.title || '',a:t.artist || ''}; if (v) { o.bpm = Math.round((v.t || 0) * 200); o.e = v.e; o.k = v.k; } return o; });
-      return withTimeout(spotifyRequest('aimix',{body:{tracks:payload}}).then(function (data) { return data && Array.isArray(data.order) ? data.order : null; }),5000,null)
-        .then(function (order) {
-          if (order && order.length === tracks.length && order[0] === 0) {
-            var seen = Object.create(null), ok = true, out = [];
-            order.forEach(function (idx) { if (idx < 0 || idx >= tracks.length || seen[idx]) ok = false; seen[idx] = true; out.push(tracks[idx]); });
-            if (ok) { automix.lastOrderBy = 'ai'; return out; }
-          }
-          var local = featureChain(tracks,ids); automix.lastOrderBy = local ? 'local' : 'none'; return local || tracks;
-        });
-    }).catch(function () { return tracks; });
-  }
+  /* Older playlists may still hold saved audio tracks; they play back-to-back, without mixing. */
   function userVolume() { var v = Number($('musicVolume').value) / 100; return Math.max(0,Math.min(1,isFinite(v) ? v : 0.8)); }
   function applyVolume(v) { if (state.player) state.player.command('setVolume',v).catch(function () {}); }
   function nativeSnapshot(raw) {
@@ -368,7 +316,7 @@
         else if (method === 'seek') result = raw.seek(value / 1000); else if (method === 'nextTrack') result = raw.next(); else if (method === 'previousTrack') result = raw.previous();
         else if (method === 'setVolume') result = raw.setVolume(value); return Promise.resolve(result);
       } catch (error) { return Promise.reject(error); } }};
-    state.nativePlayer = adapter; raw.setVolume(userVolume()); raw.setMix(automix.enabled,Number(read('c122:music-mix-seconds')) || 8);
+    state.nativePlayer = adapter; raw.setVolume(userVolume()); raw.setMix(false,8);
     raw.setShuffle(read('c122:music-shuffle') === '1'); raw.setRepeat(read('c122:music-repeat') || 'off');
     return adapter;
   }
@@ -393,10 +341,9 @@
     var spotify = state.spotifyPlayer;
     if (!spotify || !spotify.activate()) { playerError('Тоглуулагч бэлэн болсны дараа Сонсох товчийг дахин дарна уу.','offline'); startPlayer(); return; }
     var queue = tracks.slice(Math.max(0,Number(index) || 0)).filter(function (item) { return item.kind === 'spotify' && playable(item); });
-    if (playlistId && automix.enabled && queue.length >= 3) { var orderEpoch = state.spotifyEpoch; try { var ordered = await automixOrder(queue); if (orderEpoch === state.spotifyEpoch && ordered && ordered.length === queue.length) queue = ordered; } catch (error) {} notice(''); }
     if (state.nativePlayer) state.nativePlayer.raw.pause(); state.activeProvider = 'spotify'; state.player = spotify;
     var epoch = state.spotifyEpoch; state.playingBusy = true; state.queue = queue; renderPlaylist(); renderResults();
-    try { await spotify.play({uris:queue.map(function (item) { return item.uri; }),positionMs:0}); if (epoch === state.spotifyEpoch) { state.playingPlaylist = playlistId || null; if (playlistId && automix.enabled && queue.length >= 3) notice(automix.lastOrderBy === 'ai' ? T('music.aiOrdered','AI ухаалаг дарааллаар холилоо ✨') : automix.lastOrderBy === 'local' ? T('music.smartOrdered','Хэмнэл, эрчээр эмхэллээ') : ''); } }
+    try { await spotify.play({uris:queue.map(function (item) { return item.uri; }),positionMs:0}); if (epoch === state.spotifyEpoch) state.playingPlaylist = playlistId || null; }
     catch (error) { if (epoch === state.spotifyEpoch) playbackFailure(error); }
     finally { if (epoch === state.spotifyEpoch) { state.playingBusy = false; renderPlaylist(); renderResults(); playerChanged(spotify.getState()); } }
   }
@@ -404,10 +351,8 @@
   function togglePlay() { if (C.YouTube && C.YouTube.pause) C.YouTube.pause(); sdkCommand('togglePlay'); }
   function skipNext() { sdkCommand('nextTrack'); }
   function skipPrevious() { sdkCommand('previousTrack'); }
-  function renderMixState(snapshot) {
-    var native = snapshot.provider === 'audio', progress = $('musicMixProgress');
-    $('musicMixStatus').textContent = native ? snapshot.mixActive ? 'Холилдож байна · ' + (snapshot.incomingTrack && snapshot.incomingTrack.title || '') : snapshot.transitionPending ? 'Шилжих мөчийг сонгож байна…' : snapshot.analysisStatus === 'analyzing' ? 'Хэмнэл, аялгууг шинжилж байна…' : snapshot.bpm ? Math.round(snapshot.bpm) + ' BPM · Smart Mix бэлэн' : 'Smart Mix · Зөөлөн шилжилт' : 'Smart Mix нь аудио сангийн дуунуудыг холино.';
-    progress.hidden = !snapshot.mixActive; progress.firstElementChild.style.width = Math.round((snapshot.mixProgress || 0) * 100) + '%';
+  function renderQueueState(snapshot) {
+    var native = snapshot.provider === 'audio';
     $('musicShuffle').disabled = !native; $('musicRepeat').disabled = !native;
     $('musicShuffle').setAttribute('aria-pressed',String(!!snapshot.shuffle));
     $('musicRepeat').textContent = snapshot.repeat === 'one' ? '↻ 1' : snapshot.repeat === 'all' ? '↻ Бүгд' : '↻';
@@ -420,41 +365,19 @@
     $('musicQueueCount').textContent = snapshot.queue.length + ' дуу';
     $('musicQueueTracks').innerHTML = snapshot.queue.map(function (item,i) { return '<button type="button" data-music-queue-play="' + i + '" class="music-queue-row' + (i === snapshot.index ? ' on' : '') + '" aria-current="' + (i === snapshot.index ? 'true' : 'false') + '"><span>' + (i === snapshot.index ? '♪' : i + 1) + '</span><strong>' + C.esc(item.title) + '</strong><small>' + C.esc(item.artist || '') + '</small></button>'; }).join('');
   }
-  function chooseSource(source) {
-    if (state.searchController) state.searchController.abort(); state.searchController = null; state.searchSeq++;
-    state.source = source === 'spotify' ? 'spotify' : 'audio'; write('c122:music-source',state.source); state.results = [];
-    C.$$('[data-music-source]',view).forEach(function (button) { button.setAttribute('aria-pressed',String(button.dataset.musicSource === state.source)); });
-    $('musicSearchInput').placeholder = state.source === 'audio' ? 'Аудио сангаас дуу, дуучин хайх…' : 'Дуу, дуучны нэр…';
-    $('musicSearchStatus').textContent = ''; renderSpotifyAccount(); renderResults();
-    if (state.source === 'audio') search(true);
-  }
-  async function importAudio() {
-    if (state.busy) return; var p = await chooseAddPlaylist(); if (!p) return;
-    var alive = true, modal = C.openModal('<h3>Аудио сангаас нэмэх</h3><p class="lead">Хавтаст байршуулсан өөрийн аудиогоо ангийн плейлистэд нэмээрэй. Нэмсэн дууг бүгд сонсож, Smart Mix-ээр холино.</p><div id="musicAudioFiles">Нээж байна…</div><div class="err" role="alert"></div><div class="actions"><button class="btn btn-ghost" type="button" data-close>Хаах</button></div>',{onClose:function () { alive = false; }}); modal.el.classList.add('music-modal');
-    try {
-      var data = await request('music_audio_files',{query:{folder:p.folder}}); if (!alive) return;
-      modal.el.querySelector('#musicAudioFiles').innerHTML = data.files.length ? data.files.map(function (file) { return '<div class="music-import-file"><span>' + C.esc(file.name) + '<small>' + (file.size / 1024 / 1024).toFixed(1) + ' MB</small></span><button class="btn btn-primary btn-sm" type="button" data-import-audio="' + C.esc(file.id) + '">Нэмэх</button></div>'; }).join('') : '<p class="music-help">Хавтаст аудио алга. Хавтас хэсэгт MP3, M4A, WAV эсвэл OGG байршуулж, дахин нээгээрэй.</p>';
-      modal.el.querySelector('#musicAudioFiles').onclick = async function (event) {
-        var button = event.target.closest('[data-import-audio]'); if (!button || button.disabled) return;
-        button.disabled = true; button.textContent = 'Нэмж байна…';
-        try { var result = await mutate('music_audio_import',p,{fileId:button.dataset.importAudio},{message:'Аудио нэмэгдлээ. Smart Mix-ээр сонсоорой.'}); p = result.playlist; if (alive) { button.textContent = 'Нэмсэн'; } chooseSource('audio'); }
-        catch (error) { if (alive) { modal.el.querySelector('.err').textContent = error.message; button.disabled = false; button.textContent = 'Нэмэх'; } }
-      };
-    } catch (error) { if (alive) { modal.el.querySelector('#musicAudioFiles').textContent = ''; modal.el.querySelector('.err').textContent = error.message; } }
-  }
   function renderResults() {
     $('musicSearchResults').innerHTML = state.results.slice(0,20).map(function (track,index) { return '<div class="music-track-row">' + trackArtwork(track) + trackCopy(track) + '<div class="music-track-buttons"><button class="btn btn-ghost btn-sm" type="button" data-music-result-play="' + index + '"' + (!canPlay(track) ? ' disabled' : '') + '>Сонсох</button><button class="btn btn-ghost btn-sm" type="button" data-music-result-add="' + index + '"' + (state.busy || (track.kind === 'spotify' && (!state.spotifyConnected || !!cooldown())) ? ' disabled' : '') + '>Нэмэх</button></div></div>'; }).join('');
   }
-  async function search(browse) {
-    var q = $('musicSearchInput').value.trim(); if (!q && !browse) return;
-    if (state.source === 'spotify' && (!state.spotifyConnected || cooldown())) return;
-    if (state.searchController) state.searchController.abort(); var controller = new AbortController(), seq = ++state.searchSeq, source = state.source;
+  async function search() {
+    var q = $('musicSearchInput').value.trim(); if (!q) return;
+    if (!state.spotifyConnected || cooldown()) return;
+    if (state.searchController) state.searchController.abort(); var controller = new AbortController(), seq = ++state.searchSeq;
     state.searchController = controller; renderSpotifyAccount(); $('musicSearchStatus').textContent = 'Дуу хайж байна…'; state.results = []; renderResults();
     try {
-      var data = source === 'audio' ? await request('music_audio_library',{query:{q:q},signal:controller.signal}) : await spotifyRequest('search',{query:{q:q},signal:controller.signal});
+      var data = await spotifyRequest('search',{query:{q:q},signal:controller.signal});
       if (seq !== state.searchSeq) return;
-      state.results = source === 'audio' ? data.tracks || [] : (data.tracks || []).map(function (item) { return Object.assign({},item,{kind:'spotify',spotifyId:item.spotifyId || item.id}); });
-      renderResults(); $('musicSearchStatus').textContent = state.results.length ? state.results.length + ' дуу олдлоо.' : source === 'audio' ? 'Аудио сан хоосон байна. «Аудио нэмэх» товчоор хавтаснаасаа дуу оруулаарай.' : 'Илэрц олдсонгүй. Өөр нэрээр хайгаарай.';
+      state.results = (data.tracks || []).map(function (item) { return Object.assign({},item,{kind:'spotify',spotifyId:item.spotifyId || item.id}); });
+      renderResults(); $('musicSearchStatus').textContent = state.results.length ? state.results.length + ' дуу олдлоо.' : 'Илэрц олдсонгүй. Өөр нэрээр хайгаарай.';
     } catch (error) { if (seq === state.searchSeq && error.name !== 'AbortError') $('musicSearchStatus').textContent = error.message; }
     finally { if (seq === state.searchSeq) { state.searchController = null; renderSpotifyAccount(); } }
   }
@@ -463,7 +386,7 @@
     renderNote(); document.addEventListener('c122:language',function () { renderNote(); renderResults(); renderPlaylist(); });
     var volume = Number(read('c122:music-volume')); $('musicVolume').value = Math.round(read('c122:music-volume') == null || !Number.isFinite(volume) ? 80 : Math.max(0,Math.min(1,volume)) * 100);
     $('musicStudent').onchange = function () { state.owner = this.value; write('c122:music-owner',state.owner); renderAccount(); renderLists(); renderPlaylist(); notice(''); };
-    $('musicImport').onclick = importAudio; $('musicUnlock').onclick = unlock; $('musicLock').onclick = lock; $('musicCreate').onclick = createPlaylist; $('musicRefresh').onclick = function () { loadStatus(true); }; $('musicTrash').onclick = trash;
+    $('musicUnlock').onclick = unlock; $('musicLock').onclick = lock; $('musicCreate').onclick = createPlaylist; $('musicRefresh').onclick = function () { loadStatus(true); }; $('musicTrash').onclick = trash;
     $('musicPlaylistEdit').onclick = editPlaylist; $('musicPlaylistDelete').onclick = deletePlaylist; $('musicPlaylistPlay').onclick = function () { if (state.playlist) playQueue(state.playlist.tracks || [],0,state.playlist.id); };
     $('musicSpotifyConnect').onclick = connectSpotify; $('musicSpotifyRetry').onclick = function () { if (state.spotifyPlayer && !state.spotifyPlayer.getState().ready) state.spotifyPlayer.disconnect(); loadSpotifyStatus(); };
     $('musicSearchForm').onsubmit = function (event) { event.preventDefault(); search(); };
@@ -491,16 +414,10 @@
     $('musicSeek').onpointercancel = function () { seekRevision++; seekCommitting = false; state.seeking = false; seekOwner = null; seekTrack = ''; if (state.player) playerChanged(state.player.getState()); };
     $('musicSeek').onblur = function () { if (!seekCommitting) { state.seeking = false; seekOwner = null; seekTrack = ''; if (state.player) playerChanged(state.player.getState()); } };
     $('musicVolume').onchange = function () { var volume = Math.max(0,Math.min(1,Number(this.value) / 100)); write('c122:music-volume',volume); applyVolume(volume); };
-    var automixBtn = $('musicAutomix');
-    function mixSetting() { automixBtn.setAttribute('aria-pressed',String(automix.enabled)); automixBtn.setAttribute('aria-checked',String(automix.enabled)); if (state.nativePlayer) state.nativePlayer.raw.setMix(automix.enabled,Number($('musicMixSeconds').value)); }
-    automixBtn.onclick = function () { automix.enabled = !automix.enabled; write('c122:music-automix',automix.enabled ? '1' : '0'); mixSetting(); };
-    $('musicMixSeconds').value = ['4','8','12'].indexOf(read('c122:music-mix-seconds')) >= 0 ? read('c122:music-mix-seconds') : '8';
-    $('musicMixSeconds').onchange = function () { write('c122:music-mix-seconds',this.value); mixSetting(); }; mixSetting();
     $('musicShuffle').onclick = function () { if (!state.nativePlayer) return; var enabled = !state.nativePlayer.raw.getState().shuffle; write('c122:music-shuffle',enabled ? '1' : '0'); state.nativePlayer.raw.setShuffle(enabled); };
     $('musicRepeat').onclick = function () { if (!state.nativePlayer) return; var values = ['off','all','one'], next = values[(values.indexOf(state.nativePlayer.raw.getState().repeat) + 1) % 3]; write('c122:music-repeat',next); state.nativePlayer.raw.setRepeat(next); };
-    chooseSource(state.source);
+    renderSpotifyAccount(); renderResults();
     view.addEventListener('click',function (event) {
-      var source = event.target.closest('[data-music-source]'); if (source) { chooseSource(source.dataset.musicSource); return; }
       var queued = event.target.closest('[data-music-queue-play]'); if (queued && state.nativePlayer) { state.nativePlayer.raw.transitionIndex(Number(queued.dataset.musicQueuePlay)); return; }
       var filter = event.target.closest('[data-music-filter]'); if (filter) { state.filter = filter.dataset.musicFilter; renderLists(); return; }
       var list = event.target.closest('[data-music-playlist]'); if (list) { loadPlaylist(list.dataset.musicPlaylist); return; }

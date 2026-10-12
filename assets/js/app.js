@@ -41,7 +41,7 @@
 
   /* ================= Табууд ================= */
   var tab = 'schedule';
-  var sectionNames = ['schedule', 'clubs', 'album', 'folders', 'textbooks', 'doodle', 'board', 'music', 'youtube', 'games', 'photobooth', 'ai-chat', 'teachermirror'];
+  var sectionNames = ['schedule', 'clubs', 'album', 'folders', 'textbooks', 'doodle', 'board', 'music', 'youtube', 'google', 'games', 'photobooth', 'ai-chat', 'teachermirror'];
   var pill = C.$('.tab-pill');
 
   function movePill() {
@@ -68,6 +68,7 @@
     if (changed && tab === 'clubs' && C.Clubs && C.Clubs.hide) C.Clubs.hide();
     if (changed && tab === 'music' && C.Music && C.Music.hide) C.Music.hide();
     if (changed && tab === 'youtube' && C.YouTube && C.YouTube.hide) C.YouTube.hide();
+    if (changed && tab === 'google' && C.Google && C.Google.hide) C.Google.hide();
     if (changed && tab === 'games' && C.Games) C.Games.hide();
     if (changed && tab === 'ai-chat' && C.AIChat && C.AIChat.hide) C.AIChat.hide();
     if (changed && tab === 'photobooth' && C.Photobooth && C.Photobooth.hide) C.Photobooth.hide();
@@ -103,6 +104,7 @@
     else if (name === 'board' && C.Board) C.Board.show();
     else if (name === 'music' && C.Music) C.Music.show();
     else if (name === 'youtube' && C.YouTube) C.YouTube.show();
+    else if (name === 'google' && C.Google) C.Google.show();
     else if (name === 'games' && C.Games) C.Games.show(requestedGame);
     else if (name === 'photobooth' && C.Photobooth) C.Photobooth.show();
     else if (name === 'ai-chat' && C.AIChat) C.AIChat.show();

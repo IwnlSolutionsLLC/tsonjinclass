@@ -1,0 +1,102 @@
+/* ===== GOOGLE — in-site glass browser ===== */
+.google-view { --g-blue:#4285f4; --g-red:#ea4335; --g-yellow:#fbbc05; --g-green:#34a853; }
+.google-view .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.google-hero { margin:24px 0 18px; }
+.google-hero .google-wordmark { display:flex; width:max-content; }
+.google-hero .eyebrow { color:var(--green-700); font-weight:800; letter-spacing:.14em; font-size:11px; }
+.google-hero p { color:var(--ink-3); font-weight:600; margin:0; }
+.google-wordmark { display:inline-flex; font-family:var(--display,inherit); font-size:clamp(34px,7vw,60px); font-weight:800; letter-spacing:-.03em; margin:6px 0 4px; line-height:1.05; }
+.google-wordmark span:nth-child(1),.google-wordmark span:nth-child(4) { color:var(--g-blue); }
+.google-wordmark span:nth-child(2),.google-wordmark span:nth-child(6) { color:var(--g-red); }
+.google-wordmark span:nth-child(3) { color:var(--g-yellow); }
+.google-wordmark span:nth-child(5) { color:var(--g-green); }
+
+.google-browser { display:flex; flex-direction:column; padding:10px; border-radius:28px; overflow:hidden; }
+.google-browser:fullscreen { border-radius:0; padding:8px; background:var(--bg); }
+.google-browser:-webkit-full-screen { border-radius:0; padding:8px; background:var(--bg); }
+.google-toolbar { display:flex; align-items:center; gap:8px; padding:4px 4px 10px; }
+.google-nav-buttons { display:flex; gap:4px; flex:none; }
+.google-btn { width:40px; height:40px; border-radius:50%; display:grid; place-items:center; border:1px solid transparent; background:transparent; color:var(--ink-2); cursor:pointer; transition:background .18s,color .18s,transform .12s; }
+.google-btn:hover:not(:disabled) { background:var(--glass-soft,rgba(255,255,255,.5)); border-color:var(--glass-border,var(--line)); color:var(--ink); }
+.google-btn:active:not(:disabled) { transform:scale(.92); }
+.google-btn:disabled { opacity:.35; cursor:default; }
+.google-btn.is-on { color:#f4b400; }
+.google-btn.is-on .i { fill:currentColor; }
+.google-btn:focus-visible,.google-go:focus-visible,.google-tile:focus-visible,.google-recent-item:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:2px; }
+.google-omnibox { flex:1; min-width:0; display:flex; align-items:center; gap:8px; height:46px; padding:0 6px 0 16px; border-radius:999px;
+  background:var(--glass-strong,rgba(255,255,255,.75)); border:1px solid var(--glass-border,var(--line-2)); box-shadow:inset 0 1px 2px rgba(0,0,0,.06); transition:border-color .2s, box-shadow .2s; }
+.google-omnibox:focus-within { border-color:var(--g-blue); box-shadow:0 0 0 4px color-mix(in srgb,var(--g-blue) 18%,transparent); }
+.google-omnibox-icon { color:var(--ink-3); display:grid; }
+.google-omnibox input { flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; color:var(--ink); font-size:14.5px; font-weight:600; }
+.google-omnibox input::placeholder { color:var(--ink-3); font-weight:500; }
+.google-go { width:36px; height:36px; border-radius:50%; border:0; display:grid; place-items:center; cursor:pointer; color:#fff; background:linear-gradient(135deg,var(--g-blue),#1a5fd0); box-shadow:0 6px 14px -6px var(--g-blue); }
+
+.google-progress { height:3px; margin:0 6px; border-radius:3px; overflow:hidden; background:transparent; }
+.google-progress i { display:block; height:100%; width:0; border-radius:3px; background:linear-gradient(90deg,var(--g-blue),var(--g-red),var(--g-yellow),var(--g-green)); }
+.google-progress.is-loading i { animation:google-load 1.6s ease-in-out infinite; }
+@keyframes google-load { 0% { width:0; margin-left:0; } 50% { width:60%; margin-left:20%; } 100% { width:0; margin-left:100%; } }
+
+.google-viewport { position:relative; margin-top:6px; height:max(520px, calc(100dvh - 300px)); border-radius:20px; overflow:hidden;
+  background:var(--glass-soft,rgba(255,255,255,.35)); border:1px solid var(--glass-border,var(--line)); }
+.google-browser:fullscreen .google-viewport { height:calc(100dvh - 110px); }
+.google-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:#fff; color-scheme:light; }
+
+.google-start { position:absolute; inset:0; overflow:auto; padding:clamp(24px,5vw,56px) clamp(16px,4vw,48px) 32px; display:flex; flex-direction:column; gap:28px; }
+.google-big-search { display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center; }
+.google-wordmark-lg { font-size:clamp(48px,9vw,86px); margin:0; filter:drop-shadow(0 10px 20px rgba(0,0,0,.08)); }
+.google-big-field { width:min(640px,100%); display:flex; align-items:center; gap:10px; height:58px; padding:0 8px 0 20px; border-radius:999px; color:var(--ink-3);
+  background:var(--glass-strong,rgba(255,255,255,.8)); border:1px solid var(--glass-border,var(--line-2)); box-shadow:0 14px 34px -18px rgba(20,40,30,.4), inset 0 1px 0 rgba(255,255,255,.7); transition:box-shadow .2s, border-color .2s; }
+.google-big-field:focus-within { border-color:var(--g-blue); box-shadow:0 0 0 5px color-mix(in srgb,var(--g-blue) 16%,transparent), 0 14px 34px -18px rgba(20,40,30,.4); }
+.google-big-field input { flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; color:var(--ink); font-size:17px; font-weight:600; }
+.google-big-field .btn { height:44px; border-radius:999px; padding:0 22px; }
+.google-safe { display:flex; align-items:center; gap:6px; margin:0; color:var(--ink-3); font-size:12px; font-weight:700; }
+.google-safe .i { color:var(--g-green); }
+
+.google-shelf-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+.google-shelf-head h3 { margin:0; font-size:13px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
+.google-tiles { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; }
+.google-tile { position:relative; display:flex; align-items:center; gap:12px; padding:12px; text-align:left; border-radius:18px; cursor:pointer; color:var(--ink); min-width:0;
+  background:var(--glass,rgba(255,255,255,.55)); border:1px solid var(--glass-border,var(--line)); box-shadow:0 8px 22px -16px rgba(20,40,30,.4), inset 0 1px 0 rgba(255,255,255,.6);
+  -webkit-backdrop-filter:blur(14px) saturate(150%); backdrop-filter:blur(14px) saturate(150%); transition:transform .18s ease, box-shadow .2s, border-color .2s; }
+.google-tile:hover { transform:translateY(-3px); border-color:color-mix(in srgb,var(--tile) 45%,transparent); box-shadow:0 18px 30px -18px color-mix(in srgb,var(--tile) 70%,transparent), inset 0 1px 0 rgba(255,255,255,.6); }
+.google-tile:active { transform:scale(.97); }
+.google-tile-icon { width:44px; height:44px; flex:none; border-radius:14px; display:grid; place-items:center; color:#fff; font-size:20px; font-weight:900; font-family:var(--display,inherit);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--tile) 70%,#fff),var(--tile)); box-shadow:0 8px 16px -8px var(--tile), inset 0 1px 0 rgba(255,255,255,.4); }
+.google-tile-copy { display:flex; flex-direction:column; min-width:0; line-height:1.25; }
+.google-tile-copy b { font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.google-tile-copy small { font-size:11.5px; color:var(--ink-3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.google-tile-badge { position:absolute; top:8px; right:8px; color:var(--ink-3); display:grid; }
+.google-tile-remove { position:absolute; top:6px; right:6px; width:24px; height:24px; border-radius:50%; display:grid; place-items:center; color:var(--ink-3); background:var(--surface-2); opacity:0; transition:opacity .15s; }
+.google-tile:hover .google-tile-remove,.google-tile-remove:focus-visible { opacity:1; }
+@media (hover:none) { .google-tile-remove { opacity:1; } }
+.google-recent { display:flex; flex-wrap:wrap; gap:8px; }
+.google-recent-item { display:inline-flex; align-items:center; gap:7px; max-width:260px; padding:8px 14px; border-radius:999px; cursor:pointer; color:var(--ink-2); font-weight:700; font-size:13px;
+  background:var(--glass-soft,rgba(255,255,255,.4)); border:1px solid var(--glass-border,var(--line)); }
+.google-recent-item span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.google-recent-item:hover { color:var(--ink); background:var(--glass,rgba(255,255,255,.6)); }
+
+.google-statusbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 8px 2px; font-size:12px; color:var(--ink-3); min-height:30px; }
+.google-current { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; font-weight:600; }
+.google-hint { flex:none; font-weight:600; }
+.google-hint button { border:0; background:none; padding:0; color:var(--g-blue); font:inherit; font-weight:800; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
+
+html[data-theme="dark"] .google-wordmark span:nth-child(1),html[data-theme="dark"] .google-wordmark span:nth-child(4) { color:#8ab4f8; }
+html[data-theme="dark"] .google-wordmark span:nth-child(2),html[data-theme="dark"] .google-wordmark span:nth-child(6) { color:#f28b82; }
+html[data-theme="dark"] .google-wordmark span:nth-child(3) { color:#fdd663; }
+html[data-theme="dark"] .google-wordmark span:nth-child(5) { color:#81c995; }
+
+@media (max-width:720px) {
+  .google-browser { padding:6px; border-radius:22px; }
+  .google-toolbar { flex-wrap:wrap; gap:6px; }
+  .google-omnibox { order:-1; flex-basis:100%; }
+  .google-toolbar .google-nav-buttons:last-child { margin-left:auto; }
+  .google-btn { width:38px; height:38px; }
+  .google-viewport { height:max(460px, calc(100dvh - 260px)); border-radius:16px; }
+  .google-tiles { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+  .google-tile { padding:10px; gap:10px; } .google-tile-icon { width:38px; height:38px; font-size:17px; border-radius:12px; }
+  .google-big-field { height:52px; } .google-big-field .btn { padding:0 16px; }
+  .google-hint > span { display:none; }
+}
+@media (prefers-reduced-motion:reduce) { .google-progress.is-loading i { animation:none; width:100%; } .google-tile { transition:none; } }
+/* The rounded field shows focus with :focus-within; skip the square outline on the bare input inside it. */
+.google-omnibox input:focus-visible, .google-big-field input:focus-visible { outline:none; }

@@ -47,6 +47,7 @@ header('Cache-Control: no-store');
   <link rel="stylesheet" href="<?= h(asset('assets/css/intercom.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/call.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/note.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
 </head>
 <body data-page="admin">
 <?php include __DIR__ . '/inc/icons.php'; ?>
@@ -175,8 +176,8 @@ header('Cache-Control: no-store');
 
     <section class="panel glass" id="musicSettings">
       <h2><svg class="i" aria-hidden="true"><use href="#i-music"/></svg>Music · YouTube хайлт</h2>
-      <p class="hint">YouTube нэрээр хайхад доорх түлхүүрийг тохируулна. Шууд видео холбоос нээх болон аудио сангийн Smart Mix-д AI түлхүүр шаардлагагүй. Smart Mix нь хөтөч дээр аудионы хэмнэлийг шинжилнэ.</p>
-      <p class="hint">Дууг сайт дотроо хайхын тулд YouTube Data API v3 түлхүүр холбоно. YouTube холбоосоор дуу нэмэх, тоглуулах жагсаалт болон аудио Mix нь энэ түлхүүргүйгээр ажиллана.</p>
+      <p class="hint">YouTube нэрээр хайхад доорх түлхүүрийг тохируулна. Шууд видео холбоос нээхэд түлхүүр шаардлагагүй. Music хэсэг дууг Spotify-оос хайна.</p>
+      <p class="hint">Дууг сайт дотроо хайхын тулд YouTube Data API v3 түлхүүр холбоно. YouTube холбоосоор дуу нэмэх, тоглуулах жагсаалт нь энэ түлхүүргүйгээр ажиллана.</p>
       <form id="musicSettingsForm" novalidate>
         <div class="field"><label for="musicApiKey">YouTube Data API түлхүүр</label><input class="input" id="musicApiKey" type="password" autocomplete="off" maxlength="200" placeholder="Хоосон орхивол одоогийн түлхүүр хэвээр"><small class="hint">Түлхүүр зөвхөн серверт хадгалагдана. YouTube Data API v3-д хязгаарласан түлхүүр хэрэглэнэ.</small></div>
         <label class="folder-share-permission"><input type="checkbox" id="musicClearKey"> Хадгалсан түлхүүрийг салгах</label>

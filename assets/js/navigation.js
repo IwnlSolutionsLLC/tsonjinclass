@@ -4,7 +4,7 @@
   var menu = document.getElementById('siteMenu'), trigger = document.getElementById('siteMenuButton'), close = document.getElementById('siteMenuClose'), current = document.getElementById('siteCurrentSection');
   if (!menu || !trigger || !close) return;
   var opened = false, previousFocus = null;
-  var names = {schedule:'nav.schedule',clubs:'nav.clubs',album:'nav.album',folders:'nav.folders',textbooks:'nav.textbooks',doodle:'nav.doodle',board:'nav.board',music:'nav.music',youtube:'nav.youtube',games:'nav.games',photobooth:'nav.photobooth','ai-chat':'nav.aiChat',teachermirror:'nav.teachermirror'};
+  var names = {schedule:'nav.schedule',clubs:'nav.clubs',album:'nav.album',folders:'nav.folders',textbooks:'nav.textbooks',doodle:'nav.doodle',board:'nav.board',music:'nav.music',youtube:'nav.youtube',google:'nav.google',games:'nav.games',photobooth:'nav.photobooth','ai-chat':'nav.aiChat',teachermirror:'nav.teachermirror'};
   function restore() {
     opened = false; trigger.setAttribute('aria-expanded', 'false'); document.body.classList.remove('site-menu-open');
     if (previousFocus && previousFocus.isConnected && previousFocus.focus) previousFocus.focus();

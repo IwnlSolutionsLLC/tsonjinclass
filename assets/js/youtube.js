@@ -115,6 +115,8 @@
   C.YouTube = {
     show:function () { state.visible = true; initialize(); },
     hide:function () { state.visible = false; pause(); },
-    pause:pause
+    pause:pause,
+    // Search for (or play, when it is a video link) something sent from another section, e.g. GOOGLE.
+    open:function (query) { initialize(); $('ytSearchInput').value = String(query || '').slice(0, 180); search(); }
   };
 })();

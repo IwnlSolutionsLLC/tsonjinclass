@@ -199,93 +199,6 @@ function sp_oauth_complete($query, $http = null)
     if (session_status() === PHP_SESSION_ACTIVE) session_regenerate_id(true);
 }
 
-/* ---------- Smart Mix: AI (Anthropic) song ordering ---------- */
-function sp_ai_settings()
-{
-    $file = is_file(C122_ROOT . '/ai-settings.php') ? C122_ROOT . '/ai-settings.php' : DB_DIR . '/ai-settings.php';
-    $saved = read_guarded($file);
-    return is_array($saved) ? $saved : array();
-}
-function sp_anthropic_key()
-{
-    $env = getenv('C122_ANTHROPIC_API_KEY');
-    if (is_string($env) && trim($env) !== '') return trim($env);
-    $saved = sp_ai_settings();
-    $key = trim((string)($saved['anthropicApiKey'] ?? ''));
-    return preg_match('#^sk-ant-[A-Za-z0-9_-]{20,250}$#D', $key) ? $key : '';
-}
-function sp_automix_model()
-{
-    $saved = sp_ai_settings();
-    $m = trim((string)($saved['automixModel'] ?? ''));
-    return preg_match('#^[A-Za-z0-9._-]{3,60}$#D', $m) ? $m : 'claude-haiku-5-5';
-}
-/** Approximate per-day cap so AI ordering cannot run away on credits. */
-function sp_automix_allowed()
-{
-    $cap = 500; $saved = sp_ai_settings();
-    if (isset($saved['automixDaily'])) $cap = max(0, min(100000, (int)$saved['automixDaily']));
-    if ($cap <= 0) return false;
-    $file = DB_DIR . '/automix.php'; $today = date('Y-m-d');
-    $state = read_guarded($file); if (!is_array($state) || ($state['day'] ?? '') !== $today) $state = array('day' => $today, 'count' => 0);
-    if ((int)$state['count'] >= $cap) return false;
-    $state['count'] = (int)$state['count'] + 1; write_guarded($file, $state);
-    return true;
-}
-function sp_anthropic_http($key, $payload)
-{
-    $body = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    $headers = array('content-type: application/json', 'x-api-key: ' . $key, 'anthropic-version: 2023-06-01');
-    $raw = ''; $status = 0;
-    if (function_exists('curl_init')) {
-        $curl = curl_init('https://api.anthropic.com/v1/messages');
-        curl_setopt_array($curl, array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $headers, CURLOPT_FOLLOWLOCATION => false,
-            CURLOPT_CONNECTTIMEOUT => 4, CURLOPT_TIMEOUT => 12, CURLOPT_SSL_VERIFYPEER => true, CURLOPT_SSL_VERIFYHOST => 2, CURLOPT_RETURNTRANSFER => false,
-            CURLOPT_WRITEFUNCTION => function ($h, $chunk) use (&$raw) { if (strlen($raw) + strlen($chunk) > 262144) return 0; $raw .= $chunk; return strlen($chunk); }));
-        if (defined('CURLOPT_PROTOCOLS') && defined('CURLPROTO_HTTPS')) curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
-        $done = curl_exec($curl); $status = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE); curl_close($curl);
-        if ($done === false) return array('status' => 0, 'data' => null);
-    } elseif (filter_var(ini_get('allow_url_fopen'), FILTER_VALIDATE_BOOLEAN)) {
-        $context = stream_context_create(array('http' => array('method' => 'POST', 'header' => implode("\r\n", $headers), 'content' => $body, 'timeout' => 12, 'follow_location' => 0, 'max_redirects' => 0, 'ignore_errors' => true), 'ssl' => array('verify_peer' => true, 'verify_peer_name' => true)));
-        $fp = @fopen('https://api.anthropic.com/v1/messages', 'rb', false, $context);
-        if (!$fp) return array('status' => 0, 'data' => null);
-        $raw = stream_get_contents($fp, 262145); fclose($fp);
-        foreach ($http_response_header ?? array() as $line) if (preg_match('#^HTTP/\S+\s+(\d{3})#', $line, $m)) $status = (int)$m[1];
-    } else return array('status' => 0, 'data' => null);
-    $data = json_decode((string)$raw, true);
-    return array('status' => $status, 'data' => is_array($data) ? $data : null);
-}
-/** $tracks: list of {t:title, a:artist, bpm?, e?, k?}. Returns a validated permutation (0 first) or null. */
-function sp_anthropic_order($tracks)
-{
-    $key = sp_anthropic_key(); if ($key === '') return null;
-    $n = count($tracks); if ($n < 3 || $n > 50) return null;
-    if (!sp_automix_allowed()) return null;
-    $lines = array();
-    foreach ($tracks as $i => $t) {
-        $meta = array();
-        if (isset($t['bpm']) && (float)$t['bpm'] > 0) $meta[] = round((float)$t['bpm']) . ' BPM';
-        if (isset($t['e'])) $meta[] = 'energy ' . round((float)$t['e'], 2);
-        if (isset($t['k']) && (int)$t['k'] >= 0) $meta[] = 'key ' . (int)$t['k'];
-        $lines[] = $i . ': "' . clean_str($t['t'] ?? '', 120) . '" — ' . clean_str($t['a'] ?? '', 120) . ($meta ? ' [' . implode(', ', $meta) . ']' : '');
-    }
-    $system = 'You are an expert DJ sequencing a playlist so each song flows smoothly into the next by tempo, energy, key and mood. Song 0 is already playing and must stay first. Respond with ONLY a JSON array of integers: a permutation of 0..' . ($n - 1) . ' that starts with 0. No words, no code fences.';
-    $user = "Order these " . $n . " songs for the smoothest set:\n" . implode("\n", $lines);
-    $payload = array('model' => sp_automix_model(), 'max_tokens' => 512, 'system' => $system, 'messages' => array(array('role' => 'user', 'content' => $user)), 'thinking' => array('type' => 'disabled'));
-    $response = sp_anthropic_http($key, $payload);
-    if ($response['status'] === 400) { unset($payload['thinking']); $response = sp_anthropic_http($key, $payload); }   // some models reject the thinking param
-    if ($response['status'] !== 200 || !is_array($response['data']['content'] ?? null)) return null;
-    $text = '';
-    foreach ($response['data']['content'] as $block) { if (is_array($block) && ($block['type'] ?? '') === 'text' && isset($block['text'])) $text .= (string)$block['text']; }
-    if ($text === '') return null;
-    if (!preg_match('/\[[\s0-9,]*\]/', $text, $m)) return null;
-    $order = json_decode($m[0], true); if (!is_array($order) || count($order) !== $n) return null;
-    $seen = array(); $clean = array();
-    foreach ($order as $idx) { $idx = (int)$idx; if ($idx < 0 || $idx >= $n || isset($seen[$idx])) return null; $seen[$idx] = true; $clean[] = $idx; }
-    if (count($clean) !== $n || $clean[0] !== 0) return null;   // must be a full permutation starting at the seed
-    return $clean;
-}
-
 function sp_dispatch($action)
 {
     $config = sp_config();
@@ -299,7 +212,7 @@ function sp_dispatch($action)
         return array('ok' => true, 'connected' => sp_signed_in(), 'csrf' => sp_csrf(), 'clientId' => $config['clientId'], 'redirectUri' => $config['redirectUri'],
             'profile' => $profile, 'notice' => $flash, 'retryAfter' => $retry);
     }
-    $writes = array('connect', 'disconnect', 'token', 'play', 'aimix');
+    $writes = array('connect', 'disconnect', 'token', 'play');
     if (in_array($action, $writes, true)) sp_require_post();
     $body = array();
     if (in_array($action, $writes, true)) {
@@ -338,37 +251,6 @@ function sp_dispatch($action)
         // A targeted play request selects the SDK device without a redundant transfer on every song.
         sp_request('PUT', 'me/player/play', array('device_id' => $device), $play);
         return array('ok' => true);
-    }
-    if ($action === 'aimix') {
-        // AI (Anthropic) playlist ordering for Smart Mix. Returns a permutation or null → client falls back locally.
-        $tracks = array();
-        if (is_array($body['tracks'] ?? null)) {
-            foreach ($body['tracks'] as $t) {
-                if (!is_array($t)) continue;
-                $entry = array('t' => clean_str($t['t'] ?? '', 120), 'a' => clean_str($t['a'] ?? '', 120));
-                if (isset($t['bpm']) && is_numeric($t['bpm'])) $entry['bpm'] = (float)$t['bpm'];
-                if (isset($t['e']) && is_numeric($t['e'])) $entry['e'] = (float)$t['e'];
-                if (isset($t['k']) && is_numeric($t['k'])) $entry['k'] = (int)$t['k'];
-                $tracks[] = $entry;
-                if (count($tracks) >= 50) break;
-            }
-        }
-        $order = null;
-        try { $order = sp_anthropic_order($tracks); } catch (Throwable $e) { $order = null; }
-        return array('ok' => true, 'order' => $order, 'configured' => sp_anthropic_key() !== '');
-    }
-    if ($action === 'features') {
-        // Audio features for Smart Mix ordering (tempo / energy / key). Read-only, up to 50 ids.
-        $ids = array();
-        foreach (explode(',', (string)($_GET['ids'] ?? '')) as $raw) { $id = sp_id(trim($raw)); if ($id !== '' && !in_array($id, $ids, true)) $ids[] = $id; if (count($ids) >= 50) break; }
-        if (!$ids) return array('ok' => true, 'features' => array());
-        $data = sp_request('GET', 'audio-features', array('ids' => implode(',', $ids)));
-        $out = array();
-        foreach ($data['audio_features'] ?? array() as $f) {
-            if (!is_array($f) || empty($f['id'])) continue;
-            $out[$f['id']] = array('tempo' => (float)($f['tempo'] ?? 0), 'energy' => (float)($f['energy'] ?? 0), 'valence' => (float)($f['valence'] ?? 0), 'danceability' => (float)($f['danceability'] ?? 0), 'key' => (int)($f['key'] ?? -1), 'mode' => (int)($f['mode'] ?? 0));
-        }
-        return array('ok' => true, 'features' => $out);
     }
     throw new SpotifySiteException('Үйлдэл олдсонгүй.', 404);
 }

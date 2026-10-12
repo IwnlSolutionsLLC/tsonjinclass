@@ -27,6 +27,7 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-uns
   <link rel="stylesheet" href="<?= h(asset('assets/css/senior.css')) ?>">
   <link rel="stylesheet" href="<?= h(asset('assets/css/themes.css')) ?>">
   <script src="<?= h(asset('assets/js/theme.js')) ?>"></script><script src="<?= h(asset('assets/js/i18n.js')) ?>"></script><link rel="stylesheet" href="<?= h(asset('assets/css/navigation.css')) ?>">
+  <link rel="stylesheet" href="<?= h(asset('assets/css/glass.css')) ?>">
 </head>
 <body data-page="share" data-tab="folders">
 <?php include __DIR__ . '/inc/icons.php'; ?>
