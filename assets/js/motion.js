@@ -31,7 +31,8 @@
     if (!indicator.classList.contains('is-ready')) { void indicator.offsetWidth; indicator.classList.add('is-ready'); tabs.classList.add('has-indicator'); }
     if (!animate) raf(function () { indicator.classList.remove('no-anim'); });
     if (tabs.scrollHeight > tabs.clientHeight + 2) {
-      var top = on.offsetTop - 8, bottom = on.offsetTop + on.offsetHeight + 8;
+      var first = on.previousElementSibling && on.previousElementSibling.classList.contains('tab-group') ? on.previousElementSibling : on;   // keep the group label visible too
+      var top = first.offsetTop - 4, bottom = on.offsetTop + on.offsetHeight + 8;
       if (top < tabs.scrollTop) tabs.scrollTop = top; else if (bottom > tabs.scrollTop + tabs.clientHeight) tabs.scrollTop = bottom - tabs.clientHeight;
     }
   }
@@ -106,7 +107,7 @@
       var el = entry.target; io.unobserve(el); el.classList.remove('mo-rv');
       if (el.animate && !still()) el.animate([{ opacity: 0, transform: 'translateY(26px)' }, { opacity: 1, transform: 'none' }], { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)' });
     });
-  }, { rootMargin: '0px 0px -4% 0px', threshold: 0.04 }) : null;
+  }, { rootMargin: '0px', threshold: 0 }) : null;
   var seen = typeof WeakSet === 'function' ? new WeakSet() : null;
   function consider(el, fold) {
     if (seen.has(el)) return; seen.add(el);

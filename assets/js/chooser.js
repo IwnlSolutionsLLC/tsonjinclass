@@ -122,7 +122,7 @@
     var r = unit * 7;
     ctx.save(); ctx.translate(cx, cy);
     if (mirrored()) ctx.scale(-1, 1);   // the canvas is mirrored with the video; keep the digits readable
-    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = active ? '#22d3ee' : 'rgba(10,25,18,.72)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = active ? '#22d3ee' : 'rgba(14,10,40,.72)'; ctx.fill();
     ctx.fillStyle = active ? '#0b1030' : '#fff'; ctx.font = '800 ' + Math.round(r * 1.1) + 'px Manrope, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(text, 0, r * 0.06); ctx.restore();
   }

@@ -165,7 +165,8 @@
     state.frameTimer = setTimeout(function () { $('textbookFrameStatus').textContent = 'ECONTENT-ийн уншигч · шаардлагатай бол эх сайтад нээгээрэй'; }, 10000);
     setDraftStatus(state.folder && state.csrf ? 'Хувийн ажлыг нээж байна…' : 'Өөрийн нэр, 4 оронтой кодоор нэвтрэхэд ажил тань вэбсайтад хадгалагдана.');
     await loadWork();
-    $('textbookReaderTitle').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    // The reader is the first block of the view; scrolling to the top keeps its back button and title below the sticky header.
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   async function chooseStudent() {
     if (!await leaveWork()) return;

@@ -393,9 +393,9 @@ html[data-theme] :is(.lock-icon, .modal-icon:not(.danger), .now-ico, .album-icon
 .tone-0 { --tone: #6d4aff; --tone-bg: rgba(235, 230, 255, 0.85); } .tone-1 { --tone: #0ea5e9; --tone-bg: rgba(220, 242, 255, 0.85); }
 .tone-2 { --tone: #ec4899; --tone-bg: rgba(255, 228, 242, 0.85); } .tone-3 { --tone: #d97706; --tone-bg: rgba(255, 240, 214, 0.85); }
 .tone-4 { --tone: #8b5cf6; --tone-bg: rgba(240, 232, 255, 0.85); } .tone-5 { --tone: #0284c7; --tone-bg: rgba(216, 238, 252, 0.85); }
-.tone-6 { --tone: #db2777; --tone-bg: rgba(252, 226, 240, 0.85); } .tone-7 { --tone: #0d9488; --tone-bg: rgba(214, 245, 240, 0.85); }
+.tone-6 { --tone: #db2777; --tone-bg: rgba(252, 226, 240, 0.85); } .tone-7 { --tone: #4f46e5; --tone-bg: rgba(226, 228, 255, 0.85); }
 html[data-theme="dark"] :is(.tone-0, .tone-4) { --tone: #a78bfa; } html[data-theme="dark"] :is(.tone-1, .tone-5) { --tone: #38bdf8; }
-html[data-theme="dark"] :is(.tone-2, .tone-6) { --tone: #f472b6; } html[data-theme="dark"] .tone-3 { --tone: #fbbf24; } html[data-theme="dark"] .tone-7 { --tone: #2dd4bf; }
+html[data-theme="dark"] :is(.tone-2, .tone-6) { --tone: #f472b6; } html[data-theme="dark"] .tone-3 { --tone: #fbbf24; } html[data-theme="dark"] .tone-7 { --tone: #818cf8; }
 .now-main .tag .pulse { background: #fff; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35); }
 .day-empty .i { display: block; margin: 0 auto 8px; }
 /* page footer as a card */
@@ -477,3 +477,22 @@ html[data-theme="dark"] .ludo-winner::backdrop { background: rgba(0, 0, 0, 0.5);
 @media (max-width: 720px) { .google-tile-copy small, .google-tile-copy b { white-space: normal; } }
 /* phones: section taglines over the bright aurora */
 @media (max-width: 720px) { :is(.games-hero, .fc-hero, .ludo-hero, .chooser-hero, .yt-hero, .google-hero, .music-hero) p { color: var(--ink-2); } }
+/* textbook covers in Aurora hues */
+.textbook-cover, .textbook-card.tone-green .textbook-cover { background: #4b2fd8; }
+.textbook-card.tone-rose .textbook-cover { background: #be185d; }
+.textbook-card.tone-sand .textbook-cover { background: #7c3aed; }
+.textbook-card.tone-blue .textbook-cover { background: #0369a1; }
+.textbook-card.tone-orange .textbook-cover { background: #c2410c; }
+.textbook-stack i { background: #b3a3ff; }
+.textbook-stack i:nth-child(2) { background: #a5e8fb; }
+.textbook-cover-button { position: relative; }
+.textbook-cover-button::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 8px; }
+.doodle-page-card:hover { transform: none; }
+/* photobooth camera stage */
+.pb-camera-stage { background: #0d0b22; }
+.pb-camera-empty p { color: #b3acd9; }
+/* flashcard shadows in the Aurora tint */
+.fc-face { box-shadow: 0 30px 60px -28px rgba(60, 40, 150, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+.fc-deck:hover { box-shadow: 0 22px 44px -22px rgba(60, 40, 150, 0.5); border-color: var(--green-300); }
+.fc-card.fc-hint-know { box-shadow: 0 0 0 3px var(--accent) inset, 0 30px 60px -28px rgba(60, 40, 150, 0.6); }
+.fc-card.fc-hint-dont { box-shadow: 0 0 0 3px #e5484d inset, 0 30px 60px -28px rgba(60, 40, 150, 0.6); }
