@@ -22,14 +22,13 @@
 .google-btn:disabled { opacity:.35; cursor:default; }
 .google-btn.is-on { color:#f4b400; }
 .google-btn.is-on .i { fill:currentColor; }
-.google-btn:focus-visible,.google-go:focus-visible,.google-tile:focus-visible,.google-recent-item:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:2px; }
-.google-omnibox { flex:1; min-width:0; display:flex; align-items:center; gap:8px; height:46px; padding:0 6px 0 16px; border-radius:999px;
+.google-btn:focus-visible,.google-tile:focus-visible,.google-recent-item:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:2px; }
+.google-omnibox { flex:1; min-width:0; display:flex; align-items:center; gap:8px; height:46px; padding:0 16px; border-radius:999px;
   background:var(--glass-strong,rgba(255,255,255,.75)); border:1px solid var(--glass-border,var(--line-2)); box-shadow:inset 0 1px 2px rgba(0,0,0,.06); transition:border-color .2s, box-shadow .2s; }
 .google-omnibox:focus-within { border-color:var(--g-blue); box-shadow:0 0 0 4px color-mix(in srgb,var(--g-blue) 18%,transparent); }
 .google-omnibox-icon { color:var(--ink-3); display:grid; }
 .google-omnibox input { flex:1; min-width:0; height:100%; border:0; outline:0; background:transparent; color:var(--ink); font-size:14.5px; font-weight:600; }
 .google-omnibox input::placeholder { color:var(--ink-3); font-weight:500; }
-.google-go { width:36px; height:36px; border-radius:50%; border:0; display:grid; place-items:center; cursor:pointer; color:#fff; background:linear-gradient(135deg,var(--g-blue),#1a5fd0); box-shadow:0 6px 14px -6px var(--g-blue); }
 
 .google-progress { height:3px; margin:0 6px; border-radius:3px; overflow:hidden; background:transparent; }
 .google-progress i { display:block; height:100%; width:0; border-radius:3px; background:linear-gradient(90deg,var(--g-blue),var(--g-red),var(--g-yellow),var(--g-green)); }

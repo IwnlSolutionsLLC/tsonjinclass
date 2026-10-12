@@ -44,8 +44,9 @@
   var NO_EMBED = ['facebook.com', 'messenger.com', 'instagram.com', 'threads.net', 'tiktok.com', 'twitter.com', 'x.com', 'reddit.com', 'discord.com', 'linkedin.com', 'pinterest.com',
     'github.com', 'gitlab.com', 'stackoverflow.com', 'amazon.com', 'ebay.com', 'netflix.com', 'spotify.com', 'twitch.tv', 'chatgpt.com', 'openai.com', 'claude.ai', 'anthropic.com', 'gemini.google.com',
     'roblox.com', 'minecraft.net', 'apple.com', 'icloud.com', 'microsoft.com', 'office.com', 'live.com', 'outlook.com', 'bing.com', 'zoom.us', 'canva.com', 'telegram.org', 'whatsapp.com',
-    'duolingo.com', 'khanacademy.org', 'coursera.org', 'quickdraw.withgoogle.com', 'scratch.mit.edu', 'kahoot.it', 'kahoot.com', 'translate.google.com', 'monkeytype.com'];
-  var state = { visible:false, bound:false, stack:[], index:-1, loading:false, loadTimer:0 };
+    'duolingo.com', 'khanacademy.org', 'coursera.org', 'quickdraw.withgoogle.com', 'scratch.mit.edu', 'kahoot.it', 'kahoot.com', 'translate.google.com', 'monkeytype.com',
+    't.me', 'discord.gg', 'fb.com', 'fb.me', 'snapchat.com', 'vk.com', 'tumblr.com', 'quora.com', 'wa.me'];
+  var state = { visible:false, bound:false, stack:[], index:-1, loading:false, loadTimer:0, parked:false };
 
   /* ---------- address handling ---------- */
   function googleSearch(q) { return 'https://www.google.com/search?igu=1&safe=active&q=' + encodeURIComponent(q); }
@@ -70,6 +71,8 @@
       if (url.pathname.indexOf('/maps') === 0 && url.searchParams.get('output') === 'embed') return { kind:'frame', url:url.href };
       return { kind:'noembed', url:url.href };
     }
+    // Google's own apps (Gmail, Docs, Classroom, accounts…) refuse to be embedded; only maps embeds work.
+    if (/(^|\.)google\.[a-z.]{2,6}$/.test(host) && !(url.pathname.indexOf('/maps') === 0 && url.searchParams.get('output') === 'embed')) return { kind:'noembed', url:url.href };
     if (onList(host, NO_EMBED)) return { kind:'noembed', url:url.href };
     return { kind:'frame', url:url.href };
   }
@@ -80,7 +83,7 @@
     var target = typeof input === 'string' ? resolve(input) : input;
     if (!target) return;
     if (target.kind === 'blocked') { C.toast(T('google.badUrl', 'Ийм хаягийг нээх боломжгүй.'), 'error'); syncAddress(); return; }
-    if (target.kind === 'youtube') { syncAddress(); openYouTube(target); return; }
+    if (target.kind === 'youtube') { if (!current()) home(); syncAddress(); openYouTube(target); return; }
     if (target.kind === 'noembed') { showBlocked(target.url); return; }
     remember(target);
     if (!options.fromHistory) { state.stack = state.stack.slice(0, state.index + 1); state.stack.push(target); state.index = state.stack.length - 1; }
@@ -218,8 +221,12 @@
   }
 
   C.Google = {
-    show:function () { state.visible = true; bind(); renderShelves(); renderChrome(); if (!current()) setTimeout(function () { var f = $('googleBigInput'); if (f && state.visible && window.matchMedia('(pointer:fine)').matches) f.focus({ preventScroll:true }); }, 60); },
-    hide:function () { state.visible = false; },
+    show:function () {
+      state.visible = true; bind();
+      if (state.parked) { state.parked = false; if (state.index >= 0) load(state.stack[state.index]); }
+      renderShelves(); renderChrome(); if (!current()) setTimeout(function () { var f = $('googleBigInput'); if (f && state.visible && window.matchMedia('(pointer:fine)').matches) f.focus({ preventScroll:true }); }, 60); },
+    // Leaving the section unloads the page so a game or video can't keep playing sound in the background; it reloads on return.
+    hide:function () { state.visible = false; if (current()) { state.parked = true; $('googleFrame').removeAttribute('src'); setLoading(false); } },
     go:go
   };
 })();

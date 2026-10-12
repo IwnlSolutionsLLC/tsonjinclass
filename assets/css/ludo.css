@@ -42,7 +42,7 @@
 /* ---------- game layout ---------- */
 .ludo-game { --turn:#888; }
 .ludo-topbar { display:flex; align-items:center; gap:12px; padding:10px 12px; margin-bottom:16px; border-radius:20px; }
-.ludo-scores { display:flex; gap:8px; flex:1; min-width:0; overflow-x:auto; scrollbar-width:none; }
+.ludo-scores { position:relative; display:flex; gap:8px; flex:1; min-width:0; overflow-x:auto; scrollbar-width:none; }
 .ludo-scores::-webkit-scrollbar { display:none; }
 .ludo-score { display:flex; align-items:center; gap:9px; padding:7px 13px 7px 8px; border-radius:14px; flex:none; border:1px solid transparent; transition:background .25s, border-color .25s, transform .25s; }
 .ludo-score.is-active { background:color-mix(in srgb,var(--pc) 16%,transparent); border-color:color-mix(in srgb,var(--pc) 45%,transparent); transform:translateY(-1px); }

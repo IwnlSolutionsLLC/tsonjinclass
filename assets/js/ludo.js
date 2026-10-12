@@ -194,6 +194,9 @@
         '<span class="ludo-score-dot" aria-hidden="true">' + (place >= 0 ? MEDALS[place] : '') + '</span>' +
         '<span class="ludo-score-copy"><b data-i18n-skip>' + C.esc(p.name) + '</b><small>' + homeCount(p) + '/4 ' + C.esc(T('ludo.home', 'төвд')) + '</small></span></div>';
     }).join('');
+    // On narrow screens the chips scroll sideways: keep whoever's turn it is in view.
+    var active = box.querySelector('.ludo-score.is-active');
+    if (active && box.scrollWidth > box.clientWidth) box.scrollLeft = Math.max(0, active.offsetLeft - (box.clientWidth - active.offsetWidth) / 2);
   }
   function updateTurnUI() {
     var p = cur(); if (!p) return;

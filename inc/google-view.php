@@ -16,7 +16,6 @@
         <span class="google-omnibox-icon" aria-hidden="true"><?= icon('search', 'i-sm') ?></span>
         <label class="sr-only" for="googleAddress" data-i18n="google.addressLabel">Хайх эсвэл хаяг бичих</label>
         <input id="googleAddress" type="text" inputmode="search" enterkeyhint="go" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="2000" placeholder="Google-ээс хайх эсвэл сайтын хаяг бичих…" data-i18n-placeholder="google.placeholder">
-        <button class="google-go" type="submit" aria-label="Хайх" data-i18n-aria-label="google.search"><?= icon('search', 'i-sm') ?></button>
       </form>
       <div class="google-nav-buttons">
         <button class="google-btn" id="googleStar" type="button" aria-pressed="false" aria-label="Миний сайтад нэмэх" title="Миний сайтад нэмэх" data-i18n-aria-label="google.star" data-i18n-title="google.star" disabled><?= icon('star') ?></button>

@@ -30,6 +30,10 @@
     indicator.style.transform = 'translate(' + on.offsetLeft + 'px,' + on.offsetTop + 'px)';
     if (!indicator.classList.contains('is-ready')) { void indicator.offsetWidth; indicator.classList.add('is-ready'); tabs.classList.add('has-indicator'); }
     if (!animate) raf(function () { indicator.classList.remove('no-anim'); });
+    if (tabs.scrollHeight > tabs.clientHeight + 2) {
+      var top = on.offsetTop - 8, bottom = on.offsetTop + on.offsetHeight + 8;
+      if (top < tabs.scrollTop) tabs.scrollTop = top; else if (bottom > tabs.scrollTop + tabs.clientHeight) tabs.scrollTop = bottom - tabs.clientHeight;
+    }
   }
   if (tabs) {
     document.addEventListener('c122:tab', function () { raf(function () { placeIndicator(true); }); });
@@ -68,7 +72,7 @@
       if (tile !== tilted) clearTilt();
       if (tile) {
         var b = tile.getBoundingClientRect(), dx = (e.clientX - b.left) / b.width * 2 - 1, dy = (e.clientY - b.top) / b.height * 2 - 1;
-        var amount = Math.min(1, Math.sqrt(dx * dx + dy * dy)) * 7;
+        var amount = Math.min(1, Math.sqrt(dx * dx + dy * dy)) * 4;
         tilted = tile; tile.style.rotate = amount < 0.4 ? '' : (-dy).toFixed(3) + ' ' + dx.toFixed(3) + ' 0 ' + amount.toFixed(2) + 'deg';
       }
     });
@@ -99,10 +103,10 @@
   var io = window.IntersectionObserver ? new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
-      var el = entry.target; io.unobserve(el); el.classList.add('mo-in');
-      setTimeout(function () { el.classList.remove('mo-rv', 'mo-in'); }, 900);
+      var el = entry.target; io.unobserve(el); el.classList.remove('mo-rv');
+      if (el.animate && !still()) el.animate([{ opacity: 0, transform: 'translateY(26px)' }, { opacity: 1, transform: 'none' }], { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)' });
     });
-  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 }) : null;
+  }, { rootMargin: '0px 0px -4% 0px', threshold: 0.04 }) : null;
   var seen = typeof WeakSet === 'function' ? new WeakSet() : null;
   function consider(el, fold) {
     if (seen.has(el)) return; seen.add(el);
@@ -112,7 +116,7 @@
   }
   function scan(root) {
     if (!io || !seen || still() || !root || !root.querySelectorAll) return;
-    var fold = window.innerHeight * 0.94;
+    var fold = window.innerHeight + 64;   // only things completely below the screen (even mid-entrance) are hidden
     if (root.matches && root.matches(REVEAL)) consider(root, fold);
     Array.prototype.forEach.call(root.querySelectorAll(REVEAL), function (el) { consider(el, fold); });
   }
@@ -140,6 +144,13 @@
       if (p < 1) raf(step); else { el.textContent = String(target); counting = false; }
     })(started);
   }
+
+  /* ---------- rest ambient loops when idle ---------- */
+  var root = document.documentElement, idleTimer = 0;
+  function wake() { root.classList.remove('mo-idle'); clearTimeout(idleTimer); idleTimer = setTimeout(function () { root.classList.add('mo-idle'); }, 8000); }
+  ['pointermove', 'pointerdown', 'keydown', 'scroll', 'wheel', 'touchstart'].forEach(function (name) { window.addEventListener(name, wake, { passive: true, capture: true }); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) { clearTimeout(idleTimer); root.classList.add('mo-idle'); } else wake(); });
+  wake();
 
   /* ---------- scroll progress ---------- */
   var bar = document.createElement('div'); bar.className = 'mo-progress'; bar.setAttribute('aria-hidden', 'true'); body.appendChild(bar);

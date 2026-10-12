@@ -844,6 +844,10 @@
   });
   window.addEventListener('dragleave', function () { if (--dragDepth <= 0) clearHint(); });
   window.addEventListener('dragover', function (e) { if (hasFiles(e)) e.preventDefault(); });
+  // Keep students on the site: a link or image dragged out of a page (e.g. the GOOGLE frame) must not open a new tab when dropped.
+  function textField(e) { return e.target && e.target.closest && e.target.closest('input,textarea,[contenteditable]'); }
+  window.addEventListener('dragover', function (e) { if (hasFiles(e) || textField(e)) return; e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'none'; });
+  window.addEventListener('drop', function (e) { if (hasFiles(e) || textField(e)) return; e.preventDefault(); });
   window.addEventListener('drop', function (e) {
     if (!hasFiles(e)) return;
     e.preventDefault();

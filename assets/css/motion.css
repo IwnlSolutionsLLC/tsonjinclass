@@ -57,9 +57,12 @@ body.mo-boot > .nav { animation: mo-drop 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.2) 
 body.mo-boot > .site-menu:not([open]) { animation: mo-drawer 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.1) backwards; }
 body.mo-boot > .site-menu:not([open]) .site-menu-tabs > :not(.tab-indicator) { animation: mo-slide 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--i, 0) * 28ms + 0.15s); }
 
-/* scroll reveal (motion.js adds .mo-rv to things below the fold, then .mo-in when they scroll into view) */
-.mo-rv { opacity: 0; }
-.mo-rv.mo-in { opacity: 1; animation: mo-up 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+/* scroll reveal: motion.js hides things that start fully below the screen (.mo-rv) and, when they scroll in,
+   drops the class and plays a Web Animations fade-up — so no CSS animation is swapped or replayed. */
+.mo-rv { opacity: 0 !important; }
+
+/* ambient loops rest when nobody has touched the page for a while, or the tab is hidden (saves the GPU) */
+html.mo-idle :is(.bg-orbs .orb, .bg-stars, .home-tile-icon, .today-day, .site-menu-logo, .brand-dot) { animation-play-state: paused; }
 
 /* ---------- menu ---------- */
 .site-menu[open] { animation: mo-drawer 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.05); }
@@ -91,8 +94,8 @@ mo-ripple > b { position: absolute; display: block; border-radius: 50%; backgrou
 @media (prefers-reduced-motion: reduce) {
   .bg-orbs .orb, .bg-stars, .view.enter > *, .view.enter .home-launch > *, .view.enter .today-facts > *, .view.enter .google-tiles > *, .view.enter .folder-grid > *,
   body.mo-boot > *, body.mo-boot .site-menu-tabs > *, .site-menu[open], .site-menu[open] .site-menu-tabs > *, .nav-current.mo-swap, .site-menu-logo, .brand-dot,
-  .home-tile-icon, .clock.mo-tick, .today-day, .modal, .toast, .mo-rv.mo-in, .btn:hover > .i, .tab:hover > .i { animation: none !important; }
-  .mo-rv { opacity: 1; }
+  .home-tile-icon, .clock.mo-tick, .today-day, .modal, .toast, .btn:hover > .i, .tab:hover > .i { animation: none !important; }
+  .mo-rv { opacity: 1 !important; }
   .tab-indicator { transition: none; }
   .mo-progress { display: none; }
 }

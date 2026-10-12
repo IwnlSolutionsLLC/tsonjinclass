@@ -3601,6 +3601,9 @@
   ]
 };
   var messages = {
+  "Хуваарь оруулаагүй байна": ["Хуваарь оруулаагүй байна", "No timetable yet", "尚未添加课程表"],
+  "Удирдлага хэсгээс хуваариа оруулна уу.": ["Удирдлага хэсгээс хуваариа оруулна уу.", "Add the timetable from the Administration page.", "请在管理页面添加课程表。"],
+  "Хуваарь хараахан оруулаагүй байна.": ["Хуваарь хараахан оруулаагүй байна.", "The timetable hasn’t been added yet.", "课程表尚未添加。"],
   "nav.group.lessons": ["Хичээл", "Lessons", "课程"],
   "nav.group.study": ["Сурах", "Study", "学习"],
   "nav.group.create": ["Бүтээл ба дурсамж", "Create & memories", "创作与回忆"],

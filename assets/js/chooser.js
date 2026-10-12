@@ -99,10 +99,10 @@
         var active = state.scanning && i === state.highlight, dim = state.scanning && !active;
         var pad = Math.min(f.w, f.h) * (active ? 0.16 : 0.1);
         var x = f.x - pad, y = f.y - pad, w = f.w + pad * 2, h = f.h + pad * 2;
-        if (active) { ctx.fillStyle = 'rgba(20,220,130,.18)'; roundRect(ctx, x, y, w, h, Math.min(w, h) * 0.2); ctx.fill(); }
+        if (active) { ctx.fillStyle = 'rgba(34,211,238,.18)'; roundRect(ctx, x, y, w, h, Math.min(w, h) * 0.2); ctx.fill(); }
         ctx.lineWidth = unit * (active ? 2.6 : 1.4);
-        ctx.strokeStyle = active ? '#3dffa8' : dim ? 'rgba(255,255,255,.35)' : 'rgba(255,255,255,' + (0.7 + Math.sin(t * 3 + i) * 0.2).toFixed(2) + ')';
-        ctx.shadowColor = active ? 'rgba(61,255,168,.95)' : 'transparent'; ctx.shadowBlur = active ? unit * 10 : 0;
+        ctx.strokeStyle = active ? '#22d3ee' : dim ? 'rgba(255,255,255,.35)' : 'rgba(255,255,255,' + (0.7 + Math.sin(t * 3 + i) * 0.2).toFixed(2) + ')';
+        ctx.shadowColor = active ? 'rgba(34,211,238,.95)' : 'transparent'; ctx.shadowBlur = active ? unit * 10 : 0;
         brackets(ctx, x, y, w, h, Math.min(w, h) * 0.28);
         ctx.shadowBlur = 0;
         label(ctx, String(i + 1), x + w / 2, y - unit * 6, unit, active);
@@ -122,19 +122,26 @@
     var r = unit * 7;
     ctx.save(); ctx.translate(cx, cy);
     if (mirrored()) ctx.scale(-1, 1);   // the canvas is mirrored with the video; keep the digits readable
-    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = active ? '#3dffa8' : 'rgba(10,25,18,.72)'; ctx.fill();
-    ctx.fillStyle = active ? '#06281a' : '#fff'; ctx.font = '800 ' + Math.round(r * 1.1) + 'px Manrope, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fillStyle = active ? '#22d3ee' : 'rgba(10,25,18,.72)'; ctx.fill();
+    ctx.fillStyle = active ? '#0b1030' : '#fff'; ctx.font = '800 ' + Math.round(r * 1.1) + 'px Manrope, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(text, 0, r * 0.06); ctx.restore();
   }
   function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 
+  /* On a portrait phone the 16:9 camera picture is cropped (object-fit: cover): only people actually visible can be picked. */
+  function onStage(f) {
+    var video = $('chooserVideo'), stage = $('chooserStage');
+    var vw = video.videoWidth, vh = video.videoHeight, W = stage.clientWidth, H = stage.clientHeight; if (!vw || !W) return true;
+    var s = Math.max(W / vw, H / vh), cx = (W - vw * s) / 2 + (f.x + f.w / 2) * s, cy = (H - vh * s) / 2 + (f.y + f.h / 2) * s;
+    return cx >= 0 && cx <= W && cy >= 0 && cy <= H;
+  }
   function detectLoop() {
     if (!state.visible || !state.stream || state.loopActive) return;
     state.loopActive = true; var epoch = state.epoch;
     (function tick() {
       if (epoch !== state.epoch) return;   // a newer camera session owns the loop
       if (!state.visible || !state.stream || state.chosen) { state.loopActive = false; return; }
-      detectFaces().then(function (faces) { if (epoch === state.epoch && !state.chosen) { state.faces = faces; setCount(); } }).finally(function () {
+      detectFaces().then(function (faces) { if (epoch === state.epoch && !state.chosen) { state.faces = faces.filter(onStage); setCount(); } }).finally(function () {
         if (epoch === state.epoch) state.detectTimer = setTimeout(tick, 220);
       });
     })();
@@ -204,7 +211,7 @@
   }
   function burst() {
     var layer = $('chooserConfetti'); if (!layer) return; layer.innerHTML = '';
-    var colors = ['#3dffa8', '#f0a90b', '#e5484d', '#3b82f6', '#8e4ec6', '#ffffff', '#e93d82'];
+    var colors = ['#22d3ee', '#f0a90b', '#e5484d', '#3b82f6', '#8e4ec6', '#ffffff', '#e93d82'];
     for (var i = 0; i < 110; i++) {
       var s = document.createElement('i');
       s.style.left = Math.random() * 100 + '%'; s.style.background = colors[i % colors.length];

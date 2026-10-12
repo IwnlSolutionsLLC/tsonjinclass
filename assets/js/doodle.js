@@ -272,7 +272,7 @@
   async function openPage(page) {
     if(state.saving)return;
     if(state.page && (state.pending.length || state.batch)){try{await save();}catch(_){/* Retained local drafts are restored on return. */}}
-    clearTimeout(state.retryTimer);state.generation++;state.refreshPromise=null;state.pagesLoading=false;state.page=page;state.ops=[];state.revision=0;state.images.clear();state.statusError='';state.drawing=null;state.drawPointer=null;state.pan=null;chooseTool(state.tool);restore(page.id);$('doodleHome').hidden=true;$('doodleEditor').hidden=false;$('doodlePageTitle').textContent=page.title;state.pageLoading=true;updateControls();render();fit();
+    clearTimeout(state.retryTimer);state.generation++;state.refreshPromise=null;state.pagesLoading=false;state.page=page;state.ops=[];state.revision=0;state.images.clear();state.statusError='';state.drawing=null;state.drawPointer=null;state.pan=null;chooseTool(state.tool);restore(page.id);$('doodleHome').hidden=true;$('doodleEditor').hidden=false;try{window.scrollTo({top:0,behavior:'instant'});}catch(_){window.scrollTo(0,0);}$('doodlePageTitle').textContent=page.title;state.pageLoading=true;updateControls();render();fit();
     try{await refreshPage();}finally{state.pageLoading=false;updateControls();}
     if(!state.page.sealed && (state.pending.length || state.batch))planSave();
     if(state.page.sealed && (state.pending.length || state.batch)){status('Хадгалаагүй ноорог энэ браузерт байна. Шинэ хуудас үүсгэн үргэлжлүүлээрэй.',true);}
