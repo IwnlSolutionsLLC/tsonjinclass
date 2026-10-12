@@ -1,0 +1,84 @@
+/* CALL (admin): the teacher's card for ringing the classroom board. Shares .ic-card with the Intercom recorder. */
+
+.call-stage { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.call-readout { flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+
+/* the teacher's picture with pulsing rings while the board rings */
+.call-avatar { position: relative; flex: none; width: 112px; height: 112px; margin: 16px; border-radius: 50%; transition: box-shadow .25s ease; }
+.call-avatar img {
+  position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+  background: var(--surface-3, #e9eee7); border: 4px solid var(--surface, #fff); box-shadow: 0 12px 28px -14px rgba(0, 0, 0, .5);
+  transition: border-color .25s ease;
+}
+.call-rings i { position: absolute; inset: 0; border-radius: 50%; border: 3px solid var(--accent, #2d5746); opacity: 0; pointer-events: none; }
+.call-card[data-state="ringing"] .call-rings i { animation: call-ring 2.1s ease-out infinite; }
+.call-card[data-state="connecting"] .call-rings i { animation: call-ring 3s ease-out infinite; }
+.call-card[data-state="ringing"] .call-rings i:nth-child(2), .call-card[data-state="connecting"] .call-rings i:nth-child(2) { animation-delay: .7s; }
+.call-card[data-state="ringing"] .call-rings i:nth-child(3), .call-card[data-state="connecting"] .call-rings i:nth-child(3) { animation-delay: 1.4s; }
+@keyframes call-ring { 0% { transform: scale(1); opacity: .75; } 100% { transform: scale(1.55); opacity: 0; } }
+.call-card[data-state="active"] .call-avatar { box-shadow: 0 0 0 6px var(--accent-soft, #e8f0e6); }
+.call-card[data-state="active"] .call-avatar img { border-color: var(--accent, #2d5746); }
+.call-card[data-state="active"] .call-avatar.is-speaking { box-shadow: 0 0 0 10px var(--accent-soft, #e8f0e6), 0 0 0 12px var(--accent, #2d5746); }
+.call-card[data-state="ended"] .call-avatar img { filter: grayscale(.85); opacity: .8; }
+
+.call-boards { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; font-weight: 700; color: var(--ink-2, #52635a); }
+.call-boards i { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3, #9aa59d); }
+.call-boards[data-on="on"] i { background: #1f9d55; box-shadow: 0 0 0 4px rgba(31, 157, 85, .2); }
+.call-boards[data-on="wait"] i { animation: call-wait 1.2s ease-in-out infinite; }
+@keyframes call-wait { 50% { opacity: .3; } }
+.call-status { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--ink, #24372e); overflow-wrap: anywhere; }
+.call-card[data-tone="bad"] .call-status { color: var(--danger, #ba4743); }
+.call-card[data-tone="warn"] .call-status { color: var(--warn, #8f661f); }
+.call-timer { font-family: var(--display, var(--font)); font-size: 30px; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--ink-3, #707c74); }
+.call-timer[hidden] { display: none; }
+.call-card[data-state="active"] .call-timer { color: var(--accent, #2d5746); }
+
+/* what each side is saying right now */
+.call-levels { display: grid; gap: 8px; padding: 12px 14px; border-radius: 14px; background: var(--surface, #fff); border: 1px solid var(--line, #e4e8e1); }
+.call-levels[hidden] { display: none; }
+.call-level { display: flex; align-items: center; gap: 12px; }
+.call-level-label { flex: none; width: 112px; font-size: 12.5px; font-weight: 700; color: var(--ink-3, #707c74); }
+.call-meter { flex: 1; display: flex; align-items: stretch; gap: 3px; height: 14px; min-width: 0; }
+.call-meter i { flex: 1; min-width: 0; border-radius: 2px; background: var(--line-2, #d5ddd1); }
+.call-meter i.on { background: var(--accent, #2d5746); }
+
+.call-hint { display: flex; align-items: center; gap: 8px; margin: 0; padding: 9px 13px; border-radius: 12px; font-size: 13.5px; font-weight: 600; line-height: 1.45; color: var(--ink, #24372e); background: var(--surface, #fff); border: 1px solid var(--warn, #8f661f); }
+.call-hint[hidden] { display: none; }
+.call-hint .i { color: var(--warn, #8f661f); }
+
+/* big buttons: the teacher may be on a phone or at the classroom touch screen */
+.call-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.call-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px; flex: 1 1 200px; min-height: 64px; padding: 0 24px;
+  border: 2px solid transparent; border-radius: 999px; cursor: pointer; font: inherit; font-size: 16px; font-weight: 800; letter-spacing: .03em; line-height: 1.2;
+  text-align: center; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.call-btn[hidden] { display: none; }
+.call-btn .i { width: 26px; height: 26px; }
+.call-btn:active:not(:disabled) { transform: scale(.97); }
+.call-btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+.call-btn:focus-visible { outline: 3px solid var(--focus, #a0b89d); outline-offset: 3px; }
+.call-btn-start { flex-basis: 280px; font-size: 18px; letter-spacing: .06em; color: var(--accent-ink, #fff); background: var(--accent, #2d5746); box-shadow: 0 18px 36px -20px var(--accent, #2d5746); }
+.call-btn-start:hover:not(:disabled) { background: var(--accent-hover, #244c3b); }
+.call-btn-hang { color: #fff; background: #b74842; box-shadow: 0 16px 30px -18px #b74842; }
+.call-btn-hang:hover:not(:disabled) { background: #a23c37; }
+.call-btn-ghost { color: var(--ink, #24372e); background: var(--surface, #fff); border-color: var(--line-2, #d5ddd1); }
+.call-btn-ghost:hover:not(:disabled) { color: var(--accent, #2d5746); background: var(--surface-2, #f3f5f1); border-color: var(--accent, #2d5746); }
+.call-btn-ghost.is-on { color: var(--danger, #ba4743); background: var(--danger-bg, #fceeed); border-color: var(--danger, #ba4743); }
+
+.call-error { margin: 0; min-height: 0; }
+.call-error:empty { display: none; }
+
+@media (max-width: 560px) {
+  .call-stage { justify-content: center; text-align: center; gap: 8px; }
+  .call-readout { align-items: center; }
+  .call-avatar { width: 96px; height: 96px; margin: 14px; }
+  .call-btn { flex-basis: 100%; padding: 0 16px; gap: 10px; font-size: 16px; letter-spacing: .02em; }
+  .call-btn-start { font-size: 16px; letter-spacing: .03em; }
+  .call-level-label { width: 96px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .call-card[data-state="ringing"] .call-rings i, .call-card[data-state="connecting"] .call-rings i, .call-boards[data-on="wait"] i { animation: none; }
+  .call-card[data-state="ringing"] .call-rings i:first-child, .call-card[data-state="connecting"] .call-rings i:first-child { opacity: .55; transform: scale(1.18); }
+  .call-avatar, .call-avatar img, .call-btn { transition: none; }
+}

@@ -1,0 +1,808 @@
+{
+  "school": "Цонжин Кибер Боардинг сургууль",
+  "schoolYear": "2026–2027",
+  "term": "I улирал",
+  "title": "Дугуйлан, секцийн хуваарь",
+  "sourceImage": "assets/img/clubs-schedule.jpg",
+  "sourceFilename": "IMG_2504.HEIC",
+  "days": [
+    {
+      "id": 1,
+      "name": "Даваа"
+    },
+    {
+      "id": 2,
+      "name": "Мягмар"
+    },
+    {
+      "id": 3,
+      "name": "Лхагва"
+    },
+    {
+      "id": 4,
+      "name": "Пүрэв"
+    },
+    {
+      "id": 7,
+      "name": "Ням"
+    }
+  ],
+  "notes": [
+    "Хуваарийг өгсөн зургийн шар өнгөөр тэмдэглэсэн цагуудаас хуулсан. Хоосон нүдэнд цаг нэмж таамаглаагүй.",
+    "Эх зурагт Ням гарагийн багана байгаа боловч дугуйлангийн цаг тэмдэглээгүй.",
+    "«7 хоногт» баганад байгаа тоо нь нийт цаг уу, уулзалтын тоо юу гэдгийг зурагт тайлбарлаагүй. Тоог эх зурагтай адил хадгалсан.",
+    "Эх зурагт 22–23 дугаар Даамын нэгтгэсэн мөр байна. Давхар дугуйлан болгон үүсгээгүй.",
+    "ЭМ / ЭР бүлэг болон хамрагдах ангийн тэмдэглэгээг эх зурагтай адил оруулсан. Анги нь хоосон дугуйланг багшаас тодруулна уу."
+  ],
+  "clubs": [
+    {
+      "id": "club-01",
+      "number": 1,
+      "name": "AI технологийн дугуйлан",
+      "teacher": "Б.Мөнгөн-Эрдэнэ",
+      "gradesLabel": "10–12",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": 21,
+      "weeklyCount": 2,
+      "room": "105",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "18:30"
+        },
+        {
+          "day": 4,
+          "start": "17:30",
+          "end": "18:30"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-02",
+      "number": 2,
+      "name": "English Corner club",
+      "teacher": "John (JJ)",
+      "gradesLabel": "10–12",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": 22,
+      "weeklyCount": 2,
+      "room": "119",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "18:30"
+        },
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-03",
+      "number": 3,
+      "name": "Гарбөмбөг",
+      "teacher": "С.Чинбат",
+      "gradesLabel": "ЭМ",
+      "grades": [],
+      "students": null,
+      "weeklyCount": 2,
+      "room": "Спорт заал",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "19:00"
+        }
+      ],
+      "notes": [
+        "Хамрагдах ангийн дугаар эх зурагт бичигдээгүй. Багшаас тодруулна уу."
+      ],
+      "group": "ЭМ"
+    },
+    {
+      "id": "club-04",
+      "number": 4,
+      "name": "Гарбөмбөг",
+      "teacher": "С.Чинбат",
+      "gradesLabel": "ЭР",
+      "grades": [],
+      "students": null,
+      "weeklyCount": 2,
+      "room": "Спорт заал",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "19:30",
+          "end": "21:00"
+        }
+      ],
+      "notes": [
+        "Хамрагдах ангийн дугаар эх зурагт бичигдээгүй. Багшаас тодруулна уу."
+      ],
+      "group": "ЭР"
+    },
+    {
+      "id": "club-05",
+      "number": 5,
+      "name": "Жудо",
+      "teacher": "О.Төрболд",
+      "gradesLabel": "10-1, 10-2, 11-2, 12-1, 12-2",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": 22,
+      "weeklyCount": 2,
+      "room": "Б-111",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "22:00"
+        }
+      ],
+      "notes": [],
+      "classes": [
+        "10-1",
+        "10-2",
+        "11-2",
+        "12-1",
+        "12-2"
+      ]
+    },
+    {
+      "id": "club-06",
+      "number": 6,
+      "name": "Код бичих клуб",
+      "teacher": "И.Дагвадорж",
+      "gradesLabel": "10-1, 10-2, 10-3",
+      "grades": [
+        10
+      ],
+      "students": 19,
+      "weeklyCount": 2,
+      "room": "105",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "day": 2,
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ],
+      "notes": [],
+      "classes": [
+        "10-1",
+        "10-2",
+        "10-3"
+      ]
+    },
+    {
+      "id": "club-07",
+      "number": 7,
+      "name": "Код бичих клуб",
+      "teacher": "И.Дагвадорж",
+      "gradesLabel": "11-1, 11-2, 12-1, 12-2",
+      "grades": [
+        11,
+        12
+      ],
+      "students": 18,
+      "weeklyCount": 2,
+      "room": "105",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "21:00"
+        },
+        {
+          "day": 4,
+          "start": "17:30",
+          "end": "18:30"
+        }
+      ],
+      "notes": [],
+      "classes": [
+        "11-1",
+        "11-2",
+        "12-1",
+        "12-2"
+      ]
+    },
+    {
+      "id": "club-08",
+      "number": 8,
+      "name": "Сагсанбөмбөг",
+      "teacher": "С.Чинбат",
+      "gradesLabel": "ЭМ 10–12",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": null,
+      "weeklyCount": 2,
+      "room": "Спорт заал",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "21:30"
+        }
+      ],
+      "notes": [],
+      "group": "ЭМ"
+    },
+    {
+      "id": "club-09",
+      "number": 9,
+      "name": "Сагсанбөмбөг",
+      "teacher": "С.Чинбат",
+      "gradesLabel": "ЭР 10–12",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": null,
+      "weeklyCount": 2,
+      "room": "Спорт заал",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "20:30",
+          "end": "22:00"
+        }
+      ],
+      "notes": [],
+      "group": "ЭР"
+    },
+    {
+      "id": "club-10",
+      "number": 10,
+      "name": "Дуулах урлаг",
+      "teacher": "Э.Мэнджаргал",
+      "gradesLabel": "",
+      "grades": [],
+      "students": 17,
+      "weeklyCount": 1,
+      "room": "104",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": [
+        "Хамрагдах ангийн дугаар эх зурагт бичигдээгүй. Багшаас тодруулна уу."
+      ]
+    },
+    {
+      "id": "club-11",
+      "number": 11,
+      "name": "Үндэсний хөгжим",
+      "teacher": "Э.Мэнджаргал",
+      "gradesLabel": "",
+      "grades": [],
+      "students": 5,
+      "weeklyCount": 1,
+      "room": "104",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ],
+      "notes": [
+        "Хамрагдах ангийн дугаар эх зурагт бичигдээгүй. Багшаас тодруулна уу."
+      ]
+    },
+    {
+      "id": "club-12",
+      "number": 12,
+      "name": "HSK 2-4",
+      "teacher": "Номин",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 37,
+      "weeklyCount": 4,
+      "room": "Б-106",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "17:30",
+          "end": "19:30"
+        },
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "21:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-13",
+      "number": 13,
+      "name": "Бийрэн бичиг",
+      "teacher": "Д.Одгэрэл",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 8,
+      "weeklyCount": 2,
+      "room": "118",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "18:30"
+        },
+        {
+          "day": 4,
+          "start": "17:30",
+          "end": "18:30"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-14",
+      "number": 14,
+      "name": "Бүжиг",
+      "teacher": "Рэгзэдмаа",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 38,
+      "weeklyCount": 1,
+      "room": "Б-111",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-15",
+      "number": 15,
+      "name": "Дизайн thinker",
+      "teacher": "Ш.Эрдэнэ-Ундрал",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 21,
+      "weeklyCount": 2,
+      "room": "106",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "17:30",
+          "end": "18:30"
+        },
+        {
+          "day": 3,
+          "start": "17:30",
+          "end": "18:30"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-16",
+      "number": 16,
+      "name": "Дуулах урлаг",
+      "teacher": "Э.Мэнджаргал",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 8,
+      "weeklyCount": 2,
+      "room": "Б-104",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": [
+        "Эх зурагт «7 хоногт» 2 гэж бичсэн боловч зөвхөн Пүрэв 19:00–20:00 цаг тэмдэглэсэн. Өөр цаг нэмж оруулаагүй."
+      ]
+    },
+    {
+      "id": "club-17",
+      "number": 17,
+      "name": "Мэтгэлцээн",
+      "teacher": "Батцэцэг",
+      "gradesLabel": "10–12",
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "students": 18,
+      "weeklyCount": 4,
+      "room": "112",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "21:00"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "21:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-18",
+      "number": 18,
+      "name": "CAMBRIDGE ART",
+      "teacher": "JAMES",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 15,
+      "weeklyCount": 1,
+      "room": "Төслийн өрөө",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": [
+        "Эх зурагт «7 хоногт» 1 гэж бичсэн боловч Мягмар, Лхагва гарагт тус бүр 19:00–20:00 цаг тэмдэглэсэн. Хоёр цагийг хоёуланг нь хадгалсан."
+      ]
+    },
+    {
+      "id": "club-19",
+      "number": 19,
+      "name": "Усан бассейн",
+      "teacher": "Ч.Батбилэг",
+      "gradesLabel": "8–12 ЭМ",
+      "grades": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": null,
+      "weeklyCount": 1,
+      "room": "УСАН БАССЕЙН",
+      "sessions": [
+        {
+          "day": 2,
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ],
+      "notes": [],
+      "group": "ЭМ"
+    },
+    {
+      "id": "club-20",
+      "number": 20,
+      "name": "Усан бассейн",
+      "teacher": "Ч.Батбилэг",
+      "gradesLabel": "6–8 ЭР",
+      "grades": [
+        6,
+        7,
+        8
+      ],
+      "students": null,
+      "weeklyCount": 1,
+      "room": "УСАН БАССЕЙН",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "18:30",
+          "end": "19:30"
+        }
+      ],
+      "notes": [],
+      "group": "ЭР"
+    },
+    {
+      "id": "club-21",
+      "number": 21,
+      "name": "Усан бассейн",
+      "teacher": "Ч.Батбилэг",
+      "gradesLabel": "9–12",
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": null,
+      "weeklyCount": 1,
+      "room": "УСАН БАССЕЙН",
+      "sessions": [
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-22",
+      "number": 22,
+      "name": "Даам",
+      "teacher": "Нарантуяа",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 17,
+      "weeklyCount": 2,
+      "room": "202",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": [],
+      "sourceNumbers": [
+        22,
+        23
+      ]
+    },
+    {
+      "id": "club-24",
+      "number": 24,
+      "name": "Дижитал зураг",
+      "teacher": "Ц.Ариунсанаа",
+      "gradesLabel": "2–12",
+      "grades": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 26,
+      "weeklyCount": 1,
+      "room": "Б-203",
+      "sessions": [
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-25",
+      "number": 25,
+      "name": "Шатар",
+      "teacher": "Нарантуяа",
+      "gradesLabel": "1–12",
+      "grades": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 50,
+      "weeklyCount": 2,
+      "room": "Б-202",
+      "sessions": [
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "day": 4,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-26",
+      "number": 26,
+      "name": "Cyber security",
+      "teacher": "Б.Мөнгөн-Эрдэнэ",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 23,
+      "weeklyCount": 2,
+      "room": "105",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "17:00",
+          "end": "19:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-27",
+      "number": 27,
+      "name": "English Corner speaking club",
+      "teacher": "John (JJ)",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 24,
+      "weeklyCount": 2,
+      "room": "119",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "17:30",
+          "end": "18:30"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "club-28",
+      "number": 28,
+      "name": "STEAM роботикс",
+      "teacher": "З.Болдсүх",
+      "gradesLabel": "6–12",
+      "grades": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "students": 15,
+      "weeklyCount": 1,
+      "room": "Төслийн өрөө",
+      "sessions": [
+        {
+          "day": 1,
+          "start": "19:00",
+          "end": "20:00"
+        },
+        {
+          "day": 3,
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ],
+      "notes": [
+        "Эх зурагт «7 хоногт» 1 гэж бичсэн боловч Даваа, Лхагва гарагт тус бүр 19:00–20:00 цаг тэмдэглэсэн. Хоёр цагийг хоёуланг нь хадгалсан."
+      ]
+    }
+  ]
+}

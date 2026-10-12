@@ -1,0 +1,35 @@
+{
+  "id": "retro-2027",
+  "name": "Retro 2027",
+  "width": 1241,
+  "height": 3510,
+  "overlay": "assets/img/photobooth/retro-overlay.png",
+  "logo": "assets/img/photobooth/logo.png",
+  "slots": [
+    {
+      "x": 0.06065176,
+      "y": 0.03535174,
+      "w": 0.87942459,
+      "h": 0.1870696
+    },
+    {
+      "x": 0.06065176,
+      "y": 0.23418783,
+      "w": 0.87942459,
+      "h": 0.18706962
+    },
+    {
+      "x": 0.06065176,
+      "y": 0.43302392,
+      "w": 0.87942459,
+      "h": 0.18706958
+    },
+    {
+      "x": 0.06065176,
+      "y": 0.63186003,
+      "w": 0.87942459,
+      "h": 0.18706958
+    }
+  ],
+  "source": "Supplied layered PDF; four stock-photo draws removed; foreground artwork preserved."
+}

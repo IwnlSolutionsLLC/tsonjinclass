@@ -1,0 +1,74 @@
+/* Teacher CCTV pages share the site's light/dark palette. */
+:is(.cctv-page,.cctv-admin-panel), :is(.cctv-page,.cctv-admin-panel) * { box-sizing: border-box; }
+body.cctv-page { margin: 0; font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+.cctv-page button,.cctv-page input { font: inherit; }
+.cctv-page a { color: inherit; }
+:is(.cctv-page,.cctv-admin-panel) [hidden] { display: none !important; }
+.cctv-header { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 1376px; margin: auto; padding: 18px 40px; border-bottom: 1px solid var(--line); }
+.cctv-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.cctv-brand img { object-fit: cover; border-radius: 9px; }
+.cctv-brand b { display: block; font-size: 14px; letter-spacing: .05em; }
+.cctv-brand small { display: block; color: var(--ink-3); font-size: 11px; margin-top: 3px; }
+.cctv-header-actions { display: flex; gap: 22px; align-items: center; }
+.cctv-back { font-size: 13px; text-decoration: none; color: var(--ink-2) !important; }
+.cctv-back:hover { color: var(--accent) !important; }
+.cctv-header .theme-toggle { display: grid; place-items: center; width: 40px; height: 40px; padding: 9px; border: 1px solid var(--line-2); border-radius: 50%; background: var(--surface); cursor: pointer; }
+.cctv-header .theme-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.cctv-wrap { max-width: 1376px; padding: 42px 40px 32px; margin: auto; }
+.cctv-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 28px; }
+.cctv-kicker { display: block; color: var(--ink-3); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.cctv-heading :is(h1,h2) { font-size: clamp(28px, 3vw, 42px); line-height: 1.15; font-weight: 650; letter-spacing: -.04em; margin: 12px 0; }
+.cctv-heading p { color: var(--ink-2); font-size: 13px; margin: 0; line-height: 1.7; }
+.cctv-status-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .12em; padding: 10px 13px; border: 1px solid var(--line-2); border-radius: 100px; color: var(--ink-3); background: var(--surface); }
+.cctv-status-badge i,.cctv-on-video i { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: currentColor; }
+.cctv-status-badge.is-live { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.cctv-view-card { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--surface); }
+.cctv-stage { position: relative; background: #101712; aspect-ratio: 16 / 9; width: 100%; display: flex; align-items: center; justify-content: center; }
+.cctv-stage video { width: 100%; height: 100%; object-fit: contain; background: #101712; display: block; }
+.cctv-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 24px; text-align: center; gap: 12px; color: #e4ebe3; background: radial-gradient(ellipse at 50% 45%, #22352a, #101712 75%); }
+.cctv-placeholder svg { width: 58px; height: 58px; stroke: #91a997; fill: none; stroke-width: 1.7; margin-bottom: 10px; }
+.cctv-placeholder strong { font-size: 17px; font-weight: 550; }
+.cctv-placeholder span { font-size: 12px; color: #98ac9d; line-height: 1.7; max-width: 420px; }
+.cctv-on-video { position: absolute; top: 20px; left: 20px; display: inline-flex; align-items: center; gap: 7px; background: #bc3a32; color: #fff; border-radius: 5px; padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+.cctv-controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 20px 10px; flex-wrap: wrap; }
+.cctv-control-main,.cctv-control-audio { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.cctv-button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--surface); color: var(--ink); font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; transition: background .18s ease,border-color .18s ease; }
+.cctv-button:hover { background: var(--surface-2); border-color: var(--accent); }
+.cctv-button.cctv-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.cctv-button.cctv-primary:hover { background: var(--accent-hover); }
+.cctv-button.cctv-danger { color: var(--danger); }
+.cctv-button:disabled { opacity: .4; cursor: default; }
+.cctv-volume { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-3); margin: 0 4px; }
+.cctv-volume input { width: 86px; accent-color: var(--accent); }
+.cctv-message { margin: 0; font-size: 12px; line-height: 1.7; color: var(--ink-2); min-height: 21px; }
+.cctv-view-card>.cctv-message { padding: 4px 20px 17px; }
+.cctv-message.is-error { color: var(--danger); }
+.cctv-details { display: grid; grid-template-columns: 1.2fr 1fr 1.2fr 1fr .8fr; margin: 26px 0 32px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.cctv-details>div { padding: 20px 18px; border-right: 1px solid var(--line); }
+.cctv-details>div:first-child { padding-left: 0; }
+.cctv-details>div:last-child { border-right: 0; }
+.cctv-details span { display: block; font-size: 10px; color: var(--ink-3); margin-bottom: 7px; }
+.cctv-details strong { display: block; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+.cctv-device-settings { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.cctv-device-settings h2 { font-size: 20px; margin: 8px 0; font-weight: 600; letter-spacing: -.02em; }
+.cctv-device-settings p { font-size: 12px; line-height: 1.7; color: var(--ink-2); max-width: 570px; margin: 0; }
+.cctv-setup-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.cctv-footnote { font-size: 11px; color: var(--ink-3); margin: 25px 0 0; line-height: 1.8; }
+.cctv-login { max-width: 440px; margin: 50px auto 100px; padding: 32px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.cctv-login h1 { font-size: 27px; margin: 14px 0; letter-spacing: -.03em; line-height: 1.2; font-weight: 600; }
+.cctv-login p { font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+.cctv-login form { display: flex; flex-direction: column; gap: 10px; margin: 24px 0 15px; }
+.cctv-login label { font-size: 11px; color: var(--ink-2); }
+.cctv-login input { min-height: 45px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--surface-2); color: var(--ink); padding: 11px 12px; width: 100%; }
+:is(.cctv-page,.cctv-admin-panel) :is(a,button,input):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.cctv-stage:fullscreen { width: 100vw; height: 100vh; aspect-ratio: auto; }
+@media (max-width: 900px) { .cctv-device-settings { align-items: flex-start; flex-direction: column; }.cctv-details { grid-template-columns: repeat(3,minmax(0,1fr)); }.cctv-details>div:first-child { padding-left: 18px; }.cctv-details>div:nth-child(3) { border-right: 0; } }
+@media (max-width: 600px) { .cctv-header { padding: 15px 18px; min-height: 76px; gap: 12px; }.cctv-header-actions { gap: 12px; }.cctv-brand b { font-size: 12px; }.cctv-back { font-size: 11px; }.cctv-wrap { padding: 28px 18px; }.cctv-heading { gap: 14px; align-items: flex-start; }.cctv-heading p { font-size: 12px; }.cctv-status-badge { margin-top: 24px; padding: 8px 10px; font-size: 9px; }.cctv-stage { min-height: 220px; }.cctv-controls { padding: 14px; }.cctv-control-audio { gap: 7px; }.cctv-view-card>.cctv-message { padding: 4px 14px 14px; }.cctv-button { font-size: 11px; padding: 9px 11px; }.cctv-details { grid-template-columns: repeat(2,minmax(0,1fr)); }.cctv-details>div { padding: 15px 12px; }.cctv-details>div:first-child { padding-left: 12px; }.cctv-details>div:nth-child(2n) { border-right: 0; }.cctv-details>div:nth-child(3) { border-right: 1px solid var(--line); }.cctv-login { padding: 26px; margin-top: 30px; }.cctv-placeholder strong { font-size: 14px; }.cctv-placeholder span { font-size: 11px; }.cctv-placeholder svg { width: 40px; height: 40px; margin: 0; } }
+@media (prefers-reduced-motion: reduce) { .cctv-button { transition: none; } }
+
+/* Embedded viewer changes only the CCTV panel inside existing administration. */
+.cctv-admin-panel { scroll-margin-top:100px; }
+.cctv-admin-panel .cctv-heading h2 { display:block; font-family:inherit; font-size:clamp(23px,3vw,34px); line-height:1.2; margin:10px 0; }
+.cctv-admin-panel .cctv-details { margin-bottom:24px; }
+.cctv-admin-panel .cctv-device-settings h2 { font-family:inherit; display:block; font-size:19px; margin:8px 0; }
+.cctv-admin-panel .cctv-controls button { font:inherit; font-size:12px; }

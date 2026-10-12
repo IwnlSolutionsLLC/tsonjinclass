@@ -1,0 +1,11 @@
+# Private settings with API keys / client secrets — keep these on the server only.
+ai-settings.php
+12-2-ai-server-settings.php
+spotify-settings.php
+
+# Runtime data written by the site (photos, folders, passwords, sessions).
+database/
+
+# OS clutter
+.DS_Store
+__MACOSX/

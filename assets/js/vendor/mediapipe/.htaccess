@@ -1,0 +1,5 @@
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType application/wasm .wasm
+  AddType application/octet-stream .tflite .task
+</IfModule>

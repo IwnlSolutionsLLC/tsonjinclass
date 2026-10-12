@@ -1,0 +1,36 @@
+name: class12-2-office
+
+services:
+  documentserver:
+    image: ${ONLYOFFICE_IMAGE:-onlyoffice/documentserver:9.4.0.1}
+    restart: unless-stopped
+    ports:
+      # HTTPS is terminated by the existing host reverse proxy.
+      - "127.0.0.1:8082:80"
+    environment:
+      JWT_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET:?Set a generated JWT_SECRET in .env before starting}
+      JWT_HEADER: Authorization
+      JWT_IN_BODY: "true"
+      # Public HTTPS website URLs work with this default. Change only for a
+      # deliberately private-network website deployment (see README).
+      ALLOW_PRIVATE_IP_ADDRESS: ${ALLOW_PRIVATE_IP_ADDRESS:-false}
+      ALLOW_META_IP_ADDRESS: "false"
+    volumes:
+      - office_logs:/var/log/onlyoffice
+      - office_data:/var/www/onlyoffice/Data
+      - office_lib:/var/lib/onlyoffice
+      - office_postgresql:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent http://127.0.0.1/healthcheck | grep -qx true"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    stop_grace_period: 60s
+
+volumes:
+  office_logs:
+  office_data:
+  office_lib:
+  office_postgresql:

@@ -1,0 +1,77 @@
+/* Хавтасны ажлын орчин, хуваалцах, засварлагч */
+.folder-head-actions { justify-content: flex-end; }
+.folder-meta-description { white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 6px !important; }
+.folder-card-description { grid-column: 2; grid-row: 3; font-size: 12px; color: var(--ink-2); overflow-wrap: anywhere; }
+.folder-card-icon { grid-row: 1 / 4; }
+.folder-breadcrumbs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 18px 0; color: var(--ink-3); }
+.folder-breadcrumbs [aria-current="page"] { color: var(--green-700); font-weight: 800; }
+.folder-directories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.folder-directory { display: flex; align-items: center; gap: 12px; padding: 18px; min-width: 0; }
+.folder-directory-icon { color: var(--green-700); background: var(--green-100); display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; flex: none; }
+.folder-directory-info { flex: 1; min-width: 0; }
+.folder-directory-name { background: none; border: 0; padding: 0; color: var(--ink); font-weight: 800; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.folder-directory-name:hover { color: var(--green-700); }
+.folder-directory-description { margin: 4px 0 0; font-size: 12px; color: var(--ink-3); overflow-wrap: anywhere; white-space: pre-wrap; }
+.folder-directory-actions { display: flex; gap: 4px; flex: none; }
+.folder-file-actions { flex-wrap: wrap; justify-content: flex-end; }
+.folder-icon-picker { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 18px; }
+.folder-icon-choice { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line-2); border-radius: 14px; background: var(--white); cursor: pointer; color: var(--ink-2); }
+.folder-icon-choice.on, .folder-icon-choice[aria-pressed="true"] { background: var(--green-100); border-color: var(--green); color: var(--green-700); }
+.folder-share-status { margin: 12px 0; font-size: 14px; color: var(--ink-2); }
+.folder-share-link { display: flex; align-items: center; gap: 8px; width: 100%; font-size: 12px; }
+.folder-share-link .input { flex: 1; min-width: 0; }
+.folder-share-permission { display: flex; align-items: center; gap: 9px; margin: 12px 0; font-weight: 700; font-size: 13px; }
+.folder-share-permission input { width: 18px; height: 18px; accent-color: var(--green); }
+.folder-move-list { max-height: 40vh; overflow: auto; display: grid; gap: 6px; }
+.share-banner { margin: 26px 0 0; padding: 16px 20px; display: flex; gap: 12px; align-items: center; color: var(--green-700); }
+.share-banner p { margin: 0; font-size: 13px; }
+.share-view .folders-hero { margin-top: 18px; }
+.share-upload-note { font-size: 13px; color: var(--ink-3); }
+.fe-dialog { width: min(1080px, 100%) !important; }
+.fe-document-preview { padding: 24px; background: white; border-radius: 12px; overflow: auto; overflow-wrap: anywhere; }
+.fe-body { margin-top: 16px; max-height: 64vh; overflow: auto; }
+.fe-toolbar, .fe-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; }
+.fe-footer { justify-content: flex-end; }
+.fe-status, .fe-note { font-size: 13px; color: var(--ink-3); white-space: pre-wrap; overflow-wrap: anywhere; }
+.fe-textarea { display: block; width: 100%; min-height: 46vh; resize: vertical; padding: 18px; border: 1px solid var(--line-2); border-radius: 14px; background: white; font-family: ui-monospace, monospace; font-size: 14px; line-height: 1.7; }
+.fe-word-list { padding: 20px; background: white; border-radius: 12px; }
+.fe-word-row { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.fe-word-row textarea, .fe-word-row [contenteditable] { width: 100%; min-height: 50px; padding: 12px; border: 1px solid var(--line-2); border-radius: 8px; }
+.fe-word-tools { display: flex; gap: 6px; margin-top: 6px; }
+.fe-grid-wrap { overflow: auto; max-height: 50vh; border: 1px solid var(--line-2); border-radius: 10px; background: white; }
+.fe-grid { border-collapse: collapse; table-layout: fixed; font-size: 12px; }
+.fe-grid th { position: sticky; top: 0; background: var(--green-100); z-index: 1; }
+.fe-grid td, .fe-grid th { border: 1px solid var(--line-2); min-width: 110px; padding: 3px; }
+.fe-cell { border: 0; background: white; width: 110px; padding: 6px; outline-color: var(--green); }
+.fe-cell.selected { background: var(--green-50); }
+.fe-formula-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.fe-formula-bar input { flex: 1; min-width: 0; }
+.fe-pdf-stage { position: relative; width: fit-content; max-width: 100%; margin: auto; background: white; }
+.fe-pdf-canvas { display: block; max-width: 100%; height: auto; }
+.fe-pdf-overlay { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+.convert-options { display: grid; gap: 10px; margin: 18px 0; }
+.convert-result { background: var(--green-50); border-radius: 14px; padding: 14px; color: var(--ink-2); font-size: 13px; }
+.office-setup-note { padding: 16px; background: var(--green-50); border-radius: 14px; margin: 16px 0; color: var(--ink-2); font-size: 14px; }
+.office-settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1040px) {
+  .folder-head-actions { width: 100%; justify-content: flex-start; }
+  #folderBody .folders-hero { flex-wrap: wrap; }
+  .folder-file-actions { max-width: 250px; }
+  .folder-directories { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .folder-card-description { grid-column: 1 / 3; grid-row: 4; }
+  .folder-card-icon { grid-row: 1; }
+  .folder-card-state { white-space: normal; }
+  .folder-file-actions { max-width: 100%; width: 100%; justify-content: flex-end; }
+  .folder-directory { flex-wrap: wrap; }
+  .folder-directory-actions { width: 100%; justify-content: flex-end; }
+  .folder-bulk-actions { flex-wrap: wrap; }
+  .folder-bulk-actions .btn { flex: 1; min-width: 85px; }
+  .folder-head-actions .btn { font-size: 12px; height: 38px; padding: 0 12px; }
+  .folder-head-actions .btn-icon { width: 38px; padding: 0; }
+  .fe-body { max-height: 58vh; }
+  .fe-textarea { min-height: 40vh; font-size: 13px; }
+  .office-settings-grid { grid-template-columns: 1fr; }
+  .folder-share-link { flex-wrap: wrap; }
+}

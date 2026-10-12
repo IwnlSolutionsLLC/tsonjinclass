@@ -1,0 +1,458 @@
+{
+  "className": "12-2",
+  "registrationDate": "2026-09-21",
+  "students": [
+    {
+      "id": "student-01",
+      "name": "Амгаланзаяа",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-04"
+          ]
+        },
+        {
+          "name": "Усан бассейн",
+          "clubIds": [
+            "club-21"
+          ]
+        },
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-02",
+      "name": "Анар-Эрдэнэ",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Дизайн thinker",
+          "clubIds": [
+            "club-15"
+          ]
+        },
+        {
+          "name": "English Corner club",
+          "clubIds": [
+            "club-02"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-03",
+      "name": "Азжаргал",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Усан бассейн",
+          "clubIds": [
+            "club-21"
+          ]
+        },
+        {
+          "name": "Хөгжмийн дугуйлан",
+          "clubIds": [
+            "club-11"
+          ],
+          "reason": "Бүртгэлд «Хөгжмийн дугуйлан» гэж бичсэн. Эх зураг дахь «Үндэсний хөгжим»-ийн цагийг харуулав; багшаас тодруулна уу.",
+          "tentative": true
+        },
+        {
+          "name": "Сагсанбөмбөг",
+          "clubIds": [
+            "club-09"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-04",
+      "name": "Ган-Эрдэнэ",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-04"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        },
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-05",
+      "name": "Гэрэлтуяа",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "СӨҮЗ",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        },
+        {
+          "name": "Дизайн thinker",
+          "clubIds": [
+            "club-15"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-06",
+      "name": "Дөлгөөн-Од",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-04"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        },
+        {
+          "name": "Гитар",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-07",
+      "name": "Дөлгөөн-Эрдэнэ",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-04"
+          ]
+        },
+        {
+          "name": "Cyber security",
+          "clubIds": [
+            "club-26"
+          ]
+        },
+        {
+          "name": "Код бичих клуб",
+          "clubIds": [
+            "club-07"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-08",
+      "name": "Мишээл",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Бүжиг",
+          "clubIds": [
+            "club-14"
+          ]
+        },
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-03"
+          ]
+        },
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-09",
+      "name": "Мөнгөнзаяа",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Мэтгэлцээн",
+          "clubIds": [
+            "club-17"
+          ]
+        },
+        {
+          "name": "Хөгжмийн дугуйлан",
+          "clubIds": [
+            "club-11"
+          ],
+          "reason": "Бүртгэлд «Хөгжмийн дугуйлан» гэж бичсэн. Эх зураг дахь «Үндэсний хөгжим»-ийн цагийг харуулав; багшаас тодруулна уу.",
+          "tentative": true
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-10",
+      "name": "Номин",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        },
+        {
+          "name": "Сагсанбөмбөг",
+          "clubIds": [
+            "club-08"
+          ]
+        },
+        {
+          "name": "Код бичих клуб",
+          "clubIds": [
+            "club-07"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-11",
+      "name": "Эрхэс",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        },
+        {
+          "name": "Сагсанбөмбөг",
+          "clubIds": [
+            "club-09"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-12",
+      "name": "Энхжавхлан",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Мэтгэлцээн",
+          "clubIds": [
+            "club-17"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        },
+        {
+          "name": "Speaking club 1",
+          "clubIds": [
+            "club-27"
+          ],
+          "reason": "Эх зураг дахь «English Corner speaking club»-тэй нэрийг тааруулсан."
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-13",
+      "name": "Энэрэл",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Шоо",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        },
+        {
+          "name": "Хөгжмийн дугуйлан",
+          "clubIds": [
+            "club-11"
+          ],
+          "reason": "Бүртгэлд «Хөгжмийн дугуйлан» гэж бичсэн. Эх зураг дахь «Үндэсний хөгжим»-ийн цагийг харуулав; багшаас тодруулна уу.",
+          "tentative": true
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-14",
+      "name": "Энхсоёлоо",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гитар",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        },
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-03"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-15",
+      "name": "Төгсбүрд",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Жудо",
+          "clubIds": [
+            "club-05"
+          ]
+        },
+        {
+          "name": "Сагсанбөмбөг",
+          "clubIds": [
+            "club-09"
+          ]
+        },
+        {
+          "name": "Гитар",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        }
+      ],
+      "gender": "male"
+    },
+    {
+      "id": "student-16",
+      "name": "Содцэцэг",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Гарбөмбөг",
+          "clubIds": [
+            "club-03"
+          ]
+        },
+        {
+          "name": "HSK 2-4",
+          "clubIds": [
+            "club-12"
+          ]
+        },
+        {
+          "name": "Код бичих клуб",
+          "clubIds": [
+            "club-07"
+          ]
+        }
+      ],
+      "gender": "female"
+    },
+    {
+      "id": "student-17",
+      "name": "Ерөөлт",
+      "className": "12-2",
+      "choices": [
+        {
+          "name": "Дижитал зургийн клуб",
+          "clubIds": [
+            "club-24"
+          ],
+          "reason": "Эх зураг дахь «Дижитал зураг»-тай нэрийг тааруулсан."
+        },
+        {
+          "name": "AI Club",
+          "clubIds": [
+            "club-01"
+          ],
+          "reason": "Эх зураг дахь «AI технологийн дугуйлан»-тай нэрийг тааруулсан."
+        },
+        {
+          "name": "СӨҮЗ",
+          "clubIds": [],
+          "reason": "Эх зурагт энэ дугуйлангийн мөр, цаг байхгүй. Цагийг багшаас тодруулна уу."
+        }
+      ],
+      "gender": "male",
+      "registrationName": "Ерөөлтхүү"
+    },
+    {
+      "id": "student-18",
+      "name": "Маргад-Эрдэнэ",
+      "className": "12-2",
+      "choices": []
+    }
+  ]
+}

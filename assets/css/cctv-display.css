@@ -1,0 +1,50 @@
+/* Always-visible camera/microphone state on the enrolled classroom display. */
+.cctv-display-badge[hidden],.cctv-display-setup-panel[hidden],.cctv-display-setup-panel [hidden],.cctv-camera-setup[hidden],[data-cctv-open-setup][hidden] { display:none!important; }
+.cctv-camera-setup { margin-top:32px; border:1px solid var(--line-2,#d5ddd1); border-radius:18px; background:var(--surface,#fff); scroll-margin-top:110px; }
+.cctv-camera-setup > summary { display:flex; align-items:center; gap:12px; justify-content:space-between; padding:20px 24px; cursor:pointer; font-size:15px; font-weight:800; }
+.cctv-camera-setup > summary small { font-size:11px; font-weight:600; color:var(--ink-3,#707c74); }
+.cctv-camera-setup > summary:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:3px; }
+.cctv-camera-setup-body { padding:0 24px 24px; }
+.cctv-camera-intro { margin:0 0 18px; max-width:800px; line-height:1.8; color:var(--ink-2,#52635a); font-size:13px; }
+.cctv-setup-load { padding:16px 18px; border:1px solid var(--line-2,#d5ddd1); border-radius:12px; font-size:13px; line-height:1.8; background:var(--surface-2,#f3f5f1); }
+.cctv-setup-load code { overflow-wrap:anywhere; }
+.cctv-camera-teacher-link { display:flex; flex-wrap:wrap; gap:18px; margin:18px 0 0; font-size:13px; font-weight:700; }
+.cctv-camera-teacher-link a { color:var(--accent,#2d5746); }
+.cctv-display-badge {
+  position:fixed; z-index:10030; right:max(18px,env(safe-area-inset-right)); bottom:max(18px,env(safe-area-inset-bottom));
+  display:flex; align-items:center; gap:12px; max-width:min(560px,calc(100vw - 28px)); padding:14px 16px;
+  color:var(--ink,#24372e); background:var(--surface,#fff); border:1px solid var(--line-2,#d5ddd1); border-radius:16px;
+  box-shadow:0 8px 35px #10221728; font:500 13px/1.5 Manrope,system-ui,sans-serif;
+}
+.cctv-display-camera { display:grid; place-items:center; flex:none; width:40px; height:40px; color:var(--ink-2,#52635a); background:var(--surface-2,#f3f5f1); border-radius:12px; }
+.cctv-display-camera svg { width:23px; height:23px; }
+.cctv-display-badge-copy { display:flex; flex:1; flex-direction:column; gap:2px; min-width:0; }
+.cctv-display-badge strong { font-size:13px; letter-spacing:.02em; }
+.cctv-display-badge-detail { font-size:11px; color:var(--ink-2,#52635a); overflow-wrap:anywhere; }
+.cctv-display-badge.is-live { border-color:#cd746e; }
+.cctv-display-badge.is-live .cctv-display-camera { color:#ad3933; background:#fae8e6; }
+.cctv-display-badge.is-live strong { color:var(--danger,#ba4743); }
+.cctv-display-badge-start,.cctv-display-badge-stop { flex:none; min-height:36px; padding:8px 12px; border-radius:10px; cursor:pointer; font:700 12px Manrope,system-ui,sans-serif; }
+.cctv-display-badge-start { background:var(--accent,#2d5746); border:1px solid var(--accent,#2d5746); color:var(--accent-ink,#fff); }
+.cctv-display-badge-stop { background:var(--danger-bg,#fceeed); border:1px solid var(--danger,#ba4743); color:var(--danger,#ba4743); }
+.cctv-display-badge button:focus-visible,.cctv-display-button:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:3px; }
+.cctv-display-badge button:disabled,.cctv-display-button:disabled { cursor:wait; opacity:.55; }
+.cctv-display-setup-panel { background:var(--surface,#fff); color:var(--ink,#24372e); padding:clamp(20px,4vw,36px); border:1px solid var(--line-2,#d5ddd1); border-radius:20px; }
+.cctv-display-setup-panel h2 { margin:0 0 12px; font-size:clamp(21px,3vw,28px); }
+.cctv-display-note { max-width:700px; color:var(--ink-2,#52635a); font-size:14px; line-height:1.8; }
+.cctv-display-status { color:var(--ink,#24372e); font-size:14px; line-height:1.7; font-weight:700; margin:22px 0 16px; }
+.cctv-display-label { display:grid; gap:8px; margin:0 0 18px; font-size:12px; font-weight:700; max-width:460px; }
+.cctv-display-label-input { width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line-2,#d5ddd1); border-radius:10px; background:var(--surface,#fff); color:var(--ink,#24372e); font:500 14px Manrope,system-ui,sans-serif; }
+.cctv-display-label-input:focus-visible { outline:3px solid var(--focus,#a0b89d); outline-offset:2px; }
+.cctv-display-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.cctv-display-button { display:inline-flex; align-items:center; justify-content:center; padding:12px 17px; min-height:46px; border:1px solid var(--line-2,#d5ddd1); border-radius:12px; font:700 13px Manrope,system-ui,sans-serif; background:var(--surface-2,#f3f5f1); color:var(--ink,#24372e); cursor:pointer; }
+.cctv-display-primary { background:var(--accent,#2d5746); color:var(--accent-ink,#fff); border-color:var(--accent,#2d5746); }
+.cctv-display-stop { background:var(--danger-bg,#fceeed); color:var(--danger,#ba4743); border-color:var(--danger,#ba4743); }
+.cctv-display-preview { display:block; margin:24px 0 0; max-width:100%; width:760px; aspect-ratio:16/9; object-fit:contain; background:#111a15; border-radius:14px; }
+@media(max-width:640px) {
+  .cctv-display-badge { right:10px; bottom:10px; padding:11px; gap:9px; max-width:calc(100vw - 20px); }
+  .cctv-display-camera { width:32px; height:32px; }
+  .cctv-display-badge strong { font-size:11px; }
+  .cctv-display-badge-detail { font-size:10px; }
+  .cctv-display-badge-stop,.cctv-display-badge-start { padding:8px 10px; font-size:11px; }
+}

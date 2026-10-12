@@ -1,0 +1,80 @@
+/* Original local colour recipes and hand-drawn accessories. */
+(function () {
+  'use strict';
+  var C = window.C122 = window.C122 || {};
+  var filterRows = [
+    ['none','Original','original','none'],['vintage',"90’s",'film','sepia(.35) saturate(1.25) contrast(1.05)'],['portra','Portra','film','sepia(.2) saturate(.85) brightness(1.06)'],['kodak','Golden Hour','film','sepia(.35) saturate(1.35) brightness(1.08)'],['fuji','Green Film','film','sepia(.18) hue-rotate(18deg) saturate(.85)'],['faded','Faded','film','contrast(.82) saturate(.75) brightness(1.12)'],['instant','Instant','film','sepia(.15) contrast(.92) saturate(1.15)'],['grain','Grain Club','film','sepia(.18) contrast(1.08)','grain'],['amber','Amber','film','sepia(.55) saturate(1.4)'],
+    ['bright','Glow','glow','brightness(1.13) saturate(1.1)'],['pink','Rose','glow','sepia(.2) saturate(1.25) hue-rotate(320deg)'],['peach','Peach','glow','sepia(.25) saturate(1.15) brightness(1.12)'],['cream','Cream','glow','sepia(.12) contrast(.9) brightness(1.15)'],['soft','Soft Light','glow','contrast(.85) brightness(1.12)'],['honey','Honey','glow','sepia(.3) saturate(1.4) brightness(1.05)'],['dream','Dream','glow','brightness(1.15) contrast(.86) saturate(.9)','haze'],['blush','Blush','glow','sepia(.22) hue-rotate(330deg) saturate(1.5)'],
+    ['cool','Blue Hour','cool','saturate(.8) hue-rotate(12deg) contrast(1.05)'],['ice','Ice','cool','saturate(.6) brightness(1.12)'],['mint','Mint','cool','sepia(.2) hue-rotate(60deg) saturate(.8)'],['lavender','Lavender','cool','sepia(.25) hue-rotate(240deg) saturate(.85)'],['moon','Moonlight','cool','saturate(.55) brightness(.9) contrast(1.2)'],['teal','Teal Club','cool','sepia(.25) hue-rotate(135deg) saturate(1.3)'],
+    ['mono','B&W','noir','grayscale(1) contrast(1.12)'],['silver','Silver','noir','grayscale(1) contrast(.9) brightness(1.13)'],['ink','Ink','noir','grayscale(1) contrast(1.6)'],['noir','Noir','noir','grayscale(1) contrast(1.25) brightness(.88)','vignette'],['sepia','Sepia','noir','sepia(1) contrast(1.12)'],['charcoal','Charcoal','noir','grayscale(1) contrast(.8) brightness(.95)'],
+    ['pop','Pop','fun','saturate(2) contrast(1.15)'],['candy','Candy','fun','sepia(.3) hue-rotate(285deg) saturate(2)'],['disco','Disco','fun','hue-rotate(170deg) saturate(1.65)'],['sunset','Sunset','fun','sepia(.5) hue-rotate(330deg) saturate(1.6)','warm'],['electric','Electric','fun','contrast(1.25) saturate(2.2)'],['duotone','Duotone','fun','grayscale(1) sepia(1) hue-rotate(155deg) saturate(3)'],['comic','Comic','fun','contrast(1.6) saturate(1.9)']
+  ];
+  var filters = filterRows.map(function (r) { return { id:r[0], name:r[1], group:r[2], css:r[3], overlay:r[4] || null }; });
+  var stickerRows = [
+    ['heart','Зүрх','love','heart','#ff667d','♥'],['double-heart','Хос зүрх','love','double','#ff667d','♥♥'],['heart-outline','Зүрхэн хүрээ','love','outline','#ef6c9c','♡'],['love-note','Love note','love','word','#ffcbd5','LOVE'],['kiss','Үнсэлт','love','emoji','#ff647c','💋'],['cherry','Cherry','love','emoji','#ed454e','🍒'],['ribbon','Ribbon','love','emoji','#f785b3','🎀'],['love-letter','Захиа','love','emoji','#ffcbd5','💌'],['butterfly','Эрвээхэй','love','emoji','#a092db','🦋'],
+    ['star','Од','retro','star','#ffca45','★'],['spark','Гялбаа','retro','spark','#fff0af','✧'],['smile','Инээмсэглэл','retro','smile','#ffce29','☺'],['flower','Цэцэг','retro','flower','#ffdfa1','✿'],['rainbow','Солонго','retro','rainbow','#f37654','🌈'],['tape','Washi tape','retro','tape','#92cbb4','▰'],['sun','Нар','retro','sun','#ffce29','☀'],['moon','Сар','retro','emoji','#ffe7a8','🌙'],['cloud','Үүл','retro','cloud','#ffffff','☁'],['bolt','Аянга','retro','bolt','#ffc731','ϟ'],['record','Пянз','retro','record','#ec7240','●'],['planet','Гараг','retro','planet','#a4a7df','🪐'],
+    ['party','Party','party','emoji','#fbb750','🎉'],['balloon','Шаар','party','emoji','#f18d91','🎈'],['disco-ball','Disco ball','party','emoji','#dbdcdd','🪩'],['crown','Титэм','party','crown','#ffcb47','♛'],['confetti','Confetti','party','confetti','#f48b7b','✺'],['music','Хөгжим','party','symbol','#a99ede','♫'],['camera','Камер','party','emoji','#727977','📷'],['alien','Alien','party','emoji','#a5df83','👽'],['fire','Fire','party','emoji','#f59347','🔥'],['cool','Cool','party','emoji','#f4c14d','😎'],['glitter','Glitter','party','spark','#bcdde9','✦'],
+    ['senior','SENIOR','school','word','#ffe7b3','SENIOR'],['class','12–2','school','word','#bfe0c6','12–2'],['year','2027','school','word','#d0c3eb','2027'],['graduate','Төгсөгч','school','emoji','#719192','🎓'],['book','Ном','school','emoji','#ea926b','📚'],['pencil','Харандаа','school','emoji','#f5c957','✏️'],['basketball','Сагс','school','emoji','#f28b49','🏀'],['football','Хөлбөмбөг','school','emoji','#eff0e8','⚽'],['medal','Медаль','school','emoji','#ffcf6b','🏅'],['ticket','Дурсамж','school','ticket','#ffd998','MEMORY'],
+    ['good-vibes','Good vibes','words','word','#ffad7c','GOOD VIBES'],['besties','Besties','words','word','#ffc8dc','BESTIES'],['forever','Forever','words','word','#cbe5db','FOREVER'],['our-days','Our days','words','word','#ded0ee','OUR DAYS'],['be-you','Be you','words','word','#fde09e','BE YOU'],['no-stress','No stress','words','word','#b8dddf','NO STRESS'],['smile-word','Smile!','words','word','#ffc9a9','SMILE!'],['made-it','We made it','words','word','#c6dda8','WE MADE IT'],
+    ['cat','Муур','friends','emoji','#edc291','🐱'],['bunny','Туулай','friends','emoji','#e8dae4','🐰'],['panda','Panda','friends','emoji','#eeeeee','🐼'],['frog','Мэлхий','friends','emoji','#a3cd78','🐸'],['teddy','Бамбарууш','friends','emoji','#c6a17c','🧸'],['unicorn','Unicorn','friends','emoji','#d0bcea','🦄']
+  ];
+  var stickers = stickerRows.map(function (r) { return { id:r[0], name:r[1], group:r[2], kind:r[3], color:r[4], symbol:r[5] }; });
+  var faceRows = [['none','Original','○'],['sunglasses','Cool shades','⌐■'],['heart-eyes','Heart eyes','♥'],['cat','Cat ears','🐱'],['bunny','Bunny ears','🐰'],['crown','Royal','♛'],['flowers','Flower crown','✿'],['freckles','Freckles','·'],['rainbow','Rainbow cheeks','🌈'],['moustache','Moustache','〰'],['blush','Blush','●'],['stars','Star cheeks','✦'],['alien','Alien antenna','👽'],['halo','Angel halo','◯']];
+  var faces = faceRows.map(function (r) { return {id:r[0],name:r[1],symbol:r[2],group:'face'}; });
+  function filterCss(id) { var f=filters.find(function(v){return v.id===id;});return f?f.css:'none'; }
+  function pathHeart(ctx,s) { ctx.beginPath();ctx.moveTo(0,s*.38);ctx.bezierCurveTo(-s*.9,-s*.15,-s*.35,-s*.8,0,-s*.32);ctx.bezierCurveTo(s*.35,-s*.8,s*.9,-s*.15,0,s*.38);ctx.closePath(); }
+  function star(ctx,s,points,inner) {ctx.beginPath();for(var i=0;i<points*2;i++){var a=-Math.PI/2+i*Math.PI/points,r=i%2?s*inner:s*.5;var x=Math.cos(a)*r,y=Math.sin(a)*r;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.closePath();}
+  function circle(ctx,x,y,r,fill) {ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);if(fill)ctx.fill();else ctx.stroke();}
+  function rounded(ctx,x,y,w,h,r) {ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function flower(ctx,s) { for(var j=0;j<10;j++){ctx.save();ctx.rotate(j*Math.PI/5);ctx.beginPath();ctx.ellipse(0,-s*.26,s*.095,s*.2,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();}ctx.fillStyle='#ffca45';circle(ctx,0,0,s*.17,true);ctx.stroke(); }
+  function rainbow(ctx,s) {['#f27654','#ffc250','#a9c899','#93c9c6','#aba2d6'].forEach(function(c,i){ctx.strokeStyle=c;ctx.lineWidth=s*.075;ctx.beginPath();ctx.arc(0,s*.22,s*(.43-i*.073),Math.PI,Math.PI*2);ctx.stroke();});}
+  function crown(ctx,s) {ctx.beginPath();ctx.moveTo(-s*.46,s*.22);ctx.lineTo(-s*.5,-s*.28);ctx.lineTo(-s*.22,-s*.02);ctx.lineTo(0,-s*.48);ctx.lineTo(s*.22,-s*.02);ctx.lineTo(s*.5,-s*.28);ctx.lineTo(s*.46,s*.22);ctx.closePath();ctx.fill();ctx.stroke();}
+  function drawSticker(ctx,sticker,size) {
+    var item=stickers.find(function(v){return v.id===sticker.kind;}) || stickers[0],s=size;
+    ctx.save();ctx.rotate((sticker.rotation||0)*Math.PI/180);ctx.fillStyle=sticker.color||item.color;ctx.strokeStyle='#252b29';ctx.lineWidth=Math.max(1,s*.02);ctx.lineJoin='round';ctx.lineCap='round';
+    switch(item.kind) {
+      case 'heart':pathHeart(ctx,s);ctx.fill();ctx.stroke();break;
+      case 'double':[-.22,.22].forEach(function(x){ctx.save();ctx.translate(x*s,0);pathHeart(ctx,s*.7);ctx.fill();ctx.stroke();ctx.restore();});break;
+      case 'outline':pathHeart(ctx,s);ctx.lineWidth=s*.06;ctx.strokeStyle=ctx.fillStyle;ctx.stroke();break;
+      case 'star':star(ctx,s,5,.22);ctx.fill();ctx.stroke();break;
+      case 'spark':star(ctx,s,4,.075);ctx.fill();ctx.stroke();break;
+      case 'flower':flower(ctx,s);break;
+      case 'rainbow':rainbow(ctx,s);break;
+      case 'crown':crown(ctx,s);break;
+      case 'smile':case 'sun':if(item.kind==='sun'){star(ctx,s*1.12,12,.32);ctx.fill();ctx.stroke();}circle(ctx,0,0,s*.4,true);ctx.stroke();ctx.strokeStyle='#252b29';ctx.lineWidth=s*.04;[-.14,.14].forEach(function(x){ctx.beginPath();ctx.arc(s*x,-s*.06,s*.055,Math.PI,0);ctx.stroke();});ctx.beginPath();ctx.arc(0,s*.06,s*.19,0,Math.PI);ctx.stroke();break;
+      case 'tape':ctx.globalAlpha=.85;ctx.beginPath();ctx.moveTo(-s*.5,-s*.18);ctx.lineTo(s*.46,-s*.23);ctx.lineTo(s*.5,s*.18);ctx.lineTo(-s*.46,s*.23);ctx.closePath();ctx.fill();ctx.stroke();for(var t=-.3;t<.4;t+=.15){ctx.strokeStyle='#ffffff88';ctx.beginPath();ctx.moveTo(s*t,-s*.17);ctx.lineTo(s*(t+.13),s*.17);ctx.stroke();}break;
+      case 'bolt':ctx.beginPath();ctx.moveTo(s*.05,-s*.5);ctx.lineTo(-s*.32,s*.05);ctx.lineTo(-s*.05,s*.05);ctx.lineTo(-s*.13,s*.5);ctx.lineTo(s*.35,-s*.08);ctx.lineTo(s*.08,-s*.08);ctx.closePath();ctx.fill();ctx.stroke();break;
+      case 'cloud':ctx.beginPath();ctx.moveTo(-s*.42,s*.2);ctx.bezierCurveTo(-s*.8,-s*.06,-s*.32,-s*.35,-s*.14,-s*.2);ctx.bezierCurveTo(0,-s*.6,s*.47,-s*.44,s*.36,-s*.1);ctx.bezierCurveTo(s*.73,-s*.17,s*.77,s*.26,s*.37,s*.26);ctx.closePath();ctx.fill();ctx.stroke();break;
+      case 'record':ctx.fillStyle='#292d2b';circle(ctx,0,0,s*.46,true);for(var r=.23;r<.45;r+=.055){ctx.strokeStyle='#ffffff22';circle(ctx,0,0,s*r,false);}ctx.fillStyle=sticker.color||item.color;circle(ctx,0,0,s*.18,true);ctx.fillStyle='#fff5e0';circle(ctx,0,0,s*.03,true);break;
+      case 'planet':circle(ctx,0,0,s*.3,true);ctx.rotate(-.3);ctx.strokeStyle=sticker.color||item.color;ctx.lineWidth=s*.05;ctx.beginPath();ctx.ellipse(0,0,s*.55,s*.13,0,0,Math.PI*2);ctx.stroke();break;
+      case 'confetti':for(var q=0;q<17;q++){ctx.save();ctx.rotate(q*2.4);ctx.translate(s*(.13+q%4*.1),0);ctx.fillStyle=['#ff7c69','#ffd44d','#9cd3c8','#c7a2da'][q%4];ctx.rotate(q);ctx.fillRect(-s*.025,-s*.04,s*.05,s*.08);ctx.restore();}break;
+      case 'word':case 'ticket':rounded(ctx,-s*.62,-s*.24,s*1.24,s*.48,s*.09);ctx.fill();ctx.stroke();if(item.kind==='ticket'){ctx.setLineDash([s*.02,s*.03]);ctx.strokeRect(-s*.52,-s*.16,s*1.04,s*.32);ctx.setLineDash([]);}ctx.fillStyle='#252b29';ctx.font='800 '+Math.round(s*(item.symbol.length>9?.12:.17))+'px Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(item.symbol,0,s*.01,s*1.08);break;
+      default:ctx.font='700 '+Math.round(s*.85)+'px "Apple Color Emoji","Segoe UI Emoji",Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';if(item.kind==='symbol'){ctx.strokeText(item.symbol,0,0);}ctx.fillText(item.symbol,0,0);break;
+    }
+    ctx.restore();
+  }
+  function drawFilterOverlay(ctx,w,h,id) {
+    var f=filters.find(function(v){return v.id===id;});if(!f||!f.overlay)return;ctx.save();
+    if(f.overlay==='grain'){ctx.fillStyle='#fff';ctx.globalAlpha=.12;for(var i=0;i<1800;i++){var x=((i*73+19)%997)/997*w,y=((i*191+31)%991)/991*h;ctx.fillRect(x,y,Math.max(1,w/700),Math.max(1,w/700));}}
+    else {var gradient=ctx.createRadialGradient(w*.5,h*.45,0,w*.5,h*.5,Math.max(w,h)*.7);gradient.addColorStop(0,f.overlay==='vignette'?'#0000':'#fff0');gradient.addColorStop(1,f.overlay==='vignette'?'#101b2866':f.overlay==='warm'?'#ed764433':'#fff4db66');ctx.fillStyle=gradient;ctx.fillRect(0,0,w,h);}ctx.restore();
+  }
+  function drawFace(ctx,faceList,w,h,id) {
+    if(!id||id==='none'||!faceList||!faceList.length)return;if(faceList[0]&&typeof faceList[0].x==='number')faceList=[faceList];
+    faceList.forEach(function(p){if(p.length<455)return;var left={x:(p[33].x+p[133].x)*w/2,y:(p[33].y+p[133].y)*h/2},right={x:(p[362].x+p[263].x)*w/2,y:(p[362].y+p[263].y)*h/2};var distance=Math.hypot(right.x-left.x,right.y-left.y);if(distance<4)return;var centre={x:(left.x+right.x)/2,y:(left.y+right.y)/2};ctx.save();ctx.translate(centre.x,centre.y);ctx.rotate(Math.atan2(right.y-left.y,right.x-left.x));ctx.scale(distance,distance);ctx.lineWidth=.04;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#252b29';ctx.fillStyle='#ffd24c';
+      if(id==='sunglasses'){ctx.fillStyle='#222a30';[-.5,.5].forEach(function(x){rounded(ctx,x-.39,-.22,.78,.43,.1);ctx.fill();ctx.stroke();ctx.strokeStyle='#ffffff55';ctx.beginPath();ctx.moveTo(x-.23,-.14);ctx.lineTo(x+.12,-.03);ctx.stroke();ctx.strokeStyle='#252b29';});ctx.beginPath();ctx.moveTo(-.12,-.07);ctx.lineTo(.12,-.07);ctx.stroke();}
+      else if(id==='heart-eyes'){ctx.fillStyle='#f95780';[-.5,.5].forEach(function(x){ctx.save();ctx.translate(x,0);pathHeart(ctx,.65);ctx.fill();ctx.stroke();ctx.restore();});}
+      else if(id==='cat'||id==='bunny'){[-.7,.7].forEach(function(x){ctx.save();ctx.translate(x,-.85);ctx.rotate(x*.23);ctx.fillStyle=id==='cat'?'#dbbea7':'#fff2e7';if(id==='cat'){ctx.beginPath();ctx.moveTo(-.32,.25);ctx.lineTo(-.2,-.62);ctx.lineTo(.35,.15);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#ed94aa';ctx.beginPath();ctx.moveTo(-.18,.1);ctx.lineTo(-.14,-.37);ctx.lineTo(.15,.05);ctx.closePath();ctx.fill();}else{ctx.beginPath();ctx.ellipse(0,-.42,.21,.7,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#ef9cac';ctx.beginPath();ctx.ellipse(0,-.42,.11,.51,0,0,Math.PI*2);ctx.fill();}ctx.restore();});if(id==='cat'){ctx.fillStyle='#e7a8ad';ctx.beginPath();ctx.moveTo(-.13,.48);ctx.lineTo(.13,.48);ctx.lineTo(0,.62);ctx.closePath();ctx.fill();[-1,1].forEach(function(side){for(var j=0;j<3;j++){ctx.beginPath();ctx.moveTo(side*.4,.5+j*.12);ctx.lineTo(side*.92,.44+j*.19);ctx.stroke();}});}}
+      else if(id==='crown'){ctx.translate(0,-.98);crown(ctx,1.8);}
+      else if(id==='flowers'){for(var j=-2;j<=2;j++){ctx.save();ctx.translate(j*.36,-.98+Math.abs(j)*.09);ctx.fillStyle=['#ffd1e0','#fff2bb','#c9d9b2'][Math.abs(j)%3];flower(ctx,.52);ctx.restore();}}
+      else if(id==='freckles'){ctx.fillStyle='#a36542';[-1,1].forEach(function(side){for(var j=0;j<7;j++){circle(ctx,side*(.42+j%3*.12),.38+Math.floor(j/3)*.09,.021,true);}});}
+      else if(id==='rainbow'){[-.67,.67].forEach(function(x){ctx.save();ctx.translate(x,.43);rainbow(ctx,.58);ctx.restore();});}
+      else if(id==='moustache'){ctx.translate(0,.73);ctx.fillStyle='#34302c';[-1,1].forEach(function(side){ctx.save();ctx.scale(side,1);ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(.3,-.32,.34,.25,.64,-.06);ctx.bezierCurveTo(.6,.5,.1,.3,0,0);ctx.fill();ctx.restore();});}
+      else if(id==='blush'){ctx.fillStyle='#ef799575';[-.65,.65].forEach(function(x){ctx.beginPath();ctx.ellipse(x,.44,.28,.15,0,0,Math.PI*2);ctx.fill();});}
+      else if(id==='stars'){[-.68,.68].forEach(function(x){ctx.save();ctx.translate(x,.38);star(ctx,.43,5,.22);ctx.fill();ctx.stroke();ctx.restore();});}
+      else if(id==='alien'){ctx.strokeStyle='#8dd591';ctx.lineWidth=.075;[-.55,.55].forEach(function(x){ctx.beginPath();ctx.moveTo(x,-.7);ctx.quadraticCurveTo(x*1.4,-1.15,x*1.25,-1.65);ctx.stroke();ctx.fillStyle='#a3e29d';circle(ctx,x*1.25,-1.65,.18,true);ctx.stroke();});}
+      else if(id==='halo'){ctx.strokeStyle='#ffdc58';ctx.lineWidth=.08;ctx.beginPath();ctx.ellipse(0,-1.16,.86,.2,-.1,0,Math.PI*2);ctx.stroke();}
+      ctx.restore();
+    });
+  }
+  C.PhotoboothEffects={filters:filters,stickers:stickers,faces:faces,filterCss:filterCss,drawFilterOverlay:drawFilterOverlay,drawSticker:drawSticker,drawFace:drawFace};
+})();

@@ -1,0 +1,17 @@
+/* A shared game shelf with the site's existing glass colors. */
+.games-view [hidden] { display:none!important; }
+.games-hero { display:flex; align-items:center; justify-content:space-between; gap:18px; margin:24px 0; }
+.games-hero .eyebrow { font-size:10px; color:var(--ink-3); letter-spacing:.13em; font-weight:800; }
+.games-hero h2 { font-family:var(--display,inherit); font-size:clamp(28px,5vw,46px); letter-spacing:-.04em; margin:10px 0; }
+.games-hero p { font-size:13px; line-height:1.7; color:var(--ink-3); margin:0; }
+.games-picker { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:7px; gap:6px; border-radius:18px; margin-bottom:26px; }
+.games-picker button { display:flex; align-items:center; justify-content:center; gap:10px; padding:16px 12px; font:inherit; font-size:14px; font-weight:800; color:var(--ink-3); border:1px solid transparent; border-radius:12px; background:transparent; cursor:pointer; transition:background .2s,color .2s,transform .2s; }
+.games-picker button[aria-selected=true] { background:var(--accent-soft,var(--surface-2)); border-color:var(--line); color:var(--accent,var(--green-700)); box-shadow:0 4px 14px -10px #14362c55; }
+.games-picker button:hover { background:var(--surface-2); }
+.games-picker button:focus-visible,.games-hero .sfx-toggle:focus-visible { outline:2px solid var(--accent,var(--green-700)); outline-offset:3px; }
+.games-view .game-panel { min-width:0; animation:games-appear .2s ease; }
+.games-view .fc-hero h2,.games-view .ludo-hero h2,.games-view .chooser-hero h2 { font-size:clamp(24px,4vw,32px); }
+.games-hero .sfx-toggle { border-color:var(--line); background:var(--surface-2); color:var(--ink); }
+@keyframes games-appear { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
+@media(max-width:570px) { .games-picker { gap:3px; padding:5px; }.games-picker button { flex-direction:column; padding:12px 5px; gap:6px; font-size:11px; }.games-hero { margin:18px 0; }.games-hero p { font-size:11px; } }
+@media(prefers-reduced-motion:reduce) { .games-view .game-panel { animation:none; }.games-picker button,.sfx-toggle { transition:none; } }

@@ -1,0 +1,95 @@
+<?php if (!defined('C122')) { http_response_code(404); exit; } ?>
+<section class="view board-view" id="view-board" role="tabpanel" aria-labelledby="tab-board" hidden>
+  <div class="lock-screen" id="boardLock" hidden><div class="lock-card glass"><div class="lock-icon"><?= icon('lock', 'i-lg') ?></div><span class="eyebrow">12–2 / CLASSROOM STUDIO</span><h2 data-i18n="board.title">САМБАР</h2><p data-i18n="board.unlockNote">Цомгийн кодоор нээгээд, хичээлийн самбараа бүх төхөөрөмжөөс ашиглаарай.</p><div class="pin" id="boardPin"></div></div></div>
+  <div id="boardBody" hidden>
+    <div id="boardHome">
+      <div class="board-hero"><div><span class="eyebrow">12–2 / CLASSROOM STUDIO</span><h2 data-i18n="board.title">САМБАР</h2><p data-i18n="board.intro">Хичээлээ зур. Санаагаа бич. Шинэ хуудсанд үргэлжлүүл.</p></div><button type="button" class="btn btn-primary" id="boardNew"><?= icon('plus') ?><span data-i18n="board.newBoard">Шинэ самбар</span></button></div>
+      <div class="board-collection-head"><label class="board-search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="boardSearch" type="search" autocomplete="off" placeholder="Самбарын нэрээр хайх" data-i18n-placeholder="board.search" aria-label="Самбарын нэрээр хайх" data-i18n-aria-label="board.search"></label><button type="button" class="btn btn-ghost" id="boardRefresh"><?= icon('refresh') ?><span data-i18n="board.refresh">Шинэчлэх</span></button></div>
+      <p class="board-collection-status" id="boardCollectionStatus" role="status"></p><div class="board-cards" id="boardCards"></div>
+      <div class="board-home-note"><span aria-hidden="true">✎</span><p data-i18n="board.collectionNote">Үзэг, баллуур, шугам, зураг — хуудсууд вэбсайтад хадгалагдана.</p></div>
+    </div>
+    <div class="board-editor" id="boardEditor" hidden>
+      <div class="board-canvas-shell" id="boardCanvasShell" data-bg="plain"><div class="board-canvas-stage" id="boardCanvasStage"><canvas id="boardBackgroundCanvas" width="1600" height="900" aria-hidden="true"></canvas><canvas id="boardCanvas" width="1600" height="900" tabindex="0" aria-label="Хичээлийн самбар. Үзэг эсвэл хуруугаар зурна." data-i18n-aria-label="board.canvas"></canvas><canvas id="boardOverlayCanvas" width="1600" height="900" aria-hidden="true"></canvas></div></div>
+
+      <div class="board-pill board-pill-title" id="boardTitlePill" data-state="saved"><i class="board-dot" aria-hidden="true"></i><span id="boardSaveStatus" class="board-pill-status" role="status" aria-live="polite" hidden></span><button type="button" class="board-pill-x" id="boardStatusClose" aria-label="Хаах" data-i18n-aria-label="board.close" hidden><?= icon('x') ?></button></div>
+      <time class="board-pill board-clock" id="boardClock" aria-label="Цаг" data-i18n-aria-label="board.clock">--:--</time>
+
+      <div class="board-conflict" id="boardConflict" role="alert" hidden><p data-i18n="board.conflict">Өөр төхөөрөмж энэ самбарыг өөрчилжээ. Өөрийн зурлагыг хуулбар болгон хадгалах эсвэл вэбсайтаас дахин нээгээрэй.</p><div><button type="button" class="btn btn-primary" data-board-act="saveCopy" data-i18n="board.saveCopy">Хуулбар хадгалах</button><button type="button" class="btn btn-ghost" data-board-act="reload" data-i18n="board.reload">Дахин нээх</button></div></div>
+      <div class="board-selection-bar" id="boardSelectionBar" hidden><span id="boardSelCount" role="status"></span><button type="button" class="btn btn-ghost" data-board-act="deselect" data-i18n="board.deselect">Сонголт болих</button><button type="button" class="btn btn-danger" data-board-act="deleteObject"><?= icon('trash') ?><span data-i18n="board.delete">Устгах</span></button></div>
+
+      <button type="button" class="board-edge board-edge-l" data-board-drawer-toggle="tools" aria-controls="boardToolDrawer" aria-expanded="false" aria-label="Хэрэгслийн тохиргоо" data-i18n-aria-label="board.toolSettings" title="Хэрэгслийн тохиргоо" data-i18n-title="board.toolSettings"><svg class="board-glyph board-gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      <button type="button" class="board-edge board-edge-r" data-board-drawer-toggle="view" aria-controls="boardViewDrawer" aria-expanded="false" aria-label="Харагдац ба хуудас" data-i18n-aria-label="board.viewSettings" title="Харагдац ба хуудас" data-i18n-title="board.viewSettings"><svg class="board-glyph board-gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+
+      <aside class="board-drawer board-drawer-l" id="boardMenuDrawer" data-drawer="menu" role="group" aria-label="Самбарын цэс" data-i18n-aria-label="board.menuTitle">
+        <div class="bd-head"><h3 data-i18n="board.menuTitle">Самбарын цэс</h3><button type="button" class="bd-close" data-board-act="closeDrawers" aria-label="Хаах" data-i18n-aria-label="board.close"><?= icon('x') ?></button></div>
+        <button type="button" class="bd-row bd-row-title" data-board-act="rename" title="Самбарын нэрийг өөрчлөх" data-i18n-title="board.renameBoard"><?= icon('edit') ?><span class="bd-row-text"><b id="boardMenuTitle" data-user-content translate="no"></b><small id="boardMenuStatus"></small></span></button>
+        <div class="bd-list">
+          <button type="button" class="bd-row" data-board-act="save"><?= icon('check') ?><span data-i18n="board.save">Хадгалах</span></button>
+          <button type="button" class="bd-row" data-board-act="back"><?= icon('folder') ?><span data-i18n="board.allBoards">Бүх самбар</span></button>
+          <button type="button" class="bd-row" data-board-act="album"><?= icon('images') ?><span data-i18n="board.album">Цомгоос</span></button>
+          <button type="button" class="bd-row" data-board-act="png"><?= icon('download') ?><span data-i18n="board.png">PNG татах</span></button>
+        </div>
+        <div class="bd-section"><span class="bd-label" data-i18n="board.background">Дэвсгэр</span><div class="bd-seg" role="group" aria-label="Дэвсгэр" data-i18n-aria-label="board.background"><button type="button" data-board-bg="plain" aria-pressed="false" data-i18n="board.plain">Цагаан</button><button type="button" data-board-bg="grid" aria-pressed="false" data-i18n="board.grid">Дөрвөлжин</button><button type="button" data-board-bg="ruled" aria-pressed="false" data-i18n="board.ruled">Шугамтай</button><button type="button" data-board-bg="dark" aria-pressed="false" data-i18n="board.dark">Хар самбар</button></div></div>
+        <div class="bd-list">
+          <button type="button" class="bd-row" id="boardFullscreen" data-board-act="fullscreen" aria-pressed="false"><?= icon('expand') ?><span id="boardFullscreenLabel">Бүтэн дэлгэц</span></button>
+          <button type="button" class="bd-row" data-board-act="immersive" id="boardImmersiveBtn"><?= icon('screen') ?><span id="boardImmersiveLabel">Сайт руу буцах</span></button>
+          <button type="button" class="bd-row" data-board-act="clear"><?= icon('refresh') ?><span data-i18n="board.clear">Цэвэрлэх</span></button>
+          <button type="button" class="bd-row board-danger" data-board-act="delPage"><?= icon('trash') ?><span data-i18n="board.deletePage">Хуудас устгах</span></button>
+          <button type="button" class="bd-row board-danger" data-board-act="delBoard"><?= icon('trash') ?><span data-i18n="board.deleteBoard">Самбар устгах</span></button>
+        </div>
+      </aside>
+
+      <aside class="board-drawer board-drawer-l" id="boardToolDrawer" data-drawer="tools" role="group" aria-label="Хэрэгслийн тохиргоо" data-i18n-aria-label="board.toolSettings">
+        <div class="bd-head"><h3 data-i18n="board.toolSettings">Хэрэгслийн тохиргоо</h3><button type="button" class="bd-close" data-board-act="closeDrawers" aria-label="Хаах" data-i18n-aria-label="board.close"><?= icon('x') ?></button></div>
+        <div class="board-options" id="boardOptions" data-tool="pen">
+          <div class="board-opt board-opt-pen"><span class="bd-label" data-i18n="board.color">Өнгө</span><div class="board-colors" id="boardColors" role="group" aria-label="Өнгө" data-i18n-aria-label="board.color"></div><label class="board-color-custom"><input type="color" id="boardColor" value="#182d25" aria-label="Өөр өнгө" data-i18n-aria-label="board.customColor"><span data-i18n="board.customColor">Өөр өнгө</span></label></div>
+          <label class="board-width board-opt board-opt-pen board-opt-erase"><span class="bd-label" id="boardWidthLabel">Хэмжээ</span><span class="board-width-row"><input type="range" id="boardWidth" min="1" max="40" value="5"><output id="boardWidthValue">5</output></span></label>
+          <div class="board-opt board-opt-erase"><span class="bd-label" data-i18n="board.eraseMode">Баллуурын төрөл</span><div class="bd-seg" role="group" aria-label="Баллуурын төрөл" data-i18n-aria-label="board.eraseMode"><button type="button" data-board-erase="area" aria-pressed="true" data-i18n="board.eraseArea">Хэсэгчлэн</button><button type="button" data-board-erase="stroke" aria-pressed="false" data-i18n="board.eraseStroke">Бүтэн зураас</button></div></div>
+          <p class="board-opt board-opt-select board-hint" data-i18n="board.selectHint">Зүйл дээр дарж эсвэл хүрээ татаж сонгоно. Зөөх, булангаас нь хэмжээг өөрчлөх, Устгах товч.</p>
+          <p class="board-opt board-opt-ruler board-hint" data-i18n="board.rulerHint">Шугамыг чирж зөөнө, үзүүрээс нь эргүүлнэ. Үзгээр шугамын ирмэгийн дагуу зурахад шулуун зураас гарна.</p>
+        </div>
+        <button type="button" class="bd-row" data-board-act="rulerToggle" aria-pressed="false"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/></svg><span id="boardRulerToggleLabel">Шугам харуулах</span></button>
+      </aside>
+
+      <aside class="board-drawer board-drawer-r" id="boardViewDrawer" data-drawer="view" role="group" aria-label="Харагдац ба хуудас" data-i18n-aria-label="board.viewSettings">
+        <div class="bd-head"><h3 data-i18n="board.viewSettings">Харагдац ба хуудас</h3><button type="button" class="bd-close" data-board-act="closeDrawers" aria-label="Хаах" data-i18n-aria-label="board.close"><?= icon('x') ?></button></div>
+        <div class="bd-section"><span class="bd-label" data-i18n="board.zoom">Томруулалт</span><div class="bd-zoom"><button type="button" class="bd-icon" data-board-act="zoomOut" aria-label="Жижигрүүлэх" data-i18n-aria-label="board.zoomOut">−</button><output id="boardZoomValue">100%</output><button type="button" class="bd-icon" data-board-act="zoomIn" aria-label="Томруулах" data-i18n-aria-label="board.zoomIn">+</button><button type="button" class="bd-fit" data-board-act="fit" data-i18n="board.fit">Бүтнээр харах</button><button type="button" class="bd-fit" data-board-act="fill" data-i18n="board.fitFill">Дэлгэц дүүрэн</button></div></div>
+        <button type="button" class="bd-row bd-touch" data-board-act="touch" aria-pressed="false"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><span class="bd-row-text"><b class="board-touch-name"></b><small data-i18n="board.touchHint">Хуруугаар зурах эсвэл хөдөлгөх. Үзэг үргэлж зурна.</small></span></button>
+        <div class="bd-section"><span class="bd-label" data-i18n="board.background">Дэвсгэр</span><div class="bd-seg" role="group" aria-label="Дэвсгэр" data-i18n-aria-label="board.background"><button type="button" data-board-bg="plain" aria-pressed="false" data-i18n="board.plain">Цагаан</button><button type="button" data-board-bg="grid" aria-pressed="false" data-i18n="board.grid">Дөрвөлжин</button><button type="button" data-board-bg="ruled" aria-pressed="false" data-i18n="board.ruled">Шугамтай</button><button type="button" data-board-bg="dark" aria-pressed="false" data-i18n="board.dark">Хар самбар</button></div></div>
+        <button type="button" class="bd-row bd-row-title" data-board-act="renamePage" title="Хуудасны нэрийг өөрчлөх" data-i18n-title="board.renamePage"><?= icon('edit') ?><span class="bd-row-text"><b id="boardPageTitle" data-user-content translate="no"></b><small data-i18n="board.renamePage">Хуудасны нэрийг өөрчлөх</small></span></button>
+      </aside>
+
+      <section class="board-sheet" id="boardPagesSheet" data-drawer="pages" role="group" aria-label="Самбарын хуудсууд" data-i18n-aria-label="board.pages">
+        <div class="bd-head"><h3 data-i18n="board.pagesHeading">Хуудсууд</h3><button type="button" class="bd-close" data-board-act="closeDrawers" aria-label="Хаах" data-i18n-aria-label="board.close"><?= icon('x') ?></button></div>
+        <div class="board-pages" id="boardPages"></div>
+      </section>
+
+      <div class="board-toolbar" id="boardToolbar" role="toolbar" aria-label="Самбарын хэрэгслүүд" data-i18n-aria-label="board.tools">
+        <div class="bt-group bt-left">
+          <button type="button" class="bt" data-board-drawer-toggle="menu" aria-controls="boardMenuDrawer" aria-expanded="false" aria-haspopup="true"><?= icon('grid') ?><span data-i18n="board.menu">Цэс</span></button>
+          <span class="bt-sep" aria-hidden="true"></span>
+          <button type="button" class="bt" data-board-act="back" aria-label="Бүх самбар" data-i18n-aria-label="board.allBoards"><?= icon('folder') ?><span data-i18n="board.boards">Самбарууд</span></button>
+        </div>
+        <div class="bt-group bt-centre">
+          <button type="button" class="bt on" data-board-tool="pen" aria-pressed="true"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><i class="bt-dot" id="boardPenDot" aria-hidden="true"></i><span data-i18n="board.pen">Үзэг</span></button>
+          <button type="button" class="bt" data-board-tool="erase" aria-pressed="false"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg><span data-i18n="board.eraser">Баллуур</span></button>
+          <button type="button" class="bt" data-board-act="undo"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg><span data-i18n="board.undo">Буцаах</span></button>
+          <button type="button" class="bt" data-board-act="redo"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg><span data-i18n="board.redo">Дахин хийх</span></button>
+          <button type="button" class="bt" data-board-tool="select" aria-pressed="false"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 6.5-6.2 1.6a2 2 0 0 0-1.4 1.4L10.8 19.7Z"/></svg><span data-i18n="board.select">Сонгох</span></button>
+          <button type="button" class="bt" data-board-tool="ruler" aria-pressed="false"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/></svg><span data-i18n="board.ruler">Шугам</span></button>
+          <button type="button" class="bt" data-board-act="album"><?= icon('images') ?><span data-i18n="board.album">Цомгоос</span></button>
+          <button type="button" class="bt" data-board-act="touch" aria-pressed="false" title="Хүрэлтийн горим" data-i18n-title="board.touchMode"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg><span class="board-touch-name">Бичих</span></button>
+        </div>
+        <div class="bt-group bt-right">
+          <button type="button" class="bt" data-board-act="newPage"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span data-i18n="board.newShort">Шинэ</span></button>
+          <button type="button" class="bt" data-board-act="prev" aria-label="Өмнөх хуудас" data-i18n-aria-label="board.previous"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m13.5 8.5-3.5 3.5 3.5 3.5"/></svg><span data-i18n="board.prevShort">Өмнөх</span></button>
+          <button type="button" class="bt bt-count" data-board-drawer-toggle="pages" aria-controls="boardPagesSheet" aria-expanded="false"><b id="boardPageNum">1/1</b></button>
+          <button type="button" class="bt" data-board-act="next" aria-label="Дараагийн хуудас" data-i18n-aria-label="board.next"><svg class="board-glyph" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10.5 8.5 3.5 3.5-3.5 3.5"/></svg><span data-i18n="board.nextShort">Дараах</span></button>
+          <span class="bt-sep" aria-hidden="true"></span>
+          <button type="button" class="bt" data-board-drawer-toggle="pages" aria-controls="boardPagesSheet" aria-expanded="false"><?= icon('list') ?><span data-i18n="board.list">Жагсаалт</span></button>
+        </div>
+      </div>
+      <div class="board-sr" id="boardAnnounce" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+</section>

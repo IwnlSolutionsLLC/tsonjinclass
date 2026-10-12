@@ -1,0 +1,114 @@
+/* A student's day: names, times and rooms, with the school noticeboard palette. */
+.student-clubs-controls { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding: 22px 0; }
+.student-clubs-picker { display: flex; flex-direction: column; gap: 7px; min-width: 250px; max-width: 360px; flex: 1; font-size: 11px; font-weight: 700; color: var(--ink-2); }
+.student-clubs-picker select { width: 100%; min-width: 0; height: 46px; padding: 0 38px 0 14px; border: 1px solid var(--line-2); border-radius: 11px; background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.student-clubs-picker select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.student-clubs-switch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface-2); }
+.student-clubs-switch button { border: 0; border-radius: 7px; padding: 10px 15px; font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; background: transparent; color: var(--ink-2); cursor: pointer; transition: background-color .18s,color .18s; }
+.student-clubs-switch button[aria-pressed="true"] { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
+.student-clubs-welcome { padding: 48px 24px; text-align: center; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.student-clubs-welcome > .i { width: 30px; height: 30px; color: var(--accent); margin-bottom: 14px; }
+.student-clubs-welcome h3 { margin: 0; color: var(--ink); font-size: 18px; line-height: 1.5; }
+.student-clubs-welcome p { margin: 10px auto 20px; max-width: 460px; font-size: 12px; line-height: 1.7; color: var(--ink-2); }
+.student-clubs-heading { display: flex; align-items: flex-end; gap: 15px; justify-content: space-between; margin: 8px 0 21px; }
+.student-clubs-kicker { margin: 0 0 7px; color: var(--ink-3); font-size: 10px; font-weight: 700; letter-spacing: .025em; }
+.student-clubs-heading h3 { margin: 0; color: var(--ink); font-size: clamp(20px,2.5vw,26px); font-weight: 750; letter-spacing: -.025em; line-height: 1.3; }
+.student-clubs-clock-note { color: var(--ink-3); font-size: 10px; white-space: nowrap; }
+.student-clubs-day-controls { display: flex; align-items: center; gap: 18px; justify-content: space-between; margin-bottom: 22px; }
+.student-clubs-day-buttons { display: inline-flex; gap: 6px; }
+.student-clubs-day-buttons button { padding: 9px 13px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--surface); color: var(--ink-2); font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: color .18s,background-color .18s,border-color .18s; }
+.student-clubs-day-buttons button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.student-clubs-date-picker { display: flex; align-items: center; gap: 9px; color: var(--ink-3); font-size: 11px; }
+.student-clubs-date-picker input { max-width: 155px; min-width: 0; height: 38px; padding: 0 10px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; font-size: 12px; font-variant-numeric: tabular-nums; }
+.student-clubs-day-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 13px; }
+.student-clubs-day-heading h4 { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.5; font-weight: 750; letter-spacing: -.015em; }
+.student-clubs-day-heading > span { color: var(--ink-3); font-size: 11px; white-space: nowrap; }
+.student-clubs-day-cards { display: flex; flex-direction: column; gap: 12px; }
+.student-clubs-day-card { display: flex; align-items: center; justify-content: space-between; gap: 22px; position: relative; padding: 22px 24px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); overflow: hidden; animation: studentClubsArrival .22s ease-out both; }
+.student-clubs-day-card.is-active { border-color: var(--accent); background: var(--accent-soft); }
+.student-clubs-day-card.is-completed { background: var(--surface-2); }
+.student-clubs-day-card-main { min-width: 0; flex: 1; }
+.student-clubs-day-rank { display: block; margin-bottom: 6px; color: var(--ink-3); font-size: 10px; }
+.student-clubs-day-card h4 { margin: 0; color: var(--ink); font-size: 20px; font-weight: 750; line-height: 1.3; letter-spacing: -.025em; }
+.student-clubs-day-card-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; margin-top: 11px; font-size: 11px; color: var(--ink-2); }
+.student-clubs-day-card-meta strong { color: var(--ink); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.student-clubs-day-card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.student-clubs-day-card-meta .i { width: 13px; height: 13px; color: var(--ink-3); }
+.student-clubs-day-card-clock { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; text-align: right; }
+.student-clubs-day-status { color: var(--accent); font-size: 10px; font-weight: 700; }
+.student-clubs-day-remaining { color: var(--ink); font-size: 22px; font-weight: 750; letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+.student-clubs-day-caption { color: var(--ink-2); font-size: 10px; }
+.student-clubs-day-minutes { color: var(--ink-3); font-size: 9px; font-variant-numeric: tabular-nums; }
+.is-completed .student-clubs-day-status { color: var(--ink-3); }
+.is-completed .student-clubs-day-remaining { color: var(--ink-2); font-size: 18px; }
+.student-clubs-day-progress { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--line); }
+.student-clubs-day-progress span { display: block; height: 100%; max-width: 100%; background: var(--accent); transition: width 1s linear; }
+.student-clubs-day-empty { padding: 38px 22px; border: 1px dashed var(--line-2); border-radius: 13px; background: var(--surface-2); text-align: center; }
+.student-clubs-day-empty > .i { width: 27px; height: 27px; color: var(--ink-3); margin-bottom: 12px; }
+.student-clubs-day-empty h4 { margin: 0; color: var(--ink); font-size: 17px; }
+.student-clubs-day-empty p { margin: 10px auto 0; max-width: 530px; color: var(--ink-2); font-size: 12px; line-height: 1.8; }
+.student-clubs-no-registration { padding: 30px; border: 1px dashed var(--line-2); border-radius: 14px; background: var(--surface-2); }
+.student-clubs-no-registration h4 { margin: 0; color: var(--ink); font-size: 16px; }
+.student-clubs-no-registration p { margin: 10px 0 18px; max-width: 550px; color: var(--ink-2); font-size: 12px; line-height: 1.75; }
+.student-clubs-week { margin-top: 6px; }
+.student-clubs-week-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.student-clubs-week-heading h4 { margin: 0; color: var(--ink); font-size: 17px; letter-spacing: -.02em; }
+.student-clubs-week-heading > span { color: var(--ink-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+.student-clubs-conflict-note { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; padding: 10px 13px; border-radius: 9px; color: var(--warn); background: var(--surface-2); font-size: 11px; line-height: 1.6; }
+.student-clubs-conflict-note .i { margin-top: 2px; flex-shrink: 0; }
+.student-clubs-agenda { border: 1px solid var(--line); border-radius: 13px; background: var(--surface); overflow: hidden; }
+.student-clubs-agenda-day { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 20px; padding: 15px 20px; border-top: 1px solid var(--line); }
+.student-clubs-agenda-day:first-child { border-top: 0; }
+.student-clubs-agenda-day.is-today { background: var(--surface-2); }
+.student-clubs-agenda-day-name { display: flex; flex-direction: column; gap: 5px; padding-top: 4px; }
+.student-clubs-agenda-day-name strong { color: var(--ink); font-size: 12px; }
+.student-clubs-agenda-day-name > span { color: var(--accent); font-size: 9px; font-weight: 700; }
+.student-clubs-agenda-items { min-width: 0; display: flex; flex-direction: column; gap: 9px; }
+.student-clubs-agenda-item { display: flex; align-items: flex-start; gap: 18px; min-width: 0; padding: 5px 0; }
+.student-clubs-agenda-time { width: 103px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+.student-clubs-agenda-time strong { color: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; }
+.student-clubs-agenda-time span { color: var(--ink-3); font-size: 10px; }
+.student-clubs-agenda-info { min-width: 0; flex: 1; }
+.student-clubs-agenda-info h5 { color: var(--ink); font-size: 12px; font-weight: 700; margin: 0; }
+.student-clubs-agenda-info p { color: var(--ink-3); font-size: 10px; line-height: 1.6; margin: 5px 0 0; }
+.student-clubs-overlap { display: flex; align-items: flex-start; gap: 5px; margin: 8px 0 0; font-size: 10px; line-height: 1.6; color: var(--warn); }
+.student-clubs-overlap .i { width: 12px; height: 12px; flex-shrink: 0; margin-top: 2px; }
+.student-clubs-agenda-empty { color: var(--ink-3); font-size: 10px; margin: 5px 0; }
+.student-clubs-choices-details { margin-top: 24px; padding-top: 15px; border-top: 1px solid var(--line); }
+.student-clubs-choices-details > summary { color: var(--ink-2); font-size: 12px; font-weight: 700; cursor: pointer; width: fit-content; }
+.student-clubs-choices { margin-top: 12px; padding: 4px 16px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); }
+.student-clubs-choice { padding: 12px 0; border-top: 1px solid var(--line); }
+.student-clubs-choice:first-child { border-top: 0; }
+.student-clubs-choice h4 { margin: 0; color: var(--ink); font-size: 12px; line-height: 1.5; }
+.student-clubs-choice h4 > span { display: inline-block; min-width: 84px; color: var(--ink-3); font-size: 10px; font-weight: 500; margin-right: 8px; }
+.student-clubs-choice-reason,.student-clubs-choice-times { margin: 7px 0 0; font-size: 10px; line-height: 1.7; color: var(--ink-3); }
+.student-clubs-reference { margin: 8px 0 0; padding: 8px 10px; font-size: 10px; line-height: 1.7; color: var(--warn); background: var(--surface-2); border-left: 2px solid var(--warn); }
+.student-clubs-missing { margin: 7px 0 0; color: var(--warn); font-size: 10px; line-height: 1.7; }
+.student-clubs-source-note { margin: 16px 0 0; max-width: 850px; color: var(--ink-3); font-size: 10px; line-height: 1.8; }
+.student-clubs-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes studentClubsArrival { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .student-clubs-controls { align-items: stretch; flex-direction: column; gap: 14px; }
+  .student-clubs-picker { max-width: none; min-width: 0; }
+  .student-clubs-switch { align-self: flex-start; }
+  .student-clubs-heading { align-items: flex-start; flex-direction: column; gap: 9px; }
+  .student-clubs-day-controls { align-items: flex-start; flex-direction: column; gap: 13px; }
+  .student-clubs-day-buttons { width: 100%; }
+  .student-clubs-day-buttons button { flex: 1; padding: 9px 10px; font-size: 11px; }
+  .student-clubs-date-picker { align-self: flex-end; }
+  .student-clubs-day-heading { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .student-clubs-day-heading h4 { font-size: 14px; }
+  .student-clubs-day-card { align-items: flex-start; flex-direction: column; gap: 15px; padding: 19px; }
+  .student-clubs-day-card h4 { font-size: 19px; }
+  .student-clubs-day-card-clock { text-align: left; }
+  .student-clubs-day-remaining { font-size: 22px; }
+  .student-clubs-agenda-day { grid-template-columns: 77px minmax(0,1fr); padding: 14px; gap: 12px; }
+  .student-clubs-agenda-item { flex-wrap: wrap; gap: 7px; }
+  .student-clubs-agenda-time { width: 100%; flex-direction: row; gap: 9px; align-items: baseline; }
+  .student-clubs-agenda-info { flex-basis: 100%; }
+  .student-clubs-week-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .student-clubs-day-card { animation: none; }
+  .student-clubs-switch button,.student-clubs-day-buttons button,.student-clubs-day-progress span { transition: none; }
+}

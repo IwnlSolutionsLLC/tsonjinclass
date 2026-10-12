@@ -1,0 +1,18 @@
+{
+  "grade": 12,
+  "verified": "2026-10-02",
+  "catalogUrl": "https://econtent.edu.mn/book/12rangi",
+  "medleCatalogUrl": "https://medle.mn/textbook/12",
+  "books": [
+    { "id": "336", "title": "Уран зохиол 12", "subject": "Уран зохиол", "category": "Хэл, уран зохиол", "mark": "Aa", "tone": "rose", "url": "https://econtent.edu.mn/pages/more.php?id=336", "medleUrl": "https://medle.mn/textbook/12/336" },
+    { "id": "337", "title": "Үндэсний бичиг 12", "subject": "Үндэсний бичиг", "category": "Хэл, уран зохиол", "mark": "ᠮᠣᠩᠭᠣᠯ", "tone": "sand", "url": "https://econtent.edu.mn/pages/more.php?id=337", "medleUrl": "https://medle.mn/textbook/12/337" },
+    { "id": "339", "title": "Монгол хэл 12", "subject": "Монгол хэл", "category": "Хэл, уран зохиол", "mark": "Аа", "tone": "green", "url": "https://econtent.edu.mn/pages/more.php?id=339", "medleUrl": "https://medle.mn/textbook/12/339" },
+    { "id": "340", "title": "Мэдээллийн технологи 12", "subject": "Мэдээллийн технологи", "category": "Тоо, технологи", "mark": "</>", "tone": "blue", "url": "https://econtent.edu.mn/pages/more.php?id=340", "medleUrl": "https://medle.mn/textbook/12/340" },
+    { "id": "341", "title": "Дизайн технологи 12", "subject": "Дизайн технологи", "category": "Тоо, технологи", "mark": "✳", "tone": "orange", "url": "https://econtent.edu.mn/pages/more.php?id=341", "medleUrl": "https://medle.mn/textbook/12/341" },
+    { "id": "343", "title": "Математик 12", "subject": "Математик", "category": "Тоо, технологи", "mark": "∑", "tone": "green", "url": "https://econtent.edu.mn/pages/more.php?id=343", "medleUrl": "https://medle.mn/textbook/12/343" },
+    { "id": "344", "title": "Орос хэл 12", "subject": "Орос хэл", "category": "Хэл, уран зохиол", "mark": "Я", "tone": "rose", "url": "https://econtent.edu.mn/pages/more.php?id=344", "medleUrl": "https://medle.mn/textbook/12/344" },
+    { "id": "357", "title": "Англи хэл 12", "subject": "Англи хэл", "category": "Хэл, уран зохиол", "mark": "En", "tone": "blue", "url": "https://econtent.edu.mn/pages/more.php?id=357", "medleUrl": "https://medle.mn/textbook/12/357" },
+    { "id": "413", "title": "Эрүүл мэнд 12", "subject": "Эрүүл мэнд", "category": "Амьдрах ухаан", "mark": "+", "tone": "orange", "url": "https://econtent.edu.mn/pages/more.php?id=413", "medleUrl": "https://medle.mn/textbook/12/413" },
+    { "id": "431", "title": "Иргэний ёс зүйн боловсрол 12", "subject": "Иргэний ёс зүй", "category": "Амьдрах ухаан", "mark": "◎", "tone": "sand", "url": "https://econtent.edu.mn/pages/more.php?id=431", "medleUrl": "https://medle.mn/textbook/12/431" }
+  ]
+}

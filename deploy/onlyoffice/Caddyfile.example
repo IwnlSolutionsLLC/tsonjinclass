@@ -1,0 +1,8 @@
+# Host-installed Caddy example. Replace the domain and merge this block into
+# your existing Caddyfile. The DNS record must point to this server.
+docs.example.com {
+    reverse_proxy 127.0.0.1:8082 {
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+    }
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /database/
+Disallow: /api.php
+Disallow: /admin.php
