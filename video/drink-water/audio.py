@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Synthesises the soundtrack for "Ус уугаарай" from build/cues.json.
 
-    python3 audio.py build/cues.json build/audio.wav
+    python3 audio.py build/cues.json build/audio.wav [voice/manifest.json]
 
 Everything is generated (no samples): steppe wind, crickets/lark, clock ticks,
 whooshes, breath, heartbeat + ECG beeps synced to the on-screen monitor, tinnitus,
 hallucinated river, pouring soil, body fall, flatline, then ice + a warm pad.
 """
 import json
+import pathlib
+import subprocess
 import sys
 import wave
 
@@ -332,7 +334,38 @@ R *= gate
 mix = np.stack([L, R], axis=1)
 mix /= np.max(np.abs(mix)) + 1e-9
 mix = np.tanh(mix * 1.15) / np.tanh(1.15) * 0.93
-pcm = (mix * 32767).astype(np.int16)
+
+# ---------------------------------------------------------------- voice-over (optional)
+VOICE = sys.argv[3] if len(sys.argv) > 3 else None
+if VOICE and pathlib.Path(VOICE).exists():
+    vdir = pathlib.Path(VOICE).parent
+    lines = json.load(open(VOICE))["lines"]
+    vo = np.zeros(N)
+    duck = np.zeros(N)
+    for ln in lines:
+        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(vdir / ln["file"]), "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"],
+                             check=True, capture_output=True).stdout
+        v = np.frombuffer(raw, np.float32).astype(np.float64)
+        voiced = v[np.abs(v) > 0.01]
+        v *= 10 ** (-16 / 20) / (np.sqrt(np.mean(voiced**2)) + 1e-9)  # each line to about -16 dBFS RMS
+        v = fade(v, 0.01, 0.04)
+        i0 = int(ln["start"] * SR)
+        n = min(len(v), N - i0)
+        vo[i0 : i0 + n] += v[:n]
+        a, b = max(0, i0 - int(0.15 * SR)), min(N, i0 + n + int(0.3 * SR))
+        duck[a:b] = 1.0
+    # smooth the ducking envelope (~120 ms attack / release)
+    k = int(0.12 * SR)
+    duck = np.convolve(duck, np.ones(k) / k, mode="same")
+    mix *= (1 - 0.6 * duck)[:, None]  # music/effects down ~8 dB under the voice
+    room = reverb(vo, 0.6, 903) * 0.07  # a touch of space so it sits in the mix
+    mix[:, 0] += vo + room
+    mix[:, 1] += vo + room
+    pk = np.max(np.abs(mix))
+    if pk > 0.95:
+        mix = np.tanh(mix * (1.1 / pk)) / np.tanh(1.1) * 0.95
+    print(f"voice-over: {len(lines)} lines mixed from {VOICE}")
+pcm = (np.clip(mix, -1, 1) * 32767).astype(np.int16)
 with wave.open(OUT, "wb") as w:
     w.setnchannels(2)
     w.setsampwidth(2)

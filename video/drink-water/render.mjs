@@ -6,6 +6,7 @@
  *   node render.mjs --stills 0.5,8,15   # PNG stills -> build/stills/
  *   node render.mjs --from 20 --to 27   # partial render (preview)
  *   node render.mjs --cues          # only write build/cues.json
+ *   node render.mjs --audio         # re-mix audio (incl. voice/manifest.json) onto build/video-only.mp4
  *
  * Audio is synthesised by audio.py from build/cues.json (timeline exported by the page).
  */
@@ -61,6 +62,9 @@ if (has('--stills')) {
 const from = +opt('--from', 0), to = +opt('--to', DURATION);
 const partial = from > 0 || to < DURATION;
 const silent = path.join(build, 'video-only.mp4');
+const audioOnly = has('--audio');
+if (audioOnly && !fs.existsSync(silent)) throw new Error('build/video-only.mp4 missing: run a full render first');
+if (!audioOnly) {
 const out = partial ? path.join(build, `preview-${from}-${to}.mp4`) : path.join(build, 'us-uugaarai-video.mp4');
 const ff = spawn('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error',
   '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
@@ -80,11 +84,14 @@ for (let n = n0; n < n1; n++) {
 }
 ff.stdin.end();
 await new Promise((r) => ff.on('close', r));
+}
 await browser.close();
 
 if (!partial) {
   // audio + mux
-  const py = spawnSync('python3', [path.join(here, 'audio.py'), path.join(build, 'cues.json'), path.join(build, 'audio.wav')], { stdio: 'inherit' });
+  const voice = path.join(here, 'voice', 'manifest.json');
+  const py = spawnSync('python3', [path.join(here, 'audio.py'), path.join(build, 'cues.json'), path.join(build, 'audio.wav'),
+    ...(fs.existsSync(voice) ? [voice] : [])], { stdio: 'inherit' });
   if (py.status !== 0) throw new Error('audio.py failed');
   const final = path.join(here, 'us-uugaarai.mp4');
   const mux = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', silent, '-i', path.join(build, 'audio.wav'),
