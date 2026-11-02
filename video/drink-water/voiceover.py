@@ -74,7 +74,7 @@ def tts(key, voice_id, model, text, lang):
     last = None
     for body in attempts:
         try:
-            return call("POST", f"/text-to-speech/{voice_id}?output_format=mp3_44100_192", key, body, "audio/mpeg")
+            return call("POST", f"/text-to-speech/{voice_id}?output_format=mp3_44100_128", key, body, "audio/mpeg")
         except RuntimeError as e:
             last = e
             if "HTTP 400" not in str(e) and "HTTP 422" not in str(e):

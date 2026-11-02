@@ -1,0 +1,112 @@
+{
+ "lines": [
+  {
+   "id": "01",
+   "scene": "intro",
+   "start": 0.9,
+   "end": 6.6,
+   "text": "Хүний биеийн жаран орчим хувь нь ус. Цус, эс бүхэн уснаас хамаардаг.",
+   "file": "01.mp3",
+   "dur": 5.538,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "02",
+   "scene": "breath",
+   "start": 7.45,
+   "end": 12.3,
+   "text": "Нэг минут. Амьсгаа гаргах бүрт бие маань чийг алддаг.",
+   "file": "02.mp3",
+   "dur": 4.023,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "03",
+   "scene": "dry",
+   "start": 12.95,
+   "end": 19.8,
+   "text": "Дөрвөн цаг. Ам хатаж, уруул хагарна. Бөөр усаа хэмнэж, шээс өтгөрнө.",
+   "file": "03.mp3",
+   "dur": 5.669,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "04",
+   "scene": "heart",
+   "start": 20.45,
+   "end": 26.8,
+   "text": "Найман цаг. Цус өтгөрч, урсгал нь удааширна. Зүрх улам хурдан цохилно.",
+   "file": "04.mp3",
+   "dur": 6.06,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "05",
+   "scene": "brain",
+   "start": 27.45,
+   "end": 33.9,
+   "text": "Арван хоёр цаг. Тархины эсүүд усаа алдаж агшина. Толгой өвдөж, бодол сарнина.",
+   "file": "05.mp3",
+   "dur": 6.478,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "06",
+   "scene": "mirage",
+   "start": 34.45,
+   "end": 41.3,
+   "text": "Хоёр дахь өдөр. Хий юм үзэгдэж эхэлнэ. Ус гэж бодсон чинь хуурай шороо байлаа.",
+   "file": "06.mp3",
+   "dur": 5.695,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "07",
+   "scene": "end",
+   "start": 41.95,
+   "end": 46.1,
+   "text": "Тав дахь өдөр. Бие цаашид тэсэж чадахгүй.",
+   "file": "07.mp3",
+   "dur": 3.344,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "08",
+   "scene": "cta",
+   "start": 50.8,
+   "end": 54.0,
+   "text": "Энэ бүхнээс таныг нэг аяга ус хамгаална.",
+   "file": "08.mp3",
+   "dur": 2.743,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  },
+  {
+   "id": "09",
+   "scene": "cta",
+   "start": 54.3,
+   "end": 56.6,
+   "text": "Ус уугаарай.",
+   "file": "09.mp3",
+   "dur": 1.097,
+   "tempo": 1.0,
+   "model": "eleven_v4",
+   "voice_id": "S6Jnb8crhBJBu03xnlyT"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
   "voice_id": "S6Jnb8crhBJBu03xnlyT",
-  "model": "eleven_v3",
+  "model": "eleven_v4",
   "language": "mn",
   "note": "start = when the line begins (seconds in the video); end = latest it may finish. Numbers are written as words so the voice reads them correctly.",
   "lines": [
@@ -8,7 +8,7 @@
     { "id": "02", "scene": "breath", "start": 7.45,  "end": 12.3, "text": "Нэг минут. Амьсгаа гаргах бүрт бие маань чийг алддаг." },
     { "id": "03", "scene": "dry",    "start": 12.95, "end": 19.8, "text": "Дөрвөн цаг. Ам хатаж, уруул хагарна. Бөөр усаа хэмнэж, шээс өтгөрнө." },
     { "id": "04", "scene": "heart",  "start": 20.45, "end": 26.8, "text": "Найман цаг. Цус өтгөрч, урсгал нь удааширна. Зүрх улам хурдан цохилно." },
-    { "id": "05", "scene": "brain",  "start": 27.45, "end": 33.8, "text": "Арван хоёр цаг. Тархины эсүүд усаа алдаж агшина. Толгой өвдөж, бодол сарнина." },
+    { "id": "05", "scene": "brain",  "start": 27.45, "end": 33.9, "text": "Арван хоёр цаг. Тархины эсүүд усаа алдаж агшина. Толгой өвдөж, бодол сарнина." },
     { "id": "06", "scene": "mirage", "start": 34.45, "end": 41.3, "text": "Хоёр дахь өдөр. Хий юм үзэгдэж эхэлнэ. Ус гэж бодсон чинь хуурай шороо байлаа." },
     { "id": "07", "scene": "end",    "start": 41.95, "end": 46.1, "text": "Тав дахь өдөр. Бие цаашид тэсэж чадахгүй." },
     { "id": "08", "scene": "cta",    "start": 50.8,  "end": 54.0, "text": "Энэ бүхнээс таныг нэг аяга ус хамгаална." },
