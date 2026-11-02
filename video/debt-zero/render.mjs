@@ -73,7 +73,7 @@ if (!audioOnly) {
 const out = partial ? path.join(build, `preview-${from}-${to}.mp4`) : path.join(build, 'video-preview.mp4');
 const ff = spawn('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error',
   '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-  '-c:v', 'libx264', '-preset', partial ? 'veryfast' : 'slow', '-crf', partial ? '23' : '20', '-maxrate', '6M', '-bufsize', '12M',
+  '-c:v', 'libx264', '-preset', partial ? 'veryfast' : 'slow', '-crf', partial ? '23' : '18', '-maxrate', '12M', '-bufsize', '24M',
   '-pix_fmt', 'yuv420p', '-movflags', '+faststart', partial ? out : silent], { stdio: ['pipe', 'inherit', 'inherit'] });
 
 const n0 = Math.round(from * FPS), n1 = Math.round(to * FPS);
@@ -97,8 +97,13 @@ if (!partial) {
   const py = spawnSync('python3', [path.join(here, 'audio.py'), path.join(build, 'cues.json'), path.join(build, 'audio.wav')], { stdio: 'inherit' });
   if (py.status !== 0) throw new Error('audio.py failed');
   const final = path.join(here, 'or-alga-bolvol.mp4');
+  // two-pass 3.6 Mbps: clean on the crowd shots and under GitHub's 100 MB file limit for ~3 minutes
+  const plog = path.join(build, 'x264pass');
+  spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', silent, '-c:v', 'libx264', '-preset', 'slow', '-b:v', '3600k',
+    '-pass', '1', '-passlogfile', plog, '-pix_fmt', 'yuv420p', '-an', '-f', 'mp4', '/dev/null'], { stdio: 'inherit' });
   const mux = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', silent, '-i', path.join(build, 'audio.wav'),
-    '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', final], { stdio: 'inherit' });
+    '-c:v', 'libx264', '-preset', 'slow', '-b:v', '3600k', '-maxrate', '6000k', '-bufsize', '8000k', '-pass', '2', '-passlogfile', plog,
+    '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', final], { stdio: 'inherit' });
   if (mux.status !== 0) throw new Error('mux failed');
   console.log('wrote', final);
 }
