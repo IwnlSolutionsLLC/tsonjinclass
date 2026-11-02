@@ -63,7 +63,12 @@ const from = +opt('--from', 0), to = +opt('--to', DURATION);
 const partial = from > 0 || to < DURATION;
 const silent = path.join(build, 'video-only.mp4');
 const audioOnly = has('--audio');
-if (audioOnly && !fs.existsSync(silent)) throw new Error('build/video-only.mp4 missing: run a full render first');
+if (audioOnly && !fs.existsSync(silent)) {
+  // fresh checkout: reuse the picture from the committed MP4 instead of re-rendering
+  const src = path.join(here, 'us-uugaarai.mp4');
+  if (!fs.existsSync(src)) throw new Error('no build/video-only.mp4 or us-uugaarai.mp4: run a full render first');
+  spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', src, '-map', '0:v:0', '-c', 'copy', silent], { stdio: 'inherit' });
+}
 if (!audioOnly) {
 const out = partial ? path.join(build, `preview-${from}-${to}.mp4`) : path.join(build, 'us-uugaarai-video.mp4');
 const ff = spawn('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error',
