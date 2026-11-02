@@ -68,7 +68,7 @@ function povInit() {
 
 function drawCracks(ctx, lt, amount) {
   povInit();
-  if (amount <= 0) return;
+  if (amount <= 0 || lt <= 0) return;
   ctx.save();
   // tint of the plates, revealed with the crack front
   const front = lt * 6.5;

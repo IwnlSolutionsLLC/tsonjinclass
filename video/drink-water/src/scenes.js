@@ -461,8 +461,8 @@ function renderAt(T) {
   // grain
   const gt = grainTiles();
   main.globalCompositeOperation = 'overlay';
-  main.globalAlpha = info.cta ? 0.06 : 0.11;
-  main.drawImage(gt[Math.floor(T * FPS) % gt.length], 0, 0, W, H);
+  main.globalAlpha = info.cta ? 0.05 : 0.085;
+  main.drawImage(gt[Math.floor(T * FPS / 2) % gt.length], 0, 0, W, H);
   resetCtx(main);
   // flash + fades
   if (S.flash && lt < 0.3) { main.fillStyle = `rgba(255,250,240,${0.55 * (1 - E.out(lt / 0.3))})`; main.fillRect(0, 0, W, H); }

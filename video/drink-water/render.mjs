@@ -64,7 +64,7 @@ const silent = path.join(build, 'video-only.mp4');
 const out = partial ? path.join(build, `preview-${from}-${to}.mp4`) : path.join(build, 'us-uugaarai-video.mp4');
 const ff = spawn('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error',
   '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-  '-c:v', 'libx264', '-preset', partial ? 'veryfast' : 'slow', '-crf', partial ? '23' : '18',
+  '-c:v', 'libx264', '-preset', partial ? 'veryfast' : 'slow', '-crf', partial ? '23' : '20', '-maxrate', '6M', '-bufsize', '12M',
   '-pix_fmt', 'yuv420p', '-movflags', '+faststart', partial ? out : silent], { stdio: ['pipe', 'inherit', 'inherit'] });
 
 const n0 = Math.round(from * FPS), n1 = Math.round(to * FPS);
