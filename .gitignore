@@ -9,3 +9,6 @@ database/
 # OS clutter
 .DS_Store
 __MACOSX/
+
+# rendered videos are delivered directly, not stored in the repo
+*.mp4
