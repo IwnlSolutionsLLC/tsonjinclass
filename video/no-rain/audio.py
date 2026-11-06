@@ -130,19 +130,21 @@ def step_env(levels):
 
 gust = np.clip(1 + 0.45 * band(N, 0.04, 0.7, 11, 1), 0.3, 1.9)
 # wind bed: warm breeze -> roaring dust storm -> dry wind -> fire roar -> silence of space
-wind = keys([(0, 0), (0.4, 0.08), (6, 0.08), (6.05, 0.1), (13, 0.12), (13.05, 0.2), (16, 0.55), (21.9, 0.6), (22.0, 0.08), (31, 0.06), (31.05, 0.1), (40, 0.1), (40.05, 0.0), (D, 0)])
+O = 4.5
+wind = keys([(0, 0), (0.4, 0.1), (O + 6, 0.08), (O + 6.05, 0.1), (O + 13, 0.12), (O + 13.05, 0.2), (O + 16, 0.55), (O + 21.9, 0.6), (O + 22.0, 0.08), (O + 31, 0.06), (O + 31.05, 0.1), (O + 40, 0.1), (O + 40.05, 0.0), (D, 0)])
 L += band(N, 80, 900, 1) * wind * gust * 0.7; R += band(N, 80, 900, 2) * wind * gust * 0.7
-grit = keys([(0, 0), (13, 0), (14, 0.15), (21.9, 0.2), (22, 0), (D, 0)])
+grit = keys([(0, 0), (O + 13, 0), (O + 14, 0.15), (O + 21.9, 0.2), (O + 22, 0), (D, 0)])
 L += band(N, 2500, 9000, 3) * grit * gust * 0.4; R += band(N, 2500, 9000, 4) * grit * gust * 0.4
 # dry thunder, no rain
-place(band(int(3.0 * SR), 25, 220, 5) * keys([(0, 0), (0.15, 1), (3.0, 0)], np.arange(int(3.0 * SR)) / SR), cues["thunder"], 0.5, send=0.4)
+for th in (cues["hookThunder"], cues["thunder"]):
+    place(band(int(3.0 * SR), 25, 220, 5) * keys([(0, 0), (0.15, 1), (3.0, 0)], np.arange(int(3.0 * SR)) / SR), th, 0.5, send=0.4)
 # cicadas / heat in the drying park and steppe
-cic = env_on([(6.2, 13)], 0.4, 0.3)
+cic = env_on([(O + 6.2, O + 13)], 0.4, 0.3)
 L += np.sin(2 * np.pi * 5200 * t) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 38 * t))) * (0.5 + 0.5 * np.sin(2 * np.pi * 0.7 * t)) * cic * 0.012
 R += np.sin(2 * np.pi * 5600 * t) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 41 * t))) * (0.5 + 0.5 * np.sin(2 * np.pi * 0.6 * t + 1)) * cic * 0.012
 for k in range(18):
     nn = int(0.01 * SR)
-    place(band(nn, 1500, 8000, 10 + k) * np.exp(-np.arange(nn) / SR / 0.002), r.uniform(7.5, 9.8), r.uniform(0.03, 0.07), pan=r.uniform(-0.6, 0.6))
+    place(band(nn, 1500, 8000, 10 + k) * np.exp(-np.arange(nn) / SR / 0.002), r.uniform(O + 7.5, O + 9.8), r.uniform(0.03, 0.07), pan=r.uniform(-0.6, 0.6))
 # river: water fading out, then flies; dam powers down
 r0, r1 = cues["river"]
 wv = band(N, 300, 3500, 20) * keys([(0, 0), (r0, 0), (r0 + 0.2, 1), (r0 + 1.5, 0.7), (r1 - 0.8, 0.0), (D, 0)])
@@ -161,8 +163,8 @@ for k in range(int((f1 - f0) * 30)):
 place(tone(1568, 2.0, decay=0.6) + 0.5 * tone(2349, 2.0, decay=0.5), cues["drop"], 0.08, send=0.6)
 place(fade(tone(900, 0.25, attack=0.002, fend=1800)), cues["drop"] - 0.05, 0.05, send=0.5)
 # slow low pulse in space (heartbeat-like)
-pk = t >= 40.5
-pulse = np.zeros(N); pulse[pk] = np.sin(2 * np.pi * 50 * t[pk]) * np.exp(-((t[pk] - 40.5) % 1.4) / 0.12)
+pk = t >= O + 40.5
+pulse = np.zeros(N); pulse[pk] = np.sin(2 * np.pi * 50 * t[pk]) * np.exp(-((t[pk] - O - 40.5) % 1.4) / 0.12)
 L += pulse * 0.2; R += pulse * 0.2
 # timer ticks + transitions
 last = -1
@@ -182,10 +184,10 @@ for i, ft in enumerate(cues["flashes"]):
     place(x * env, ft - 0.4, 0.18, send=0.3)
     place(tone(60, 1.1, decay=0.28, attack=0.003, fend=30), ft, 0.38)
 # music: grey tension that grows, sparse sad pad in space
-tense = pad([43.65, 65.41, 87.31, 103.83], 0, 41, [(0, 0), (1, 0.08), (13, 0.11), (31, 0.15), (39.5, 0.17), (41, 0)], partials=7, detune=0.006, bright=1.3, seed=2)
+tense = pad([43.65, 65.41, 87.31, 103.83], 0, O + 41, [(0, 0), (1, 0.1), (O + 13, 0.11), (O + 31, 0.15), (O + 39.5, 0.17), (O + 41, 0)], partials=7, detune=0.006, bright=1.3, seed=2)
 place(tense, 0, 1.0, send=0.25)
-sad = pad([110.0, 130.81, 164.81, 220.0], 39.5, D, [(39.5, 0), (41, 0.11), (cues["endText"], 0.12), (cues["endText"] + 1.2, 0.17), (D - 0.5, 0.16), (D, 0)], partials=5, bright=1.9, seed=3)
-place(sad, 39.5, 1.0, send=0.5)
+sad = pad([110.0, 130.81, 164.81, 220.0], O + 39.5, D, [(O + 39.5, 0), (O + 41, 0.11), (cues["endText"], 0.12), (cues["endText"] + 1.2, 0.17), (D - 0.5, 0.16), (D, 0)], partials=5, bright=1.9, seed=3)
+place(sad, O + 39.5, 1.0, send=0.5)
 
 # ---------------------------------------------------------------- mix + voice
 L += reverb(VL, 2.4, 901) * 0.8

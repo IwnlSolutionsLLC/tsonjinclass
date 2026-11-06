@@ -28,12 +28,23 @@ function shot(lt, D, cuts) {
 }
 function pushCam(ctx, z, fx = W / 2, fy = H / 2) { ctx.translate(fx, fy); ctx.scale(z, z); ctx.translate(-fx, -fy); }
 
-/* 0:00 one second: clouds gather, rain never lands */
+/* hook: the question over gathering clouds */
+function shotHook(ctx, lt, T, D) {
+  ctx.save(); pushCam(ctx, 1.08 - 0.08 * (lt / D), W / 2, 900);
+  drawVirga(ctx, T, lt * 0.55, true);
+  ctx.restore();
+  ctx.fillStyle = 'rgba(10,14,20,0.35)'; ctx.fillRect(0, 0, W, H);
+  hudLabel(ctx, W / 2, 700, 'ХЭРВЭЭ ДЭЛХИЙ ДЭЭР', { size: 64, weight: 900, color: '#ffffff', align: 'center', ls: 3, alpha: seg(lt, 0.2, 0.7), glow: 'rgba(0,0,0,0.85)' });
+  hudLabel(ctx, W / 2, 800, 'ДАХИН ХЭЗЭЭ Ч', { size: 64, weight: 900, color: '#ffffff', align: 'center', ls: 3, alpha: seg(lt, 0.6, 1.1), glow: 'rgba(0,0,0,0.85)' });
+  hudLabel(ctx, W / 2, 940, 'БОРОО ОРОХГҮЙ', { size: 96, weight: 900, color: '#9fdcff', align: 'center', ls: 3, alpha: seg(lt, 1.1, 1.6), glow: 'rgba(60,160,255,0.6)', blur: 30 });
+  hudLabel(ctx, W / 2, 1060, 'БОЛБОЛ?', { size: 96, weight: 900, color: '#9fdcff', align: 'center', ls: 3, alpha: seg(lt, 1.5, 2.0), glow: 'rgba(60,160,255,0.6)', blur: 30 });
+}
+/* one second: clouds gather, rain never lands */
 function shotS1(ctx, lt, T, D) {
   ctx.save(); pushCam(ctx, 1.0 + 0.06 * (lt / D), W / 2, 900);
-  drawVirga(ctx, T, lt);
+  drawVirga(ctx, T, lt + 2.5);
   ctx.restore();
-  const a = seg(lt, 0.2, 0.8) * (1 - seg(lt, 3.8, 4.4));
+  const a = 0;
   hudLabel(ctx, W / 2, 1520, 'ХЭРВЭЭ ДАХИН ХЭЗЭЭ Ч', { size: 56, weight: 900, color: '#ffffff', align: 'center', ls: 3, alpha: a, glow: 'rgba(0,0,0,0.85)' });
   hudLabel(ctx, W / 2, 1620, 'БОРОО ОРОХГҮЙ БОЛБОЛ?', { size: 72, weight: 900, color: '#9fdcff', align: 'center', ls: 3, alpha: a, glow: 'rgba(0,0,0,0.85)' });
   hudChip(ctx, W / 2, 1780, 'ДУСАЛ ГАЗАРТ ХҮРЭХГҮЙ', '#9fdcff', seg(lt, 4.2, 4.7), 30);
@@ -95,14 +106,15 @@ function shotEnd(ctx, lt, T, D) {
 }
 
 const SCENES = [
-  { id: 's1', t0: 0, t1: 6, val: 1, l1: '1 СЕКУНД', l2: 'ТАСАЛДСАН ЦИКЛ', fn: shotS1, grade: [1.08, 1.04] },
-  { id: 'd1', t0: 6, t1: 13, val: 86400, l1: '86,400 СЕКУНД · 1 ДЭХ ӨДӨР', l2: 'ХӨРСНИЙ АН ЦАВ', fn: shotD1, grade: [1.0, 1.05] },
-  { id: 'd7', t0: 13, t1: 22, val: 604800, l1: '604,800 СЕКУНД · 7 ДАХЬ ӨДӨР', l2: 'ШУУРГАНЫ ЭХЛЭЛ', fn: shotD7, grade: [0.85, 1.08] },
-  { id: 'd30', t0: 22, t1: 31, val: 2592000, l1: '2,592,000 СЕКУНД · 30 ДАХЬ ӨДӨР', l2: 'ГОЛ МӨРНИЙ СҮЙРЭЛ', fn: shotD30, grade: [0.8, 1.1] },
-  { id: 'y1', t0: 31, t1: 40, val: 31536000, l1: '31,536,000 СЕКУНД · 1 ЖИЛ', l2: 'ОЙН ТҮЙМЭР & ӨЛСГӨЛӨН', fn: shotY1, grade: [0.85, 1.12] },
-  { id: 'end', t0: 40, t1: 48, l2: 'АНГАРАГ ГАРАГ МЭТ ДЭЛХИЙ', fn: shotEnd, grade: [1.0, 1.08] },
+  { id: 'hook', t0: 0, t1: 4.5, fn: shotHook, grade: [1.05, 1.06] },
+  { id: 's1', t0: 4.5, t1: 10.5, val: 1, l1: '1 СЕКУНД', l2: 'ТАСАЛДСАН ЦИКЛ', fn: shotS1, grade: [1.08, 1.04] },
+  { id: 'd1', t0: 10.5, t1: 17.5, val: 86400, l1: '86,400 СЕКУНД · 1 ДЭХ ӨДӨР', l2: 'ХӨРСНИЙ АН ЦАВ', fn: shotD1, grade: [1.0, 1.05] },
+  { id: 'd7', t0: 17.5, t1: 26.5, val: 604800, l1: '604,800 СЕКУНД · 7 ДАХЬ ӨДӨР', l2: 'ШУУРГАНЫ ЭХЛЭЛ', fn: shotD7, grade: [0.85, 1.08] },
+  { id: 'd30', t0: 26.5, t1: 35.5, val: 2592000, l1: '2,592,000 СЕКУНД · 30 ДАХЬ ӨДӨР', l2: 'ГОЛ МӨРНИЙ СҮЙРЭЛ', fn: shotD30, grade: [0.8, 1.1] },
+  { id: 'y1', t0: 35.5, t1: 44.5, val: 31536000, l1: '31,536,000 СЕКУНД · 1 ЖИЛ', l2: 'ОЙН ТҮЙМЭР & ӨЛСГӨЛӨН', fn: shotY1, grade: [0.85, 1.12] },
+  { id: 'end', t0: 44.5, t1: 52.5, l2: 'АНГАРАГ ГАРАГ МЭТ ДЭЛХИЙ', fn: shotEnd, grade: [1.0, 1.08] },
 ];
-const DURATION = 48;
+const DURATION = 52.5;
 const ROLL = 0.7;
 (function attachVoice() {
   const lines = (window.VOICE && window.VOICE.lines) || [];
@@ -119,13 +131,13 @@ function timerState(T) {
   const i = sceneIndex(T), S = SCENES[i], lt = T - S.t0;
   if (S.val == null) return null;
   const st = { color: '#ffffff', l1: S.l1, l2: S.l2, rolling: false };
-  if (i === 0) { st.val = dispValue(0, lt); }
+  if (i === 1) { st.val = dispValue(1, lt); }
   else {
     const prev = dispValue(i - 1, SCENES[i - 1].t1 - SCENES[i - 1].t0 - 1e-6);
     if (lt < ROLL) { st.val = Math.floor(Math.exp(lerp(Math.log(prev + 1), Math.log(S.val + 1), E.inOut(lt / ROLL))) - 1); st.rolling = true; }
     else st.val = dispValue(i, lt);
   }
-  st.alpha = i === 0 ? seg(lt, 0.1, 0.4) : 1;
+  st.alpha = i === 1 ? seg(lt, 0.1, 0.4) : 1;
   st.l1a = seg(lt, ROLL - 0.1, ROLL + 0.25); st.l2a = seg(lt, ROLL + 0.05, ROLL + 0.4);
   if (false) { st.alpha *= 1 - seg(lt, 6.5, 7.3); st.l1a *= 1 - seg(lt, 6.5, 7.3); st.l2a *= 1 - seg(lt, 6.5, 7.3); }
   return st;
@@ -184,12 +196,12 @@ function exportCues() {
   C.flashes = SCENES.filter((s) => s.flash).map((s) => s.t0);
   C.ticks = [];
   let prev = null;
-  for (let T = 0; T < 40; T += 1 / 240) {
+  for (let T = 4.5; T < 44.5; T += 1 / 240) {
     const st = timerState(T);
     if (!st || st.alpha < 0.05) { prev = null; continue; }
     if (prev !== null && st.val !== prev) C.ticks.push({ t: +T.toFixed(4), roll: st.rolling });
     prev = st.val;
   }
-  C.thunder = 1.5; C.storm = [13, 22]; C.river = [22, 22 + 5.4]; C.dam = 22 + 5.4; C.fire = [31, 31 + 3.6 + 2.7]; C.drop = 44.0; C.endText = 45.0;
+  const O = 4.5; C.hookThunder = 1.6; C.thunder = 1.5 + O; C.storm = [13 + O, 22 + O]; C.river = [22 + O, 27.4 + O]; C.dam = 27.4 + O; C.fire = [31 + O, 37.3 + O]; C.drop = 44.0 + O; C.endText = 45.0 + O;
   return C;
 }

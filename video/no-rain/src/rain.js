@@ -15,7 +15,7 @@ function hudChip(ctx, x, y, text, colr, alpha = 1, size = 30) {
 }
 
 /* storm clouds whose rain evaporates before reaching the ground (virga) */
-function drawVirga(ctx, t, lt) {
+function drawVirga(ctx, t, lt, norain) {
   const hy = 1400;
   let g = ctx.createLinearGradient(0, 0, 0, hy);
   g.addColorStop(0, '#5a6b7a'); g.addColorStop(1, '#e8d6b0');
@@ -35,7 +35,7 @@ function drawVirga(ctx, t, lt) {
   for (let i = 0; i < 220; i++) {
     const x = 80 + hash(i * 2.1) * 920, q = (t * 1.6 + hash(i * 3.7)) % 1;
     const y0 = 760 + q * 520, len = 60;
-    const a = 0.6 * (1 - q) * seg(lt, 1.2, 2.2);
+    const a = norain ? 0 : 0.6 * (1 - q) * seg(lt, 1.2, 2.2);
     if (a <= 0.01) continue;
     ctx.strokeStyle = `rgba(200,220,240,${a})`;
     ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x - 8, y0 + len); ctx.stroke();
